@@ -1,14 +1,16 @@
-ul li{
-  list-style-type: armenian;
+ul li {
+    list-style-type: armenian;
 }
 
-.app-wrapper{
-  display: grid;
-  grid-template-rows: 65px 1fr;
-  grid-template-columns: 1fr 10fr;
-  grid-template-areas: 
-  "header header"
-  "nav content ";
+.app-wrapper {
+    display: grid;
+    grid-template-rows: 65px 1fr;
+    grid-template-columns: 1fr 10fr;
+    grid-template-areas: "header header" "nav content ";
+}
+
+.app-wrapper-content {
+  grid-area: content;
 }
 
 

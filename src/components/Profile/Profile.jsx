@@ -3,7 +3,7 @@ import s from './Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
 console.log(s);
 const Profile = () => {
-    return <div className={s.content}>
+    return <div>
         <div className={s.content__background}>
 
         </div>
