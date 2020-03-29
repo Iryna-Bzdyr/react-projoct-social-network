@@ -1,12 +1,13 @@
 import React from 'react'
-
+import s from './Profile.module.css'
+console.log(s)
 const Profile = () => {
     return (
-        <div className='content'>
-            <div className='content-background'>
+        <div className={s.content}>
+            <div className={s.content__background}>
 
             </div>
-            <div className='content-inner'>
+            <div className={s.content__inner}>
                 <div>
                     ava+description
        </div>
