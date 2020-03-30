@@ -8,16 +8,5 @@
   .content{
     position: relative;
   }
-  .content__background{
-    position: fixed;
-    z-index: -1;
-    height: 100vh;
-    width: 100vw;
-   background-image: url('https://www.agent-cy.com/wp-content/uploads/2019/01/abstract-tech-corporate-blue-grey-background-video-animation-hd-1920x1080_ekydufpme__F0011.png');
-  }
-  
-  .content__inner{
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
+
+ 

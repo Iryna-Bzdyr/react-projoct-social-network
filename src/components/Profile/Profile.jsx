@@ -1,12 +1,10 @@
 import React from 'react'
 import s from './Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
+
 console.log(s);
 const Profile = () => {
-    return <div>
-        <div className={s.content__background}>
-
-        </div>
+    return <div>      
         <div className={s.content__inner}>
             <div>
                 ava+description
