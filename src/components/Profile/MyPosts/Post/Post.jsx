@@ -6,7 +6,7 @@ Post = (props) => {
     console.log(props)
     return <div className={s.item}>
         {props.message}
-        {props.age}
+        {props.likes}
     </div>
 };
 

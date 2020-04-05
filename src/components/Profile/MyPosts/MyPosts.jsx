@@ -3,8 +3,12 @@ import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import { Button } from 'reactstrap';
 
-let MyPosts;
-MyPosts = () => {
+let postData = [
+    {id:1, post:'Hi. how are you', likesCount:12},
+    {id:2, post:'It"s my first post', likesCount:35}
+]
+let postElements = postData.map( post =>  <Post message={post.post} likes={post.likesCount}/>)
+const  MyPosts = () => {
     return (
 
         <div>
@@ -12,11 +16,12 @@ MyPosts = () => {
             <div>
                 <div className={s.new__post__area}>
                     <textarea></textarea>
-                    <Button color="warning">warning</Button>{' '}
+                    <Button color="warning">Add</Button>{' '}
                 </div>
                 New post
-                <Post message='Hi. how are you' age={12}/>
-                <Post message = 'It"s my first post'age={25}/>
+                {
+                    postElements
+                }
             </div>
 
 
