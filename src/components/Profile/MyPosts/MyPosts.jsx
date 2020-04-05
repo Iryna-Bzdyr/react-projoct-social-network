@@ -1,16 +1,13 @@
 import React from 'react'
 import s from './MyPosts.module.css'
-import Post from "./Post/Post";
 import { Button } from 'reactstrap';
+import Post from "./Post/Post";
 
-let postData = [
-    {id:1, post:'Hi. how are you', likesCount:12},
-    {id:2, post:'It"s my first post', likesCount:35}
-]
-let postElements = postData.map( post =>  <Post message={post.post} likes={post.likesCount}/>)
-const  MyPosts = () => {
+
+const  MyPosts = (props) => {
+    let postElements = props.postData.map( (post, index) =>  <Post key={index} message={post.post} likes={post.likesCount}/>)
+    console.log(postElements)
     return (
-
         <div>
             My post
             <div>

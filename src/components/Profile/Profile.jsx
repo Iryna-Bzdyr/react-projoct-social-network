@@ -4,11 +4,11 @@ import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 console.log(s);
-const Profile = () => {
+const Profile = (props) => {
     return <div>      
         <div className={s.content__inner}>
            <ProfileInfo/>
-           <MyPosts/>
+           <MyPosts postData={props.postData} />
         </div>
     </div>
 };
