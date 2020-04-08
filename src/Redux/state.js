@@ -30,7 +30,7 @@ export let addPost = (postMassage) => {
         likesCount: 0
     }
     state.profilePage.postData.push(newPost)
-    renderEntireTree()
+    renderEntireTree(state)
 }
 
 export default state
