@@ -1,10 +1,32 @@
 import React from 'react';
 import s from './Header.module.css'
+import { IoIosMenu, IoIosSearch } from "react-icons/io";
+import { FiUserCheck } from "react-icons/fi";
+
 
 const Header = () => {
     return (
         <header className={s.header}>
-            <img src='https://firebasestorage.googleapis.com/v0/b/roshen-bebec.appspot.com/o/icons%2Fcalendar.png?alt=media&token=9f4d0b79-9e68-4d9b-83e8-c2f4dbd9d947' alt=''></img>
+           <div className={s.logo}>
+               <img src='https://mk0dunhakdisdem7bjhx.kinstacdn.com/wp-content/themes/thrive-nouveau/logo.svg' alt=''></img>
+           </div>
+            <div className={s.content}>
+             <div className={s.menu__icon}><i><IoIosMenu /></i>
+             </div>
+             <div className={s.input__icon}><input/>
+             <i><IoIosSearch/></i>
+             </div>
+             <div className={s.button}>
+                 <button className={s.login__btn}><i><FiUserCheck/> </i>Login</button>
+                 <button className={s.sing__btn}>Sing up</button>
+             </div>
+
+
+
+
+
+
+            </div>
         </header>
     )
 }

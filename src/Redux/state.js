@@ -19,7 +19,8 @@ let state = {
        postData: [
            {id:1, post:'Hi. how are you', likesCount:12},
            {id:2, post:'It"s my first post', likesCount:35}
-       ]
+       ],
+        newPostText: 'it-kamasutra'
    }
 }
 
@@ -30,6 +31,11 @@ export let addPost = (postMassage) => {
         likesCount: 0
     }
     state.profilePage.postData.push(newPost)
+    renderEntireTree(state)
+}
+
+export let updateNewPostText = (newText) => {
+    state.profilePage.newPostText = newText
     renderEntireTree(state)
 }
 

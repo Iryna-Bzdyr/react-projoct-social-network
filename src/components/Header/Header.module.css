@@ -1,4 +1,78 @@
 .header{
     grid-area: header;
     background-color: lightblue;
+    display: grid;
+    grid-template-columns: 1.5fr 10fr;
 }
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(231,89,137);
+    background: linear-gradient(90deg, rgba(231,89,137,1) 11%, rgba(184,33,99,1) 44%, rgba(121,9,58,1) 72%);
+}
+
+.logo img {
+    width: 100%;
+    height: 80%;
+}
+
+.content{
+    display: grid;
+    grid-template-columns: 1fr 7fr 5fr ;
+    background: rgb(184,33,99);
+    background: linear-gradient(90deg, rgba(184,33,99,1) 11%, rgba(174,73,217,1) 54%, rgba(25,163,199,1) 89%);
+}
+.content div{
+    display: flex;
+    justify-content: center;
+}
+.menu__icon{
+    color: white;
+}
+.menu__icon i {
+    zoom: 300%;
+}
+.content div input{
+    width: 100%;
+    margin: 2.5% 40% 2.5% 2%;
+    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 5px
+}
+.input__icon{
+   display: flex;
+    position: relative;
+}
+.input__icon i {
+    position: absolute;
+    zoom: 150%;
+    color: white;
+    right: 42%;
+    top: 20%
+}
+
+.button button{
+    color: #fff;
+    padding: 0% 3%;
+    border: 0 none;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 3% 2%;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+}
+.login__btn{
+    background: rgba(0, 0, 0, 0.24);
+}
+.sing__btn{
+    background: #6020d2;
+    background: linear-gradient(to bottom, #6020d2 0, #673ab7 100%);
+}
+
+.button i {
+    zoom: 150%;
+}
+
