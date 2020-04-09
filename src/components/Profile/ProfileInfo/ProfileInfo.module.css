@@ -1,0 +1,27 @@
+.wrapper{
+    display: grid;
+    height: 50vh;
+    grid-template-rows: 70% 15% 15%;
+}
+
+
+.background{
+
+}
+.background img {
+    height: 130%;
+    width: 100%;
+}
+
+.profile__info{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.profile__info img {
+    height: 200px;
+    width: 200px;
+    border-radius: 90%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.27);
+}

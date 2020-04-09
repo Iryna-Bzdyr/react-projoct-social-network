@@ -1,15 +1,50 @@
 
 .nav{
     grid-area: nav;
-    background-color: #f5f5f5;
-    padding: 20px;
+    padding: 1% 1% 1% 0%;
+    margin-left: -250px;
+    top: 84px;
+    left: 13%;
+    position: fixed;
+    height: 100%;
+    width: 13%;
+    overflow-y: auto;
+    z-index: 1000;
+    background: #fafafa;
+    transition: left 0.25s ease-in-out;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.27);
 }
-
+.item{
+    font-size: 18px;
+    padding: 3% 3% 3% 10%;
+}
+.item:hover{
+    border-radius: 0 20px 20px 0;
+    background-color: #d8d8d8;
+}
 .item a, .item a:hover {
-   color: white;
+   color: black;
     text-decoration: none;
+    padding-left: 5%;
 }
 
-.item a.active{
-color: gold;
+
+.item a.active, .item a:hover{
+color: rgba(174,73,217,1)
+}
+
+.home{
+    color: #ed104b;
+}
+.message{
+    color: #59d600;
+}
+.news{
+    color: #0018f4;
+}
+.music{
+    color: #f40000;
+}
+.settings{
+    color: #8224e3;
 }

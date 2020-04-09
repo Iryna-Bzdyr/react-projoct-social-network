@@ -14,6 +14,7 @@ let state = {
             {id: 2, text: 'How are you'},
             {id: 3, text: 'What time is it'},
         ],
+        newMessageText:'',
     },
     profilePage:{
        postData: [
@@ -24,14 +25,15 @@ let state = {
    }
 }
 
-export let addPost = (postMassage) => {
+export let addPost = () => {
     let newPost = {
         id:5,
-        post: postMassage,
+        post: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.postData.push(newPost)
     renderEntireTree(state)
+    state.profilePage.newPostText = ''
 }
 
 export let updateNewPostText = (newText) => {
@@ -39,4 +41,18 @@ export let updateNewPostText = (newText) => {
     renderEntireTree(state)
 }
 
+export let addMessage= ()=>{
+    let newMassage = {
+        id:4,
+        text: state.messagesPage.newMessageText
+    }
+    state.messagesPage.MassageData.push(newMassage)
+    renderEntireTree(state)
+    state.messagesPage.newMessageText = ''
+}
+
+export let updateNewMessageText = (newMessage) =>{
+    state.messagesPage.newMessageText = newMessage
+    renderEntireTree(state)
+}
 export default state
