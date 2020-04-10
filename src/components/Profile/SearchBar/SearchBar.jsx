@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 let SearchBar = (props)=>{
 
     return (
-        <div>
+        <div className={s.wrapper}>
            <div>
                <NavLink to={`/profile/${props.pathName}`} activeClassName={s.active} className={s.link}>{props.pathName}</NavLink>
            </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './MyPosts.module.css'
-import { Button } from 'reactstrap';
+import { Button, Input  } from 'reactstrap';
 import Post from "./Post/Post";
 
 
@@ -23,7 +23,7 @@ const  MyPosts = (props) => {
             My post
             <div>
                 <div className={s.new__post__area}>
-                    <textarea onChange={onPostChange} ref={newPostElement} value={props.state.profilePage.newPostText} />
+                    <Input type="textarea" name="text" id="exampleText" onChange={onPostChange} ref={newPostElement} value={props.state.profilePage.newPostText} />
                     <Button onClick={addNewPost} color="warning">Add</Button>{' '}
                 </div>
                 New post

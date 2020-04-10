@@ -17,8 +17,10 @@ const Profile = (props) => {
             <div className={s.wrapper}>
                 <div className={s.content__inner}>
                     <ProfileInfo state={props.state} />
-                   <div className={s.link__wrapper}>
-                       {navigationElement}
+                   <div className={s.nav__menu}>
+                       <div className={s.link__wrapper}>
+                           {navigationElement}
+                       </div>
                    </div>
                     <div>
                         <Route path='/profile/Activity' render={()=> <Activity state={props.state}/>} />

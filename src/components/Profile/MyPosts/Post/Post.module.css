@@ -1,0 +1,16 @@
+
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.avatar{
+
+}
+.avatar img {
+  height: 40px;
+    width: 40px;
+    border-radius: 90%;
+}
