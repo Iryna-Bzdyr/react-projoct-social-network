@@ -1,7 +1,8 @@
 .header{
     grid-area: header;
     display: grid;
-    grid-template-columns: 1.5fr 10fr;
+    height: 8%;
+    grid-template-columns: 250px 10fr;
     position: fixed;
     right: 0;
     left: 0;

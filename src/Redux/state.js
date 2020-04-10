@@ -21,6 +21,13 @@ let state = {
            {id:1, post:'Hi. how are you', likesCount:12},
            {id:2, post:'It"s my first post', likesCount:35}
        ],
+        searchBar:[
+            {id:1, name:'Activity'},
+            {id:2, name:'MyPost'},
+            {id:3, name:'Friends'},
+            {id:4, name:'Groups'},
+            {id:5, name:'Forums'},
+        ],
         newPostText: 'it-kamasutra'
    }
 }
