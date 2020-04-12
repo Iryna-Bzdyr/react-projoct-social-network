@@ -5,17 +5,16 @@ import MessageItem from "./MassageItem/MessageItem";
 import { Button } from 'reactstrap';
 
 
+
 const Dialogs = (props) => {
-    console.log(props)
-    let dialogsElements = props.state.messagesPage.DialogsData.map( (dialog, index) => (<DialogItem key={index} id={dialog.id} name={dialog.name} />))
-    let messageElements = props.state.messagesPage.MassageData.map(message => <MessageItem key={message.id} id={message.id} text={message.text}/> )
-    let newMessageText = React.createRef()
+    let dialogsElements = props.state.DialogsData.map( (dialog, index) => (<DialogItem key={index} id={dialog.id} name={dialog.name} />))
+    let messageElements = props.state.MassageData.map(message => <MessageItem key={message.id} id={message.id} text={message.text}/> )
     let addNewMessage = () => {
-         props.addMessage()
+         props.addNewMessage()
     }
-    let changeMessage = () => {
-        let messageText = newMessageText.current.value
-        props.updateNewMessageText(messageText)
+    let changeMessage = (event) => {
+        let messageText = event.target.value
+        props.changeMessage(messageText)
     }
     return (
         <div>
@@ -35,7 +34,7 @@ const Dialogs = (props) => {
 
             </div>
             <div className={s.message__area}>
-                <textarea value={props.state.messagesPage.newMessageText} ref={newMessageText} onChange={changeMessage}/>
+                <textarea value={props.state.newMessageText}  onChange={changeMessage}/>
 
                 <Button onClick={addNewMessage} color="warning">Add</Button>{' '}
             </div>

@@ -13,7 +13,8 @@ const Header = () => {
             <div className={s.content}>
              <div className={s.menu__icon}><i><IoIosMenu /></i>
              </div>
-             <div className={s.input__icon}><input/>
+             <div className={s.input__icon}>
+                 <input/>
              <i><IoIosSearch/></i>
              </div>
              <div className={s.button}>

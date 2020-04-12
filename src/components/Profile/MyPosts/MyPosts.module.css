@@ -1,12 +1,13 @@
 
-
-.posts{
+.posts {
 
 }
-.new__post__area{
-display: flex;
-    align-items:center;
+
+.new__post__area {
+    display: flex;
+    align-items: center;
 }
+
 .new__post__area textarea {
     margin: 0% 3%;
     width: 300px;

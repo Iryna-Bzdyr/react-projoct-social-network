@@ -1,7 +1,8 @@
 .header{
     grid-area: header;
     display: grid;
-    grid-template-columns: 1.5fr 10fr;
+    height: 80px;
+    grid-template-columns: 250px 10fr;
     position: fixed;
     right: 0;
     left: 0;
@@ -17,7 +18,7 @@
 
 .logo img {
     width: 100%;
-    height: 80%;
+    height: 70%;
 }
 
 .content{
@@ -38,13 +39,16 @@
 }
 .content div input{
     width: 100%;
-    margin: 2.5% 40% 2.5% 2%;
+    height: 40px;
+    margin: 0 40% 0 3%;
     background: rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 5px
 }
+
 .input__icon{
    display: flex;
+    align-items: center;
     position: relative;
 }
 .input__icon i {
@@ -54,7 +58,10 @@
     right: 42%;
     top: 20%
 }
-
+.button{
+    display: flex;
+    align-items: center;
+}
 .button button{
     color: #fff;
     padding: 0% 3%;
@@ -64,7 +71,8 @@
     font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin: 3% 2%;
+    height: 40px;
+    margin: 0 10px;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
 }
 .login__btn{
