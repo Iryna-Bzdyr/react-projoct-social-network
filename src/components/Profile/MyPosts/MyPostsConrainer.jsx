@@ -9,13 +9,13 @@ let mapStateToProps = (state) =>{
     }
 }
 
-let mapDispatchToProps = (dispath) => {
+let mapDispatchToProps = (dispatch) => {
     return {
         upDateNewPostText:(text) => {
-            dispath(upDateNewPostTextActionCreator(text))
+            dispatch(upDateNewPostTextActionCreator(text))
         },
         addNewPost: () =>{
-            dispath(addPostActionCreator())
+            dispatch(addPostActionCreator())
         }
     }
 }
