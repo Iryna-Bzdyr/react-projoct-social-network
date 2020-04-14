@@ -7,12 +7,14 @@ import { Button } from 'reactstrap';
 
 
 const Dialogs = (props) => {
+    console.log(props)
     let dialogsElements = props.state.DialogsData.map( (dialog, index) => (<DialogItem key={index} id={dialog.id} name={dialog.name} />))
     let messageElements = props.state.MassageData.map(message => <MessageItem key={message.id} id={message.id} text={message.text}/> )
     let addNewMessage = () => {
          props.addNewMessage()
     }
     let changeMessage = (event) => {
+        debugger
         let messageText = event.target.value
         props.changeMessage(messageText)
     }

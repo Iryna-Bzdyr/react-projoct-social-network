@@ -6,25 +6,25 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter} from "react-router-dom";
-import StoreContext from "./StoreContext";
+import {Provider} from "react-redux";
 
-let renderEntireTree = (store) => {
+let renderEntireTree = () => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
-              <StoreContext.Provider value={store}>
+              <Provider store={store}>
                     <App/>
-              </StoreContext.Provider>
+              </Provider>
             </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')
     );
 }
 store.subscribe(()=>{
-    renderEntireTree(store)
+    renderEntireTree()
 })
 
-renderEntireTree(store)
+renderEntireTree()
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

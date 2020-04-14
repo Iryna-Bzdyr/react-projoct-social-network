@@ -5,14 +5,10 @@ import { FaHome, FaRegNewspaper, FaMusic } from "react-icons/fa";
 import { MdMessage, MdSettings } from "react-icons/md";
 import {IoIosMusicalNotes} from "react-icons/io";
 import MyFriends from "./MyFriends/MyFriends";
-import StoreContext from "../../StoreContext";
 
 
 const Navbar = (props) => {
-  return <StoreContext.Consumer>
-    {store=>{
-      let state = store.getState()
-      let friendsElement = state.sideBar.myFriends.map((friend, index)=><MyFriends key={index} id={friend.id} name={friend.name} imageUrl={friend.photo} />)
+      let friendsElement = props.state.myFriends.map((friend, index)=><MyFriends key={index} id={friend.id} name={friend.name} imageUrl={friend.photo} />)
       return (
           <div className={s.nav}>
             <div >
@@ -54,9 +50,6 @@ const Navbar = (props) => {
             </div>
           </div>
       )
-    }}
-  </StoreContext.Consumer>
-
 }
 
 export default Navbar
