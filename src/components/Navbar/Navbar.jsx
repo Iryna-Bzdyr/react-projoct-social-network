@@ -43,6 +43,12 @@ const Navbar = (props) => {
                   </i>
                   <NavLink to="/settings" activeClassName={s.active}>Settings</NavLink>
                 </div>
+                  <div className={`${s.item}`}>
+                      <i className={s.settings}>
+                          <MdSettings/>
+                      </i>
+                      <NavLink to="/users" activeClassName={s.active}>Users</NavLink>
+                  </div>
               </div>
             </div>
             <div className={s.friend__block}>
