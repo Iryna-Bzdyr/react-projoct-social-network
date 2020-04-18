@@ -13,7 +13,6 @@ const Dialogs = (props) => {
          props.addNewMessage()
     }
     let changeMessage = (event) => {
-        debugger
         let messageText = event.target.value
         props.changeMessage(messageText)
     }

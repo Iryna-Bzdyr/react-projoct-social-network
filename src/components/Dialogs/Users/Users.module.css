@@ -1,0 +1,45 @@
+.user__card{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    padding: 20px;
+    margin: 3% 15%;
+    border: 1px silver solid;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.user__avatar{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.user__avatar img{
+    height: 80px;
+    width: 80px;
+    border-radius: 90%;
+    box-shadow: 5px 5px 10px gray;
+}
+
+.user__avatar button{
+    color: #fff;
+    width: 100px;
+    padding: 3% 3%;
+    margin-top: 5px;
+    border: 0 none;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+
+}
+.unfollow__btn{
+    background: rgb(231,89,137);
+    background: linear-gradient(90deg, rgba(231,89,137,1) 11%, rgba(184,33,99,1) 44%, rgba(121,9,58,1) 72%);
+}
+.follow__btn{
+    background: #6020d2;
+    background: linear-gradient(to bottom, #6020d2 0, #673ab7 100%);
+}
