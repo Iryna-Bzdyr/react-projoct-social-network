@@ -43,3 +43,23 @@
     background: #6020d2;
     background: linear-gradient(to bottom, #6020d2 0, #673ab7 100%);
 }
+
+.pages__block{
+    display: flex;
+    flex-direction: row;
+}
+
+.activePage{
+   background-color: red;
+}
+.preLoader__block{
+    display: flex;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+}
+
+.preLoader__none{
+    display: none;
+}

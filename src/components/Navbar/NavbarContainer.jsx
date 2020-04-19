@@ -1,12 +1,24 @@
 import React from "react";
 import Navbar from "./Navbar";
 import {connect} from "react-redux";
+import {setUserNavsAC} from "../../Redux/Reducer/sidebar-reducer";
+
 
 
 let mapStateToProps = (state) =>{
     return {
-        state: state.sideBar
+        users: state.sideBar.users,
     }
 }
-const  NavbarContainer = connect(mapStateToProps)(Navbar)
+
+let mapDispatchToProps = (dispatch)=>{
+    return {
+        getUsers: (users)=>{
+            dispatch(setUserNavsAC(users))
+        }
+    }
+}
+
+
+const  NavbarContainer = connect(mapStateToProps, mapDispatchToProps)(Navbar)
 export default NavbarContainer

@@ -8,7 +8,7 @@ import Music from "./components/Music/Music";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
-import UserContainer from "./components/Dialogs/Users/UsersContainer";
+import UserContainer from "./components/Users/UsersContainer";
 
 
 const App = (props) => {

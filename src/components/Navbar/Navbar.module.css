@@ -48,7 +48,9 @@ color: rgba(174,73,217,1)
 .settings{
     color: #8224e3;
 }
-
+.users{
+    color: darkorange;
+}
 .friend__block{
     display: grid;
     margin: 5% 3% 3% 5%;
