@@ -6,12 +6,16 @@ import { MdMessage, MdSettings } from "react-icons/md";
 import {IoIosMusicalNotes} from "react-icons/io";
 import MyFriends from "./MyFriends/MyFriends";
 import * as axios from 'axios'
+import database from "../../firebase";
 
 class Navbar extends React.Component{
     componentDidMount() {
-        axios.get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`).then(responce => {
-            this.props.getUsers(responce.data)
-        })
+        // axios.get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`).then(responce => {
+        //     this.props.getUsers(responce.data)
+        // })
+        database.ref('database/users').on('value', (snap)=> {
+            this.props.getUsers(snap.val())
+        });
     }
     render() {
         let friendsElement = this.props.users.map((friend, index)=><MyFriends key={index} id={friend.id}  imageUrl={friend.photo} />)

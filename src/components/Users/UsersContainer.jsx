@@ -10,19 +10,43 @@ import {
 } from "../../Redux/Reducer/user-reducer";
 import * as axios from "axios";
 import Users from "./Users";
-import loaderImg from './../../assets/images/ajax-loader (1).gif'
 import PreLoader from "../../common/PreLoader/PreLoader";
+import database from "../../firebase";
+
+
 
 class UsersAPIComponent extends React.Component {
 
     componentDidMount() {
         this.props.setToggleFetching(true)
-        axios.get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`).then(responce => {
-            this.props.setUsers(responce.data)
-            let count = responce.headers["x-total-count"];
-            this.props.setTotalUsersCount(count)
-            this.props.setToggleFetching(false)
-        })
+
+
+        // axios.get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`).then(responce => {
+        //     this.props.setUsers(responce.data)
+        //     let count = responce.headers["x-total-count"];
+        //     this.props.setTotalUsersCount(count)
+        //     this.props.setToggleFetching(false)
+        // })
+       //  let users = database.ref('users')
+       // console.log(users)
+       //  console.log(database)
+       //  console.log(firestorage)
+        // users.get().then(response=>{
+        //     console.log(response)
+        // })
+        // database.collection("users").add({
+        //     first: "Ada",
+        //     last: "Lovelace",
+        //     born: 1815
+        // })
+        //     .then(function(docRef) {
+        //         console.log("Document written with ID: ", docRef.id);
+        //     })
+        //     .catch(function(error) {
+        //         console.error("Error adding document: ", error);
+        //     });
+
+
     }
 
     onPageChange = (page) => {
@@ -38,10 +62,9 @@ class UsersAPIComponent extends React.Component {
     render() {
 
         return <>
-            <div className={this.props.isFetching === true ? s.preLoader__block : s.preLoader__none}>
-               <PreLoader/>
-            </div>
-
+            {/*<div className={this.props.isFetching === true ? s.preLoader__block : s.preLoader__none}>*/}
+            {/*   <PreLoader/>*/}
+            {/*</div>*/}
             <Users totalUsersCount={this.props.totalUsersCount} pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    users={this.props.users} follow={this.props.follow} unFollow={this.props.unFollow}
