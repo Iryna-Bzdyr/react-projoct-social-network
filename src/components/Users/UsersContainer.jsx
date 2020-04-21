@@ -29,6 +29,7 @@ class UsersAPIComponent extends React.Component {
             })
             this.props.setUsers(users)
         });
+
     }
     onPageChange = (index) => {
         this.props.setToggleFetching(true)

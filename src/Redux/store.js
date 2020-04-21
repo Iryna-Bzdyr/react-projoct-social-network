@@ -78,4 +78,378 @@ window.store = store
 //     8:{id:8, followed:true, status:"If You Have Availability To Think Big then Only You Can Achieve Big.", fullName:{firstName:"Chris", lastName:"Pine"}, location:{country:"Italy",city:"Roma"}, photo: "https://autogear.ru/misc/i/gallery/2369/396349.jpg"}
 //
 // }]
+//
+// let profile=[
+//     {
+//         1:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:'Hello World',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:'Hello World',
+//                     likes:4
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+//                     likes:10
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//         2:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:'Your limitation—it’s only your imagination.',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:'Push yourself, because no one else is going to do it for you.',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     text:'Sometimes later becomes never. Do it now.',
+//                     likes:2
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://www.whoa.in/20140224-Whoa/Beautiful-Natural-Sunrise-with-Orange-Background-HD-Wallpaper.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://thewallpaper.co/wp-content/uploads/2016/10/HD-Nature-Backgrounds-windows-apple-mac-wallpapers-4k-best-wallpaper-ever-wallpaper-for-iphone-free-download-1920x1080.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://i.pinimg.com/originals/ca/a2/65/caa2654e79e2dc88c6a3c18e1a353452.jpg',
+//                     likes:10
+//                 },
+//                 {
+//                     id:4,
+//                     url:'https://s1.1zoom.me/big0/24/Scenery_Seasons_Winter_469080.jpg',
+//                     likes:25
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//         3:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:' Great things never come from comfort zones.',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:'Dream it. Wish it. Do it.',
+//                     likes:4
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://www.ecopetit.cat/wpic/mpic/35-351275_hd-nature-wallpaper-plant-fresh-air-high-resolution.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://www.pixelstalk.net/wp-content/uploads/2016/07/Desktop-autumn-hd-wallpaper-3D.jpg',
+//                     likes:10
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//         4:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:'Success doesn’t just find you. You have to go out and get it.',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:'The harder you work for something, the greater you’ll feel when you achieve it.',
+//                     likes:4
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://i.ytimg.com/vi/xgTwHQjQsPc/maxresdefault.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://images-na.ssl-images-amazon.com/images/I/91eEfPOs3ML.jpg',
+//                     likes:10
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//         5:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:'Don’t stop when you’re tired. Stop when you’re done.',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:'Wake up with determination. Go to bed with satisfaction.',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     text:'Do something today that your future self will thank you for.',
+//                     likes:25
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+//                     likes:10
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//         6:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:'Little things make big days.',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:'It’s going to be hard, but hard does not mean impossible.',
+//                     likes:4
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://wallpaperaccess.com/full/1204217.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://2.bp.blogspot.com/-oI74LXWvLLs/VS8Aw_gheII/AAAAAAAAAEA/L98qaFheqpk/s1600/Images%2Bde%2Bla%2Bnature%2Bpittoresque%2Bde%2Bla%2Btechnologie%2BHD.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQRpoz5mcLL8_kQDeUBPyxpBNMFHgwjfS3wEaUX4CcY2AULjDr2&usqp=CAU',
+//                     likes:10
+//                 },
+//                 {
+//                     id:4,
+//                     url:'https://www.pixelstalk.net/wp-content/uploads/2016/07/1080p-HD-Image-Nature-Desktop.jpg',
+//                     likes:10
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//         7:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:'Don’t wait for opportunity. Create it.',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:'Sometimes we’re tested not to show our weaknesses, but to discover our strengths.',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     text:'The key to success is to focus on goals, not obstacles.',
+//                     likes:4
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+//                     likes:10
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//         8:{
+//             userID:1,
+//             post:[
+//                 {
+//                     id:1,
+//                     text:'Dream it. Believe it. Build it.',
+//                     likes:2
+//                 },
+//                 {
+//                     id:2,
+//                     text:' Don’t wait for opportunity. Create it.',
+//                     likes:4
+//                 }
+//             ],
+//             photo:[
+//                 {
+//                     id:1,
+//                     url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+//                     likes:4
+//                 },
+//                 {
+//                     id:2,
+//                     url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+//                     likes:4
+//                 },
+//                 {
+//                     id:3,
+//                     url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+//                     likes:10
+//                 },
+//             ],
+//             friends:[
+//
+//             ],
+//             groups:[
+//
+//             ],
+//             activity:[
+//
+//             ],
+//             status:'',
+//
+//         },
+//     }
+// ]
 
