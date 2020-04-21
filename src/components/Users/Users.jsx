@@ -11,8 +11,8 @@ const Users = (props)=>{
     return(
         <div>
             <div className={s.pages__block}>
-                {pagesArray.map(page =>
-                    <button onClick={()=>props.onPageChange(page)} className={props.currentPage===page?s.activePage:''}
+                {pagesArray.map((page, index) =>
+                    <button onClick={()=>props.onPageChange(index)} className={props.currentPage===page?s.activePage:''}
                     >{page}</button>)
                 }
             </div>

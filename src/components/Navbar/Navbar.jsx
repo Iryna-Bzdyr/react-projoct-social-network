@@ -13,8 +13,12 @@ class Navbar extends React.Component{
         // axios.get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`).then(responce => {
         //     this.props.getUsers(responce.data)
         // })
-        database.ref('database/users').on('value', (snap)=> {
-            this.props.getUsers(snap.val())
+        database.ref('database/users/').on('value', (snap)=> {
+            let users = []
+            snap.forEach(u=>{
+                users.push(u.val())
+            })
+            this.props.getUsers(users)
         });
     }
     render() {

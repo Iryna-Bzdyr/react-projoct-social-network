@@ -8,63 +8,46 @@ import {
     setUsersAC, toggleIsFetchingAC,
     unfollowAC
 } from "../../Redux/Reducer/user-reducer";
-import * as axios from "axios";
 import Users from "./Users";
 import PreLoader from "../../common/PreLoader/PreLoader";
 import database from "../../firebase";
 
 
-
 class UsersAPIComponent extends React.Component {
-
     componentDidMount() {
         this.props.setToggleFetching(true)
-
-
-        // axios.get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`).then(responce => {
-        //     this.props.setUsers(responce.data)
-        //     let count = responce.headers["x-total-count"];
-        //     this.props.setTotalUsersCount(count)
-        //     this.props.setToggleFetching(false)
-        // })
-       //  let users = database.ref('users')
-       // console.log(users)
-       //  console.log(database)
-       //  console.log(firestorage)
-        // users.get().then(response=>{
-        //     console.log(response)
-        // })
-        // database.collection("users").add({
-        //     first: "Ada",
-        //     last: "Lovelace",
-        //     born: 1815
-        // })
-        //     .then(function(docRef) {
-        //         console.log("Document written with ID: ", docRef.id);
-        //     })
-        //     .catch(function(error) {
-        //         console.error("Error adding document: ", error);
-        //     });
-
-
-    }
-
-    onPageChange = (page) => {
-        this.props.setCurrentPage(page)
-        this.props.setToggleFetching(true)
-        axios.get(`http://localhost:3000/users?_page=${page}&_limit=${this.props.pageSize}`).then(responce => {
-            this.props.setUsers(responce.data)
-            let count = responce.headers["x-total-count"];
+        database.ref('database/users/').on('value', (snap)=> {
+            let count = snap.numChildren()
+            this.props.setTotalUsersCount(count)
             this.props.setToggleFetching(false)
-        })
+        });
+
+        database.ref('database/users/').orderByKey().startAt(`0`).limitToFirst(this.props.pageSize).on('value', (snap) => {
+            let users = []
+            snap.forEach(u=>{
+                users.push(u.val())
+            })
+            this.props.setUsers(users)
+        });
+    }
+    onPageChange = (index) => {
+        this.props.setToggleFetching(true)
+        let startPoint = index*this.props.pageSize+1
+        database.ref('database/users/').orderByKey().startAt(`${startPoint}`).limitToFirst(this.props.pageSize).on('value', (snap) => {
+            let users = []
+            snap.forEach(u=>{
+                users.push(u.val())
+            })
+            this.props.setUsers(users)
+            this.props.setToggleFetching(false)
+        });
     }
 
     render() {
-
         return <>
-            {/*<div className={this.props.isFetching === true ? s.preLoader__block : s.preLoader__none}>*/}
-            {/*   <PreLoader/>*/}
-            {/*</div>*/}
+            <div className={this.props.isFetching === true ? s.preLoader__block : s.preLoader__none}>
+                <PreLoader/>
+            </div>
             <Users totalUsersCount={this.props.totalUsersCount} pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    users={this.props.users} follow={this.props.follow} unFollow={this.props.unFollow}
