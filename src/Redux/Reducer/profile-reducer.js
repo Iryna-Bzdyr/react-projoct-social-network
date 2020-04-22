@@ -12,7 +12,7 @@ let initialState = {
         {id: 2, name: 'MyPost'},
         {id: 3, name: 'Friends'},
         {id: 4, name: 'Groups'},
-        {id: 5, name: 'Forums'},
+        {id: 5, name: 'Photo'},
     ],
     newPostText: ''
 }

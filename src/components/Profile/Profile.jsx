@@ -5,7 +5,7 @@ import {Route} from "react-router-dom";
 import Activity from "./Activity/Activity";
 import Friends from "./Friends/Friends";
 import Groups from "./Groups/Groups";
-import Forums from "./Forums/Forums";
+import Forums from "./Photos/Forums";
 import MyPostsContainer from "./MyPosts/MyPostsConrainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 

@@ -19,8 +19,11 @@ else {
                         <img src={props.userData[0].photo}/>
                         <div>
                             <h4>
-                                justin timberlake
+                                {props.userData[0].fullName.firstName}   {props.userData[0].fullName.lastName}
                             </h4>
+                        </div>
+                        <div>
+                            <span>{props.userData[0].location.city}</span>  <span>{props.userData[0].location.country}</span>
                         </div>
                     </div>
                 </div>
