@@ -1,6 +1,5 @@
 import React from 'react'
 import s from './Profile.module.css'
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import SearchBar from "./SearchBar/SearchBar";
 import {Route} from "react-router-dom";
 import Activity from "./Activity/Activity";
@@ -8,14 +7,16 @@ import Friends from "./Friends/Friends";
 import Groups from "./Groups/Groups";
 import Forums from "./Forums/Forums";
 import MyPostsContainer from "./MyPosts/MyPostsConrainer";
+import ProfileInfoContainer from "./ProfileInfo/ProfileInfoContainer";
 
 const Profile = (props) => {
-    let navigationElement = props.state.searchBar.map((pathName, index) => <SearchBar key={index}
+    console.log(props)
+    let navigationElement = props.searchBar.map((pathName, index) => <SearchBar key={index}
                                                                                                   pathName={pathName.name}/>)
     return (
         <div className={s.wrapper}>
             <div className={s.content__inner}>
-                <ProfileInfo state={props.store}/>
+                <ProfileInfoContainer usersInfo={props.usersInfo}/>
                 <div className={s.nav__menu}>
                     <div className={s.link__wrapper}>
                         {navigationElement}

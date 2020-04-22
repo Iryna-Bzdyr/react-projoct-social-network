@@ -29,9 +29,8 @@ class UsersAPIComponent extends React.Component {
             })
             this.props.setUsers(users)
         });
-
     }
-    onPageChange = (index) => {
+    onPageChange = (page, index) => {
         this.props.setToggleFetching(true)
         let startPoint = index*this.props.pageSize+1
         database.ref('database/users/').orderByKey().startAt(`${startPoint}`).limitToFirst(this.props.pageSize).on('value', (snap) => {
@@ -39,6 +38,7 @@ class UsersAPIComponent extends React.Component {
             snap.forEach(u=>{
                 users.push(u.val())
             })
+            this.props.setCurrentPage(page)
             this.props.setUsers(users)
             this.props.setToggleFetching(false)
         });
@@ -53,12 +53,10 @@ class UsersAPIComponent extends React.Component {
                    currentPage={this.props.currentPage}
                    users={this.props.users} follow={this.props.follow} unFollow={this.props.unFollow}
                    onPageChange={this.onPageChange}
-
             />
         </>
     }
 }
-
 
 const mapStateToProps = (state) => {
     return {
@@ -67,29 +65,6 @@ const mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userId) => {
-            dispatch(followAC(userId))
-        },
-        unFollow: (userId) => {
-            dispatch(unfollowAC(userId))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalUsers) => {
-            dispatch(setTotalUsersCountAC(totalUsers))
-        },
-        setToggleFetching: (isFetching) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        }
     }
 }
 
@@ -102,3 +77,28 @@ const UserContainer = connect(mapStateToProps, {
     setToggleFetching: toggleIsFetchingAC
 })(UsersAPIComponent)
 export default UserContainer
+
+
+//
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         follow: (userId) => {
+//             dispatch(followAC(userId))
+//         },
+//         unFollow: (userId) => {
+//             dispatch(unfollowAC(userId))
+//         },
+//         setUsers: (users) => {
+//             dispatch(setUsersAC(users))
+//         },
+//         setCurrentPage: (currentPage) => {
+//             dispatch(setCurrentPageAC(currentPage))
+//         },
+//         setTotalUsersCount: (totalUsers) => {
+//             dispatch(setTotalUsersCountAC(totalUsers))
+//         },
+//         setToggleFetching: (isFetching) => {
+//             dispatch(toggleIsFetchingAC(isFetching))
+//         }
+//     }
+// }

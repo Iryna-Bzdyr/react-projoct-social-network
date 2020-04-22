@@ -1,6 +1,6 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
-import SearchBar from "../SearchBar/SearchBar";
+
 
 
 const ProfileInfo = (props) => {
@@ -11,7 +11,7 @@ const ProfileInfo = (props) => {
                 <div className={s.background}>
                     <img src='https://i.pinimg.com/originals/a0/6d/06/a06d06c67ecb1edfeb40c5fa2995f318.jpg'/>
                     <div className={s.profile__info}>
-                        <img src='https://mvclip.ru/content/images/artists/1/5327124a3ee946e2a6ebcd9b1f9164f4.jpg '/>
+                        {/*<img src={props.usersInfo[0].photo}/>*/}
                         <div>
                             <h4>
                                 justin timberlake
