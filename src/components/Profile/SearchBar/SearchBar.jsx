@@ -7,7 +7,7 @@ let SearchBar = (props)=>{
     return (
         <div className={s.wrapper}>
            <div>
-               <NavLink to={`/profile/${props.pathName}`} activeClassName={s.active} className={s.link}>{props.pathName}</NavLink>
+               <NavLink to={`/profile/${props.currentUserId}/${props.pathName}`} activeClassName={s.active} className={s.link}>{props.pathName}</NavLink>
            </div>
         </div>
     )

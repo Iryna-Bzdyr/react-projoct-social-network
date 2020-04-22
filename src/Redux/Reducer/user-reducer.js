@@ -5,8 +5,10 @@ const setCurrentPage = 'SET-CURRENT-PAGE'
 const setTotalUsersCount = 'SET-TOTAL-USERS-COUNT'
 const setPageSize = 'SET-PAGE-SIZE'
 const toggleIsFetching ='TOGGLE-IS-FETCHING'
+const setCurrentUserId = 'SET-CURRENT-USER-ID'
 let initialState = {
     users: [],
+    currentUserId:0,
     pageSize: 3,
     totalUsersCount: 0,
     currentPage: 1,
@@ -46,6 +48,7 @@ let userReducer = (state = initialState, action) => {
             return {...state, totalUsersCount: action.totalUsersCount}
         case setPageSize: return  {...state, pageSize:action.pageSize}
         case toggleIsFetching: return  {...state, isFetching:action.isFetching}
+        case setCurrentUserId: return  {...state, currentUserId:action.currentUserId}
         default:
             return state
     }
@@ -57,4 +60,5 @@ export const setCurrentPageAC = (currentPage) => ({type: setCurrentPage, page: c
 export const setTotalUsersCountAC = (totalUsers) => ({type: setTotalUsersCount, totalUsersCount: totalUsers})
 export const setPageSizeAC = (pageSize) => ({type: setPageSize, pageSize: pageSize})
 export const toggleIsFetchingAC = (status) => ({type:toggleIsFetching, isFetching:status})
+export const setCurrentUserIdAC = (userID)=>({type:setCurrentUserId, currentUserId:userID})
 export default userReducer
