@@ -1,5 +1,7 @@
 .user__card{
     display: grid;
+    text-decoration: none;
+    color: black;
     grid-template-columns: 20% 80%;
     padding: 20px;
     margin: 3% 15%;
@@ -7,7 +9,10 @@
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 }
-
+.user__card:hover{
+    text-decoration: none;
+    color: black;
+}
 .user__avatar{
     display: flex;
     justify-content: center;
