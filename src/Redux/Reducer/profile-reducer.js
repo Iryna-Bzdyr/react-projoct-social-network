@@ -2,11 +2,12 @@ const addPost = 'ADD-POST';
 const upDateNewPostText = 'UPDATE-NEW-POST-TEXT';
 const setProfileData = 'SET-PROFILE-DATA'
 const setPostData = 'SET-POST-DATA'
-
+const setPhotoData = 'SET-PHOTO-DATA'
 
 let initialState = {
     profileData: [],
     postData: [],
+    photoData:[],
     searchBar: [
         {id: 1, name: 'Activity'},
         {id: 2, name: 'MyPost'},
@@ -31,6 +32,12 @@ const profileReducer = (state = initialState, action) => {
                 postData:[...action.postData]
             }
         }
+        case setPhotoData:{
+            return {
+                ...state,
+                photoData:[...action.photoData]
+            }
+        }
         case addPost:
             let post = state.newPostText
             return {
@@ -51,6 +58,7 @@ const profileReducer = (state = initialState, action) => {
 
 export const setProfileDataAC = (profileData) => ({type: setProfileData, profileData: profileData})
 export const setPostDataAC = (postData) => ({type: setPostData, postData: postData})
+export const setPhotoDataAC = (photoData) => ({type: setPhotoData, photoData: photoData})
 export const addPostActionCreator = () => ({type: addPost})
 export const upDateNewPostTextActionCreator = (text) => (
     {type: upDateNewPostText, newText: text})

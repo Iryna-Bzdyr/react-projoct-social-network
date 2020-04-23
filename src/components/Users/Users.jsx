@@ -18,7 +18,7 @@ const Users = (props) => {
                 }
             </div>
             {
-                props.users.map(u => <NavLink to={`/profile/${u.id}`}>
+                props.users.map(u => <NavLink to={`/profile/${u.id}/Photo`}>
 
                         <div className={s.user__card}>
                             <div className={s.user__avatar}>

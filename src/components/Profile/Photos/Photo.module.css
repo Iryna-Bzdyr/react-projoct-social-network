@@ -1,0 +1,11 @@
+.photo__wrapper{
+    padding: 2% 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2%;
+}
+
+.photo__wrapper img{
+    width: 100%;
+    height: 400px;
+}
