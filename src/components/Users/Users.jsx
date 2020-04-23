@@ -18,13 +18,13 @@ const Users = (props) => {
                 }
             </div>
             {
-                props.users.map(u => <NavLink to={`/profile/${u.id}/Photo`}>
+                props.users.map(u =>
 
                         <div className={s.user__card}>
                             <div className={s.user__avatar}>
-
+                                <NavLink to={`/profile/${u.id}/Photo`}>
                                 <img src={u.photo}/>
-
+                                </NavLink>
                                 <div>
                                     {u.followed
                                         ? <button onClick={() => {
@@ -48,7 +48,7 @@ const Users = (props) => {
                                 </div>
                             </div>
                         </div>
-                    </NavLink>
+
                 )
 
             }

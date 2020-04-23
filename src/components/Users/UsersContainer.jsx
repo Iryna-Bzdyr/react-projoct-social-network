@@ -23,6 +23,7 @@ class UsersAPIComponent extends React.Component {
         });
 
         database.ref('database/users/').orderByKey().startAt(`0`).limitToFirst(this.props.pageSize).on('value', (snap) => {
+            this.props.setCurrentPage(1)
             let users = []
             snap.forEach(u=>{
                 users.push(u.val())

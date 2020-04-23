@@ -18,20 +18,26 @@
     font-size: 18px;
     padding: 3% 3% 3% 10%;
 }
-.item:hover, .active__div{
+.item:hover, .active div{
     border-radius: 0 20px 20px 0;
     background-color: #d8d8d8;
+    color: rgba(174,73,217,1)
 }
-.item a, .item a:hover {
-   color: black;
+
+.nav__wrapper{
+    color: black;
     text-decoration: none;
+}
+.nav__wrapper:hover{
+    color: rgba(174,73,217,1);
+    text-decoration: none;
+}
+
+.nav__wrapper a {
     padding-left: 5%;
 }
 
 
-.item a.active, .item a:hover{
-color: rgba(174,73,217,1)
-}
 
 .home{
     color: #ed104b;

@@ -14,45 +14,68 @@ const Navbar = (props) => {
     return (
         <div className={s.nav}>
             <div>
-                <div>
+                <NavLink to='/profile' activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.home}>
                             <FaHome/>
                         </i>
-                        <NavLink to='/profile' activeClassName={s.active}>Profile</NavLink>
+                        <a> Profile</a>
                     </div>
+                </NavLink>
+
+
+                <NavLink to='/dialogs' activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.message}>
                             <MdMessage/>
                         </i>
-                        <NavLink to='/dialogs' activeClassName={s.active}>Messages</NavLink>
+                        <a> Messages</a>
                     </div>
+                </NavLink>
+
+
+                <NavLink to="/news" activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.news}>
                             <FaRegNewspaper/>
                         </i>
-                        <NavLink to="/news" activeClassName={s.active}>News</NavLink>
+                        <a>News</a>
                     </div>
+                </NavLink>
+
+
+                <NavLink to="/music" activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.music}>
                             <IoIosMusicalNotes/>
                         </i>
-                        <NavLink to="/music" activeClassName={s.active}>Music</NavLink>
+                        <a>Music</a>
                     </div>
+                </NavLink>
+
+                <NavLink to="/settings" activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.settings}>
                             <MdSettings/>
                         </i>
-                        <NavLink to="/settings" activeClassName={s.active}>Settings</NavLink>
+                        <a>Settings</a>
                     </div>
+                </NavLink>
+
+
+                <NavLink to="/users" activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.users}>
                             <FaUsers/>
                         </i>
-                        <NavLink to="/users" activeClassName={s.active}>Users</NavLink>
+                        <a>Users</a>
                     </div>
-                </div>
+                </NavLink>
+
+
             </div>
+
+
             <div className={s.friend__block}>
                 {friendsElement}
             </div>
