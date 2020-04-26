@@ -1,6 +1,10 @@
 import React from "react";
 import s from './Users.module.css'
 import {NavLink} from "react-router-dom";
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+
 
 const Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
@@ -9,50 +13,59 @@ const Users = (props) => {
         pagesArray.push(i)
     }
     return (
-        <div>
+        <Container maxWidth="lg">
+
             <div className={s.pages__block}>
                 {pagesArray.map((page, index) =>
-                    <button onClick={() => props.onPageChange(page, index)}
+                    <button   onClick={() => props.onPageChange(page, index)}
                             className={props.currentPage === page ? s.activePage : ''}
-                    >{page}</button>)
+                    >{page}</button >)
                 }
             </div>
-            {
-                props.users.map(u =>
+            <Container maxWidth="md" className={s.card__wrapper}>
+                {
+                    props.users.map(u =>
+                        <Grid container spacing={5}>
+                            <Grid item xs={12}>
+                                <Paper elevation={3} className={s.user__card}>
+                                    <Grid container>
+                                        <Grid  item xs={3}>
+                                            <div className={s.user__avatar}>
+                                                <NavLink to={`/profile/${u.id}/Photo`}>
+                                                    <img src={u.photo}/>
+                                                </NavLink>
+                                                <div>
+                                                    {u.followed
+                                                        ? <button onClick={() => {
+                                                            props.unFollow(u.id)
+                                                        }} className={s.unfollow__btn}>UNFOLLOW</button>
+                                                        : <button onClick={() => {
+                                                            props.follow(u.id)
+                                                        }} className={s.follow__btn}>FOLLOW</button>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                            <div className={s.name}>
+                                                <h3>{u.fullName.firstName} {u.fullName.lastName}</h3>
+                                            </div>
+                                            <div className={s.locotion}>
+                                                <p>{u.location.city}, {u.location.country}</p>
+                                            </div>
+                                            <div className={s.status}>
+                                                <p>{u.status}</p>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                </Paper>
+                            </Grid>
 
-                        <div className={s.user__card}>
-                            <div className={s.user__avatar}>
-                                <NavLink to={`/profile/${u.id}/Photo`}>
-                                <img src={u.photo}/>
-                                </NavLink>
-                                <div>
-                                    {u.followed
-                                        ? <button onClick={() => {
-                                            props.unFollow(u.id)
-                                        }} className={s.unfollow__btn}>UNFOLLOW</button>
-                                        : <button onClick={() => {
-                                            props.follow(u.id)
-                                        }} className={s.follow__btn}>FOLLOW</button>
-                                    }
-                                </div>
-                            </div>
-                            <div className={s.user__description}>
-                                <div className={s.name}>
-                                    <h3>{u.fullName.firstName} {u.fullName.lastName}</h3>
-                                </div>
-                                <div className={s.locotion}>
-                                    <p>{u.location.city}, {u.location.country}</p>
-                                </div>
-                                <div className={s.status}>
-                                    <p>{u.status}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                )
-
-            }
-        </div>
+                        </Grid>
+                    )
+                }
+            </Container>
+        </Container>
     )
 }
 export default Users

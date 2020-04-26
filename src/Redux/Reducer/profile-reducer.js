@@ -3,11 +3,12 @@ const upDateNewPostText = 'UPDATE-NEW-POST-TEXT';
 const setProfileData = 'SET-PROFILE-DATA'
 const setPostData = 'SET-POST-DATA'
 const setPhotoData = 'SET-PHOTO-DATA'
+const sliderIsOpen = 'SLIDER-IS-OPEN'
 
 let initialState = {
     profileData: [],
     postData: [],
-    photoData:[],
+    photoData: [],
     searchBar: [
         {id: 1, name: 'Activity'},
         {id: 2, name: 'MyPost'},
@@ -15,7 +16,9 @@ let initialState = {
         {id: 4, name: 'Groups'},
         {id: 5, name: 'Photo'},
     ],
-    newPostText: ''
+    newPostText: '',
+    sliderIsOpen: false,
+    sliderAutoplay:false
 }
 
 
@@ -26,16 +29,16 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileData: [...action.profileData]
             }
-        case setPostData:{
+        case setPostData: {
             return {
                 ...state,
-                postData:[...action.postData]
+                postData: [...action.postData]
             }
         }
-        case setPhotoData:{
+        case setPhotoData: {
             return {
                 ...state,
-                photoData:[...action.photoData]
+                photoData: [...action.photoData]
             }
         }
         case addPost:
@@ -50,6 +53,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 newPostText: action.newText
             }
+        case sliderIsOpen:
+            return {
+                ...state,
+                sliderIsOpen: action.sliderIsOpen
+            }
         default:
             return state
     }
@@ -62,4 +70,5 @@ export const setPhotoDataAC = (photoData) => ({type: setPhotoData, photoData: ph
 export const addPostActionCreator = () => ({type: addPost})
 export const upDateNewPostTextActionCreator = (text) => (
     {type: upDateNewPostText, newText: text})
+export const sliderIsOpenAC = (status) => ({type: sliderIsOpen, sliderIsOpen: status})
 export default profileReducer

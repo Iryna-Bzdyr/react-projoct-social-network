@@ -1,5 +1,4 @@
 import React from "react";
-import s from './Users.module.css'
 import {connect} from "react-redux";
 import {
     followAC,
@@ -9,8 +8,10 @@ import {
     unfollowAC
 } from "../../Redux/Reducer/user-reducer";
 import Users from "./Users";
-import PreLoader from "../../common/PreLoader/PreLoader";
 import database from "../../firebase";
+import {Sugar} from "react-preloaders";
+
+
 
 
 class UsersAPIComponent extends React.Component {
@@ -47,9 +48,7 @@ class UsersAPIComponent extends React.Component {
 
     render() {
         return <>
-            <div className={this.props.isFetching === true ? s.preLoader__block : s.preLoader__none}>
-                <PreLoader/>
-            </div>
+            <Sugar customLoading={this.props.isFetching} background="blur"/>
             <Users totalUsersCount={this.props.totalUsersCount} pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
                    users={this.props.users} follow={this.props.follow} unFollow={this.props.unFollow}

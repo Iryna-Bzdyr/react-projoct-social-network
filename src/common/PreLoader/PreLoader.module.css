@@ -7,16 +7,19 @@
     background-color: #d9d9d9;
     opacity: 0.6;
 }
-
+.dots__wrapper{
+    /*margin: 0 auto;*/
+    /*margin-top: 20%;*/
+}
 .cssload__dots {
     width: 0;
     height: 0;
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 10%;
-    right: 15%;
-    margin: auto;
+    bottom: 0;
+    right: 0;
+    margin: 0 auto;
     outline: 2px solid red;
     filter: url(#goo);
     -o-filter: url(#goo);

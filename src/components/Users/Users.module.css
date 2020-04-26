@@ -1,17 +1,8 @@
-.user__card{
-    display: grid;
-    text-decoration: none;
-    color: black;
-    grid-template-columns: 20% 80%;
-    padding: 20px;
-    margin: 3% 15%;
-    border: 1px silver solid;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-}
-.user__card:hover{
-    text-decoration: none;
-    color: black;
+.pages__block{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding: 2%;
 }
 .user__avatar{
     display: flex;
@@ -25,7 +16,10 @@
     border-radius: 90%;
     box-shadow: 5px 5px 10px gray;
 }
-
+.user__card{
+    margin: 0 5%;
+    padding: 2%;
+}
 .user__avatar button{
     color: #fff;
     width: 100px;
@@ -49,22 +43,22 @@
     background: linear-gradient(to bottom, #6020d2 0, #673ab7 100%);
 }
 
-.pages__block{
-    display: flex;
-    flex-direction: row;
+
+.pages__block button{
+    padding: 0% 1%;
+    border: 0 none;
+    border-radius: 3px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    height: 25px;
+    margin: 2px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .activePage{
-   background-color: red;
-}
-.preLoader__block{
-    display: flex;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    z-index: 100;
-}
-
-.preLoader__none{
-    display: none;
+    color: white;
+    font-weight: bold;
+    background: #6020d2;
+    background: linear-gradient(to bottom, #6020d2 0, #673ab7 100%);
 }

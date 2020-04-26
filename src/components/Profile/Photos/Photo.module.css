@@ -1,11 +1,19 @@
-.photo__wrapper{
-    padding: 2% 10%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2%;
+
+.gridList {
+    width: 70%;
 }
 
-.photo__wrapper img{
+.root {
+    padding-top: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+}
+.slider__photo{
+    height: 100%;
     width: 100%;
-    height: 400px;
+}
+.Slide-text-174{
+    display: none;
 }

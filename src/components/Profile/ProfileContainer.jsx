@@ -10,7 +10,6 @@ import {withRouter} from "react-router-dom";
 class ProfileApiContainer extends React.Component{
 
     componentDidMount() {
-        console.log(this.props)
         let userID = +this.props.match.params.userID
         if(!userID){
             userID =1
