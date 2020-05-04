@@ -12,11 +12,16 @@ import Button from "@material-ui/core/Button";
 import {FaInfoCircle} from "react-icons/fa";
 import {Field, reduxForm} from "redux-form";
 import validate from '../../common/Validate/Validate'
+import database from "../../firebase";
 
 const Login = (props) => {
-let onSubmit=(submitData)=>{
-    console.log(submitData)
-}
+
+
+    let onSubmit = (submitData) => {
+       console.log(submitData)
+    }
+
+
     return (
         <div className={s.wrapper}>
             <Container maxWidth="sm">
@@ -24,10 +29,10 @@ let onSubmit=(submitData)=>{
                     <div className={s.background}></div>
                     <div className={s.form}>
                         <div className={s.form__headline}> Account Sign-in</div>
-                        <LoginReduxForm  onSubmit={onSubmit}/>
+                        <LoginReduxForm onSubmit={onSubmit} />
                         <div className={s.defolt__user}>
                             <p className={s.block__icon}>
-                                <FaInfoCircle />
+                                <FaInfoCircle/>
                             </p>
                             <p>
                                 Use the following credentials to log-in as user:
@@ -42,10 +47,10 @@ let onSubmit=(submitData)=>{
 }
 
 
-
-const renderFromHelper = ({ touched, error, label }) => {
+const renderFromHelper = ({touched, error, label}) => {
     if (!(touched && error)) {
-        return <FormHelperText className={s.text__helper}>Please enter <span className={s.label__text}>{label}</span> here</FormHelperText>
+        return <FormHelperText className={s.text__helper}>Please enter <span
+            className={s.label__text}>{label}</span> here</FormHelperText>
     } else {
         return <FormHelperText>{touched && error}</FormHelperText>
     }
@@ -53,11 +58,11 @@ const renderFromHelper = ({ touched, error, label }) => {
 
 
 const renderFilledInput = ({
-                             label,
-                             input,
-                             meta: { touched, invalid, error },
-                             ...custom
-                         }) => (
+                               label,
+                               input,
+                               meta: {touched, invalid, error},
+                               ...custom
+                           }) => (
     <FormControl className={s.input__area}>
         <InputLabel htmlFor={label}>{label}</InputLabel>
         <FilledInput
@@ -65,18 +70,17 @@ const renderFilledInput = ({
             label={label}
             placeholder={label}
             error={touched && invalid}
-            helperText={touched && error}
+            // helperText={touched && error && label}
             {...input}
             {...custom}
         />
-        {renderFromHelper({ touched, error, label })}
-</FormControl>
+        {renderFromHelper({touched, error, label})}
+    </FormControl>
 )
 
 
-
 const LoginForm = (props) => {
-
+    const { handleSubmit, pristine, reset, submitting, valid } = props
     const [values, setValues] = React.useState({
         amount: '',
         password: '',
@@ -95,7 +99,7 @@ const LoginForm = (props) => {
         event.preventDefault();
     };
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className={s.form__wrapper}>
                 <Field
                     name="login"
@@ -123,15 +127,14 @@ const LoginForm = (props) => {
                 />
                 <div className={s.button__area}>
                     <Button variant="contained" color="secondary" type="submit"
-                            disabled={!props.valid || props.submitting}
-                            onClick={props.reset}
-
+                            disabled={!valid || submitting}
+                            onClick={reset}
                     >
                         Login
                     </Button>
-                    <Button variant="contained" color="primary" type="submit"
-                            disabled={props.pristine || props.submitting}
-                            onClick={props.reset}
+                    <Button variant="contained" color="primary" type="button"
+                            disabled={pristine || submitting}
+                            onClick={reset}
                     >
                         Reset
                     </Button>
@@ -142,6 +145,6 @@ const LoginForm = (props) => {
     )
 }
 
-const LoginReduxForm = reduxForm({form: 'login',validate})(LoginForm)
+const LoginReduxForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 
 export default Login
