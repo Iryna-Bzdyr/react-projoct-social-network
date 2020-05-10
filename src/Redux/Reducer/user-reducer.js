@@ -1,3 +1,5 @@
+import {userAPI} from "../../firebase";
+
 const follow = 'FOLLOW'
 const unFollow = 'UN-FOLLOW'
 const setUsers = 'SET-USERS'
@@ -61,4 +63,40 @@ export const setTotalUsersCountAC = (totalUsers) => ({type: setTotalUsersCount, 
 export const setPageSizeAC = (pageSize) => ({type: setPageSize, pageSize: pageSize})
 export const toggleIsFetchingAC = (status) => ({type:toggleIsFetching, isFetching:status})
 export const setCurrentUserIdAC = (userID)=>({type:setCurrentUserId, currentUserId:userID})
+
+
+export const getUsersThunkCreator = (pageSize, currentPage) => (dispath)=>{
+
+    dispath(toggleIsFetchingAC(true))
+
+    userAPI.on('value', (snap)=> {
+        let count = snap.numChildren()
+        dispath(setTotalUsersCountAC(count))
+        dispath(toggleIsFetchingAC(false))
+    });
+
+    userAPI.orderByKey().startAt(`0`).limitToFirst(pageSize).on('value', (snap) => {
+        dispath(setCurrentPageAC(currentPage))
+        let users = []
+        snap.forEach(u=>{
+            users.push(u.val())
+        })
+        dispath(setUsersAC(users))
+    });
+}
+
+export const changeUserPage = (index, page, pageSize) => (dispath)=>{
+    dispath(toggleIsFetchingAC(true))
+    let startPoint = index*pageSize+1
+    userAPI.orderByKey().startAt(`${startPoint}`).limitToFirst(pageSize).on('value', (snap) => {
+        let users = []
+        snap.forEach(u=>{
+            users.push(u.val())
+        })
+        dispath(setCurrentPageAC(page))
+        dispath(setUsersAC(users))
+        dispath(toggleIsFetchingAC(false))
+    });
+}
+
 export default userReducer

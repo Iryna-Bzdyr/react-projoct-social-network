@@ -9,7 +9,8 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UserContainer from "./components/Users/UsersContainer";
-import Login from "./components/Login/Login";
+import LoginContainer from "./components/Login/LoginContainer";
+
 
 
 const App = (props) => {
@@ -19,7 +20,7 @@ const App = (props) => {
                 <NavbarContainer/>
 
                 <div className='app-wrapper-content'>
-                    <Route path='/login' render={()=> <Login/>} />
+                    <Route path='/login' render={()=> <LoginContainer/>} />
                     <Route path='/dialogs' render={()=> <DialogsContainer/>} />
                     <Route path='/profile/:userID?' render={()=><ProfileContainer/>} />
                     <Route path='/news' component={News} />

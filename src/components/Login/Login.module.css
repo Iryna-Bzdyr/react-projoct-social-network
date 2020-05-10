@@ -1,5 +1,6 @@
 .wrapper {
     background-image: url(https://mk0dunhakdisdem7bjhx.kinstacdn.com/wp-content/uploads/sites/4/2019/09/home-bg.png?id=262);
+    background-size: cover;
     height: 100vh;
     padding-top: 3%;
 }

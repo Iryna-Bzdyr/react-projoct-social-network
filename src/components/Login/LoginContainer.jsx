@@ -1,23 +1,35 @@
 import React from "react";
-import Users from "../Users/Users";
 import {connect} from "react-redux";
-import {setUserLoginAC} from "../../Redux/Reducer/auth-reducer";
+import {checkLogin} from "../../Redux/Reducer/auth-reducer";
+import Login from "./Login";
 
 class userAPIContainer extends React.Component{
 
+    componentDidMount(){
+    }
+
+   setUserLogin = (login, password)=>{
+       this.props.checkLogin(login, password)
+   }
     render() {
         return (
-            <Users/>
+            <Login setUserLogin={this.setUserLogin}
+                   userID={this.props.userID}
+                   resultCode={this.props.resultCode}
+            />
         );
     }
 }
 
 let mapStateToProps= (state)=>{
     return{
-        login:state.auth.login
+        resultCode:state.auth.resultCode,
+        userID:state.auth.userID,
     }
 }
 
-const UserContainer = connect(mapStateToProps, {
-    setUserLogin: setUserLoginAC
+const LoginContainer = connect(mapStateToProps, {
+    checkLogin
 })(userAPIContainer)
+
+export default LoginContainer

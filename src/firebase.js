@@ -13,5 +13,21 @@ export const config = {
 
 
 const fire = firebase.initializeApp(config);
+
 const database = fire.database();
+export const userAPI =  database.ref('database/users/')
+export const userLogin = database.ref('database/loginData/')
+
+
+//
+// export const userLodin = (userLogin) =>{
+//     database.ref('database/loginData/').orderByChild('login').equalTo(userLogin).on('value', (snap) => {
+//         let user = []
+//         snap.forEach(u=>{
+//             user.push(u.val())
+//         })
+//     });
+// }
+
+
 export default database;

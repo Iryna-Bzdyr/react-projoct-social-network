@@ -1,49 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC, toggleIsFetchingAC,
+    changeUserPage,
+    followAC, getUsersThunkCreator,
     unfollowAC
 } from "../../Redux/Reducer/user-reducer";
 import Users from "./Users";
-import database from "../../firebase";
 import {Sugar} from "react-preloaders";
-
-
 
 
 class UsersAPIComponent extends React.Component {
     componentDidMount() {
-        this.props.setToggleFetching(true)
-        database.ref('database/users/').on('value', (snap)=> {
-            let count = snap.numChildren()
-            this.props.setTotalUsersCount(count)
-            this.props.setToggleFetching(false)
-        });
-
-        database.ref('database/users/').orderByKey().startAt(`0`).limitToFirst(this.props.pageSize).on('value', (snap) => {
-            this.props.setCurrentPage(1)
-            let users = []
-            snap.forEach(u=>{
-                users.push(u.val())
-            })
-            this.props.setUsers(users)
-        });
+        this.props.getUsersThunkCreator(this.props.pageSize, this.props.currentPage)
     }
     onPageChange = (page, index) => {
-        this.props.setToggleFetching(true)
-        let startPoint = index*this.props.pageSize+1
-        database.ref('database/users/').orderByKey().startAt(`${startPoint}`).limitToFirst(this.props.pageSize).on('value', (snap) => {
-            let users = []
-            snap.forEach(u=>{
-                users.push(u.val())
-            })
-            this.props.setCurrentPage(page)
-            this.props.setUsers(users)
-            this.props.setToggleFetching(false)
-        });
+        this.props.changeUserPage(index,page,this.props.pageSize)
     }
 
     render() {
@@ -71,10 +42,8 @@ const mapStateToProps = (state) => {
 const UserContainer = connect(mapStateToProps, {
     follow: followAC,
     unFollow: unfollowAC,
-    setUsers: setUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    setTotalUsersCount: setTotalUsersCountAC,
-    setToggleFetching: toggleIsFetchingAC
+    getUsersThunkCreator,
+    changeUserPage
 })(UsersAPIComponent)
 export default UserContainer
 
