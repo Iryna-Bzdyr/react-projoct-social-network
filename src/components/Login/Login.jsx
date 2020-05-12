@@ -117,7 +117,7 @@ const LoginReduxForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 const Login = (props) => {
     const onSubmit = (submitData) => {
         props.setUserLogin(submitData.login, submitData.password)
-    }
+}
 
 
     return (
@@ -134,7 +134,7 @@ const Login = (props) => {
                             </p>
                             <p>
                                 Use the following credentials to log-in as user:
-                                login: <span>jason</span> password: <span>1234567890</span>
+                                login: <span>b.pitt@gmail.com</span> password: <span>bpitt1234</span>
                             </p>
                         </div>
                     </div>

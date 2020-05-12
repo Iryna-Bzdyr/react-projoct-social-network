@@ -58,32 +58,4 @@
     right: 42%;
     top: 20%
 }
-.button{
-    display: flex;
-    align-items: center;
-}
-.button button{
-    color: #fff;
-    padding: 0% 3%;
-    border: 0 none;
-    border-radius: 5px;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    height: 40px;
-    margin: 0 10px;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
-}
-.login__btn{
-    background: rgba(0, 0, 0, 0.24);
-}
-.sing__btn{
-    background: #6020d2;
-    background: linear-gradient(to bottom, #6020d2 0, #673ab7 100%);
-}
-
-.button i {
-    zoom: 150%;
-}
 

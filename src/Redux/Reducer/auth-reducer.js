@@ -1,43 +1,44 @@
-import {userLogin} from "../../firebase";
+import {usersAPI, userLogin} from "../../firebase";
 
 
-const setUserPassword = 'SET-USER-PASSWORD'
 const setResultCode = 'SET-RESULT-CODE'
 const setUserID = 'SET-USER-ID'
+const setCurrentUser = 'SET-CURRENT-USER'
 
 let initialState = {
     login: null,
     password: null,
     userID: null,
+    currentUser: [],
     resultCode: null,
     isFetching: false
 }
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case setUserPassword:
+        case setCurrentUser:
             return {
                 ...state,
-                ...action.password
+                currentUser: [...action.currentUser]
             }
         case setResultCode:
             return {
                 ...state,
-                ...action.resultCode
+                resultCode: action.resultCode
             }
         case setUserID:
             return {
                 ...state,
-                ...action.userID
+                userID: action.userID
             }
         default:
             return state
     }
 }
 
-export const setUserPasswordAC = (password) => ({type: setUserPassword, login: password})
-export const setResultCodeAC = (resultCode) => ({type: setResultCode, resultCode})
-export const setUserIDAC = (userID) => ({type: setUserID, userID})
+export const setCurrentUserAC = (currentUser) => ({type: setCurrentUser, currentUser: currentUser})
+export const setResultCodeAC = (resultCode) => ({type: setResultCode, resultCode: resultCode})
+export const setUserIDAC = (userID) => ({type: setUserID, userID: userID})
 
 export const checkLogin = (login, password) => (dispath) => {
     let user = []
@@ -45,19 +46,24 @@ export const checkLogin = (login, password) => (dispath) => {
         snap.forEach(u => {
             user.push(u.val())
         })
-        if (user.length==0){
+
+        if (user.length == 0) {
             dispath(setResultCodeAC(0))
-        }
-        else if ( dispath(setUserPasswordAC(user[0].data.password==password))){
-            dispath(setResultCodeAC(1))
+        } else if (user[0].data.password == password) {
             dispath(setUserIDAC(user[0].data.userID))
-        }
-        else{
+
+            usersAPI.orderByChild('id').equalTo(user[0].data.userID).on('value', (snap) => {
+                let user = []
+                snap.forEach(u => {
+                    user.push(u.val())
+                })
+                dispath(setCurrentUserAC(user))
+                dispath(setResultCodeAC(1))
+            });
+        } else {
             dispath(setResultCodeAC(0))
         }
     })
-    console.log(user)
-
 }
 
 export default authReducer

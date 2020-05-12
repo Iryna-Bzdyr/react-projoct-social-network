@@ -1,11 +1,10 @@
 import React from 'react';
 import s from './Header.module.css'
 import {IoIosMenu, IoIosSearch} from "react-icons/io";
-import {FiUserCheck} from "react-icons/fi";
-import {NavLink} from "react-router-dom";
+import AuthBlockContainer from "./AuthBlock/AuthContainer";
 
 
-const Header = () => {
+const Header = (props) => {
     return (
         <header className={s.header}>
             <div className={s.logo}>
@@ -19,17 +18,7 @@ const Header = () => {
                     <input/>
                     <i><IoIosSearch/></i>
                 </div>
-                <div className={s.button}>
-
-                        <button className={s.login__btn}><i><FiUserCheck/> </i>
-                            <NavLink to='/login'>
-                            Login
-                            </NavLink>
-                        </button>
-
-                    <button className={s.sing__btn}>Sing up</button>
-                </div>
-
+               <AuthBlockContainer/>
 
             </div>
         </header>

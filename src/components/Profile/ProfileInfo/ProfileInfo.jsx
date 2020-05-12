@@ -1,6 +1,5 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
-import PreLoader from "../../../common/PreLoader/PreLoader";
 import {Lines} from "react-preloaders";
 
 

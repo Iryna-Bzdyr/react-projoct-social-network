@@ -1,4 +1,4 @@
-import {userAPI} from "../../firebase";
+import database, {usersAPI} from "../../firebase";
 
 const follow = 'FOLLOW'
 const unFollow = 'UN-FOLLOW'
@@ -69,13 +69,13 @@ export const getUsersThunkCreator = (pageSize, currentPage) => (dispath)=>{
 
     dispath(toggleIsFetchingAC(true))
 
-    userAPI.on('value', (snap)=> {
+    usersAPI.on('value', (snap)=> {
         let count = snap.numChildren()
         dispath(setTotalUsersCountAC(count))
         dispath(toggleIsFetchingAC(false))
     });
 
-    userAPI.orderByKey().startAt(`0`).limitToFirst(pageSize).on('value', (snap) => {
+    usersAPI.orderByKey().startAt(`0`).limitToFirst(pageSize).on('value', (snap) => {
         dispath(setCurrentPageAC(currentPage))
         let users = []
         snap.forEach(u=>{
@@ -88,7 +88,7 @@ export const getUsersThunkCreator = (pageSize, currentPage) => (dispath)=>{
 export const changeUserPage = (index, page, pageSize) => (dispath)=>{
     dispath(toggleIsFetchingAC(true))
     let startPoint = index*pageSize+1
-    userAPI.orderByKey().startAt(`${startPoint}`).limitToFirst(pageSize).on('value', (snap) => {
+    usersAPI.orderByKey().startAt(`${startPoint}`).limitToFirst(pageSize).on('value', (snap) => {
         let users = []
         snap.forEach(u=>{
             users.push(u.val())
@@ -98,5 +98,17 @@ export const changeUserPage = (index, page, pageSize) => (dispath)=>{
         dispath(toggleIsFetchingAC(false))
     });
 }
+
+export const setUserThunk = (id) => (dispath)=>{
+    database.ref('database/users/').orderByChild('id').equalTo(id).on('value', (snap) => {
+        let user = []
+        snap.forEach(u=>{
+            user.push(u.val())
+        })
+        dispath(setUsersAC(user))
+        dispath(setCurrentUserIdAC(id))
+    });
+}
+
 
 export default userReducer
