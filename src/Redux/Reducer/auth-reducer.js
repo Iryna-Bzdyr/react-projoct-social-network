@@ -1,5 +1,5 @@
 import {usersAPI, userLogin} from "../../firebase";
-
+import {reset} from 'redux-form';
 
 const setResultCode = 'SET-RESULT-CODE'
 const setUserID = 'SET-USER-ID'
@@ -40,7 +40,7 @@ export const setCurrentUserAC = (currentUser) => ({type: setCurrentUser, current
 export const setResultCodeAC = (resultCode) => ({type: setResultCode, resultCode: resultCode})
 export const setUserIDAC = (userID) => ({type: setUserID, userID: userID})
 
-export const checkLogin = (login, password) => (dispath) => {
+export const checkLogin = (login, password, formName) => (dispatch) => {
     let user = []
     userLogin.orderByChild('data/login').equalTo(login).on('value', (snap) => {
         snap.forEach(u => {
@@ -48,21 +48,22 @@ export const checkLogin = (login, password) => (dispath) => {
         })
 
         if (user.length == 0) {
-            dispath(setResultCodeAC(0))
+            dispatch(setResultCodeAC(0))
         } else if (user[0].data.password == password) {
-            dispath(setUserIDAC(user[0].data.userID))
+            dispatch(setUserIDAC(user[0].data.userID))
 
             usersAPI.orderByChild('id').equalTo(user[0].data.userID).on('value', (snap) => {
                 let user = []
                 snap.forEach(u => {
                     user.push(u.val())
                 })
-                dispath(setCurrentUserAC(user))
-                dispath(setResultCodeAC(1))
+                dispatch(setCurrentUserAC(user))
+                dispatch(setResultCodeAC(1))
             });
         } else {
-            dispath(setResultCodeAC(0))
+            dispatch(setResultCodeAC(0))
         }
+        dispatch(reset(formName));
     })
 }
 

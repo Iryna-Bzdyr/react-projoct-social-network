@@ -8,8 +8,8 @@ class userAPIContainer extends React.Component{
     componentDidMount(){
     }
 
-   setUserLogin = (login, password)=>{
-       this.props.checkLogin(login, password)
+   setUserLogin = (login, password, formName)=>{
+       this.props.checkLogin(login, password, formName)
    }
     render() {
         return (
