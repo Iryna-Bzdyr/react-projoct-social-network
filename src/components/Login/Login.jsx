@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import {FaInfoCircle} from "react-icons/fa";
 import {Field, reduxForm} from "redux-form";
 import validate from '../../common/Validate/Validate'
+import {Redirect} from "react-router-dom";
 
 
 const renderFromHelper = ({touched, error, label}) => {
@@ -119,7 +120,11 @@ const Login = (props) => {
         props.setUserLogin(submitData.login, submitData.password, 'LoginForm')
 }
 
-
+if (props.resultCode==1){
+    return (
+        <Redirect to={`profile/${props.userID}`}  />
+    )
+}
     return (
         <div className={s.wrapper}>
             <Container maxWidth="sm">
