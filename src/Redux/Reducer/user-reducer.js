@@ -8,6 +8,7 @@ const setTotalUsersCount = 'SET-TOTAL-USERS-COUNT'
 const setPageSize = 'SET-PAGE-SIZE'
 const toggleIsFetching ='TOGGLE-IS-FETCHING'
 const setCurrentUserId = 'SET-CURRENT-USER-ID'
+
 let initialState = {
     users: [],
     currentUserId:0,

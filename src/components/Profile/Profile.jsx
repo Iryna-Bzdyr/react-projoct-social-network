@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './Profile.module.css'
 import SearchBar from "./SearchBar/SearchBar";
-import {Route} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import Activity from "./Activity/Activity";
 import Friends from "./Friends/Friends";
 import Groups from "./Groups/Groups";

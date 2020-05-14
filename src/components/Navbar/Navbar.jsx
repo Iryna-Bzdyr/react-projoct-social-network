@@ -7,6 +7,7 @@ import {IoIosMusicalNotes} from "react-icons/io";
 import MyFriends from "./MyFriends/MyFriends";
 
 
+
 const Navbar = (props) => {
 
     let friendsElement = props.users.map((friend, index) => <MyFriends key={index} id={friend.id}
@@ -14,7 +15,8 @@ const Navbar = (props) => {
     return (
         <div className={s.nav}>
             <div>
-                <NavLink to='/profile' activeClassName={s.active} className={s.nav__wrapper}>
+
+                <NavLink to={`profile/${props.userID}/Photo`} activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.home}>
                             <FaHome/>
@@ -22,7 +24,6 @@ const Navbar = (props) => {
                         <a> Profile</a>
                     </div>
                 </NavLink>
-
 
                 <NavLink to='/dialogs' activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>

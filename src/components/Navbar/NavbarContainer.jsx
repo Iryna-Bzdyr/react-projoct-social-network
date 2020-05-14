@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import {connect} from "react-redux";
 import {setUserNavsAC} from "../../Redux/Reducer/sidebar-reducer";
 import database from "../../firebase";
+import {Redirect} from "react-router-dom";
 
 
 class NavbarIPIContainer extends React.Component {
@@ -20,8 +21,13 @@ class NavbarIPIContainer extends React.Component {
     }
 
     render(){
+        if (!this.props.resultCode){
+            return (
+                <Redirect to={`login/`}  />
+            )
+        }
         return(
-            <Navbar users={this.props.users} />
+            <Navbar users={this.props.users} userID={this.props.userID}/>
         )
     }
 }
@@ -29,6 +35,8 @@ class NavbarIPIContainer extends React.Component {
 let mapStateToProps = (state) =>{
     return {
         users: state.sideBar.users,
+        resultCode:state.auth.resultCode,
+        userID:state.auth.userID,
     }
 }
 

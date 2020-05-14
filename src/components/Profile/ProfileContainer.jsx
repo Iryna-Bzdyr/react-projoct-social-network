@@ -3,12 +3,13 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {setProfileDataAC} from "../../Redux/Reducer/profile-reducer";
 import {setUserThunk} from "../../Redux/Reducer/user-reducer";
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 
 
 class ProfileApiContainer extends React.Component{
     componentDidMount() {
         let userID = +this.props.match.params.userID
+        console.log(this.props.match.params)
         if(!userID){
             userID =1
         }
@@ -16,6 +17,11 @@ class ProfileApiContainer extends React.Component{
         this.props.setProfileData(this.props.searchBar)
     }
     render() {
+        if (!this.props.resultCode){
+            return (
+                <Redirect to={`login/`}  />
+            )
+        }
         return (
             <Profile searchBar={this.props.searchBar} userData={this.props.userData} currentUserId={this.props.currentUserId}/>
         )
@@ -28,7 +34,8 @@ let  mapStateToProps = (state)=>{
     return {
         searchBar: state.profilePage.searchBar,
         userData: state.usersPage.users,
-        currentUserId:state.usersPage.currentUserId
+        currentUserId:state.usersPage.currentUserId,
+        resultCode:state.auth.resultCode,
     }
 }
 
