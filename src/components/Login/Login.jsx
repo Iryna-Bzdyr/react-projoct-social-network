@@ -123,7 +123,6 @@ const Login = (props) => {
 if (props.resultCode==1){
     return (
         <Redirect to={`/profile/${props.userID}/Photo`}  />
-        // <Link to='/profile' > some stuff </Link>
     )
 }
     return (

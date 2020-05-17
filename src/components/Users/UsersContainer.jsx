@@ -7,14 +7,17 @@ import {
 } from "../../Redux/Reducer/user-reducer";
 import Users from "./Users";
 import {Sugar} from "react-preloaders";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
 
 
-class UsersAPIComponent extends React.Component {
+class UsersComponent extends React.Component {
     componentDidMount() {
         this.props.getUsersThunkCreator(this.props.pageSize, this.props.currentPage)
     }
+
     onPageChange = (page, index) => {
-        this.props.changeUserPage(index,page,this.props.pageSize)
+        this.props.changeUserPage(index, page, this.props.pageSize)
     }
 
     render() {
@@ -29,23 +32,27 @@ class UsersAPIComponent extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
     }
 }
 
-const UserContainer = connect(mapStateToProps, {
-    follow: followAC,
-    unFollow: unfollowAC,
-    getUsersThunkCreator,
-    changeUserPage
-})(UsersAPIComponent)
-export default UserContainer
+export default compose(
+    connect(mapStateToProps, {
+        follow: followAC,
+        unFollow: unfollowAC,
+        getUsersThunkCreator,
+        changeUserPage
+    }),
+    withAuthRedirect
+)(UsersComponent)
+
+
 
 
 //
