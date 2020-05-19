@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {setProfileDataAC} from "../../Redux/Reducer/profile-reducer";
+import {setProfileDataAC, setUserStatusThunk, updateStatusThunk} from "../../Redux/Reducer/profile-reducer";
 import {setUserThunk} from "../../Redux/Reducer/user-reducer";
 import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
@@ -17,11 +17,12 @@ class ProfileContainer extends React.Component{
         }
         this.props.setUserThunk(userID)
         this.props.setProfileData(this.props.searchBar)
+        this.props.setUserStatusThunk(userID)
     }
     render() {
 
         return (
-            <Profile searchBar={this.props.searchBar} userData={this.props.userData} currentUserId={this.props.currentUserId}/>
+            <Profile searchBar={this.props.searchBar} userData={this.props.userData} currentUserId={this.props.currentUserId} userStatus={this.props.userStatus} updateStatus={this.props.updateStatusThunk}/>
         )
     }
 }
@@ -32,6 +33,7 @@ let  mapStateToProps = (state)=>{
         currentUserId:state.usersPage.currentUserId,
         resultCode:state.auth.resultCode,
         userID:state.auth.userID,
+        userStatus:state.profilePage.userStatus
     }
 }
 
@@ -39,6 +41,8 @@ export default compose(
     connect(mapStateToProps, {
         setUserThunk,
         setProfileData:setProfileDataAC,
+        updateStatusThunk,
+        setUserStatusThunk
     }),
     withRouter,
     withAuthRedirect

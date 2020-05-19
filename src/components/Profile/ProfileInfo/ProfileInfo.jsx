@@ -24,7 +24,7 @@ const ProfileInfo = (props) => {
                                 <span>{props.userData[0].location.city}</span>
                                 <span>{props.userData[0].location.country}</span>
                             </div>
-                            <Status status={props.userData[0].status}/>
+                            <Status userStatus={props.userStatus} updateStatus={props.updateStatus} currentID={props.userData[0].id}/>
                         </div>
                     </div>
 

@@ -18,7 +18,7 @@ const Profile = (props) => {
     return (
         <div className={s.wrapper}>
             <div className={s.content__inner}>
-                <ProfileInfo userData={props.userData}/>
+                <ProfileInfo userData={props.userData} userStatus={props.userStatus} updateStatus={props.updateStatus}/>
                 <div className={s.nav__menu}>
                     <div className={s.link__wrapper}>
                         {navigationElement}

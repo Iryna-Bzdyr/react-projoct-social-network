@@ -18,6 +18,16 @@ const database = fire.database();
 export const usersAPI =  database.ref('database/users/')
 export const userLogin = database.ref('database/loginData/')
 
+export const userAPI = (id)=>{
+    return (
+     usersAPI.orderByChild('id').equalTo(id)
+    )
+}
 
+export const currentUserAPI = (id) => {
+    return (
+        database.ref(`database/users/${id}`)
+    )
+}
 
 export default database;

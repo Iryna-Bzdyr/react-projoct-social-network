@@ -1,4 +1,4 @@
-import database, {usersAPI} from "../../firebase";
+import database, {userAPI, usersAPI} from "../../firebase";
 
 const follow = 'FOLLOW'
 const unFollow = 'UN-FOLLOW'
@@ -8,8 +8,7 @@ const setTotalUsersCount = 'SET-TOTAL-USERS-COUNT'
 const setPageSize = 'SET-PAGE-SIZE'
 const toggleIsFetching ='TOGGLE-IS-FETCHING'
 const setCurrentUserId = 'SET-CURRENT-USER-ID'
-const setUserStatus = 'SET-USER-STATUS'
-const upDateUserStatus = 'UPDATE-USER-STATUS'
+
 
 let initialState = {
     users: [],
@@ -18,7 +17,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching:false,
-    userStatus:""
+
 }
 
 let userReducer = (state = initialState, action) => {
@@ -67,8 +66,7 @@ export const setTotalUsersCountAC = (totalUsers) => ({type: setTotalUsersCount, 
 export const setPageSizeAC = (pageSize) => ({type: setPageSize, pageSize: pageSize})
 export const toggleIsFetchingAC = (status) => ({type:toggleIsFetching, isFetching:status})
 export const setCurrentUserIdAC = (userID)=>({type:setCurrentUserId, currentUserId:userID})
-export const setUsersStatusAC = (userStatus) => ({type: setUserStatus, userStatus})
-export const updateUsersStatusAC = (userStatus) => ({type: upDateUserStatus, userStatus})
+
 
 export const getUsersThunkCreator = (pageSize, currentPage) => (dispath)=>{
 
@@ -105,7 +103,7 @@ export const changeUserPage = (index, page, pageSize) => (dispath)=>{
 }
 
 export const setUserThunk = (id) => (dispath)=>{
-    database.ref('database/users/').orderByChild('id').equalTo(id).on('value', (snap) => {
+    userAPI(id).on('value', (snap) => {
         let user = []
         snap.forEach(u=>{
             user.push(u.val())
@@ -115,14 +113,5 @@ export const setUserThunk = (id) => (dispath)=>{
     });
 }
 
-export const setUserStatusThunk = (id) => (dispath)=>{
-    database.ref('database/users/').orderByChild('id').equalTo(id).on('value', (snap) => {
-        let user = []
-        snap.forEach(u=>{
-            user.push(u.val())
-        })
-        dispath(setUsersStatusAC(user[0].status))
-    });
-}
 
 export default userReducer

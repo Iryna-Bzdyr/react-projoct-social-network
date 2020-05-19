@@ -1,9 +1,14 @@
+import {currentUserAPI, userAPI, usersAPI} from "../../firebase";
+
+
 const addPost = 'ADD-POST';
 const upDateNewPostText = 'UPDATE-NEW-POST-TEXT';
 const setProfileData = 'SET-PROFILE-DATA'
 const setPostData = 'SET-POST-DATA'
 const setPhotoData = 'SET-PHOTO-DATA'
 const sliderIsOpen = 'SLIDER-IS-OPEN'
+const setUserStatus = 'SET-USER-STATUS'
+
 
 let initialState = {
     profileData: [],
@@ -18,7 +23,9 @@ let initialState = {
     ],
     newPostText: '',
     sliderIsOpen: false,
-    sliderAutoplay:false
+    sliderAutoplay:false,
+    userStatus:""
+
 }
 
 
@@ -58,6 +65,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 sliderIsOpen: action.sliderIsOpen
             }
+        case setUserStatus:
+            return  {
+                ...state,
+                userStatus:action.userStatus
+            }
         default:
             return state
     }
@@ -71,4 +83,29 @@ export const addPostActionCreator = () => ({type: addPost})
 export const upDateNewPostTextActionCreator = (text) => (
     {type: upDateNewPostText, newText: text})
 export const sliderIsOpenAC = (status) => ({type: sliderIsOpen, sliderIsOpen: status})
+export const setUsersStatusAC = (userStatus) => ({type: setUserStatus, userStatus})
+
+
+
+export const setUserStatusThunk = (id) => (dispath)=>{
+    userAPI(id).on('value', (snap) => {
+        let user = []
+        snap.forEach(u=>{
+            user.push(u.val())
+        })
+        dispath(setUsersStatusAC(user[0].status))
+    });
+}
+export const updateStatusThunk = (id, status) => (dispath) => {
+    currentUserAPI(id).update({status:status})
+    //     .then(userAPI(id).on('value', (snap) => {
+    //     let user = []
+    //     snap.forEach(u=>{
+    //         user.push(u.val())
+    //     })
+    //     dispath(setUsersStatusAC(user[0].status))
+    // }))
+}
+
+
 export default profileReducer
