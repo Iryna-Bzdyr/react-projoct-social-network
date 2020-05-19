@@ -116,6 +116,7 @@ const LoginForm = (props) => {
 const LoginReduxForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 
 const Login = (props) => {
+    console.log(props)
     const onSubmit = (submitData) => {
         props.setUserLogin(submitData.login, submitData.password, 'LoginForm')
 }
@@ -137,6 +138,7 @@ if (props.resultCode==1){
                             <p className={s.block__icon}>
                                 <FaInfoCircle/>
                             </p>
+                            {!props.error && <div>props.error</div>}
                             <p>
                                 Use the following credentials to log-in as user:
                                 login: <span>b.pitt@gmail.com</span> password: <span>bpitt1234</span>
