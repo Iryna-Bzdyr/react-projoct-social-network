@@ -42,7 +42,7 @@ export const setUserIDAC = (userID) => ({type: setUserID, userID: userID})
 
 export const checkLogin = (login, password, formName) => (dispatch) => {
     let user = []
-    let action = stopSubmit(formName, {_error:"Incorrect login or password"})
+    let action = stopSubmit('LoginForm', {_error:"Incorrect login or password"})
     userLogin.orderByChild('data/login').equalTo(login).on('value', (snap) => {
         snap.forEach(u => {
             user.push(u.val())
@@ -53,7 +53,6 @@ export const checkLogin = (login, password, formName) => (dispatch) => {
             dispatch(action)
         } else if (user[0].data.password == password) {
             dispatch(setUserIDAC(user[0].data.userID))
-
             usersAPI.orderByChild('id').equalTo(user[0].data.userID).on('value', (snap) => {
                 let user = []
                 snap.forEach(u => {
@@ -65,6 +64,7 @@ export const checkLogin = (login, password, formName) => (dispatch) => {
             });
         } else {
             dispatch(setResultCodeAC(0))
+            debugger
             dispatch(action)
         }
 

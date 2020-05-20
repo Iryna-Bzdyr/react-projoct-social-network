@@ -85,6 +85,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 4% 30%;
+    padding: 3% 30% 0%;
+}
+
+.error__block{
+    color: #ed104b;
+    font-weight: bold;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
