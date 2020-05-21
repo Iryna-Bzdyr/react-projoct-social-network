@@ -1,4 +1,4 @@
-import database, {userAPI, usersAPI} from "../../firebase";
+import  {userAPI, usersAPI} from "../../firebase";
 
 const follow = 'FOLLOW'
 const unFollow = 'UN-FOLLOW'

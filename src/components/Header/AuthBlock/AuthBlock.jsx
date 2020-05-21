@@ -15,7 +15,12 @@ const AuthBlock =(props)=>{
                     </NavLink>
                 </button>
 
-                <button className={s.sing__btn}>Sing up</button>
+                <button className={s.sing__btn}>
+                    <NavLink to='/registration'>
+                        Sing up
+                    </NavLink>
+
+                    </button>
             </div>
         )
     }

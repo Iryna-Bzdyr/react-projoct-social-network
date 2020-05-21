@@ -1,0 +1,14 @@
+.label__text{
+    color: #ed104b;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.helper__text{
+    padding-bottom: 2%;
+}
+
+.input__area {
+    width: 100%;
+    margin: 5px;
+}

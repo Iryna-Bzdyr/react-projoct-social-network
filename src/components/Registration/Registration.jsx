@@ -1,19 +1,20 @@
 import React from "react";
-import s from './Login.module.css'
-import Container from '@material-ui/core/Container';
+import s from "../Login/Login.module.css";
+import {Field, reduxForm} from "redux-form";
+import {renderFilledInput} from "../../common/MaterialForm/MaterialForm";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
-import {FaInfoCircle} from "react-icons/fa";
-import {Field, reduxForm} from "redux-form";
-import validate from '../../common/Validate/Validate'
-import {Link, Redirect} from "react-router-dom";
-import {renderFilledInput} from "../../common/MaterialForm/MaterialForm";
+import validate from "../../common/Validate/Validate";
+import {Redirect} from "react-router-dom";
+import Container from "@material-ui/core/Container";
+// import {FaInfoCircle} from "react-icons";
 
 
 
-const LoginForm = (props) => {
+
+const RegistrationForm = (props) => {
     const [values, setValues] = React.useState({
         amount: '',
         password: '',
@@ -60,6 +61,16 @@ const LoginForm = (props) => {
                         </InputAdornment>
                     }
                 />
+                <Field
+                    name="firstName"
+                    component={renderFilledInput}
+                    label="First Name"
+                />
+                <Field
+                    name="lastName"
+                    component={renderFilledInput}
+                    label="Last Name"
+                />
             </div>
             <div className={s.button__area}>
                 <Button variant="contained" color="secondary" type="submit"
@@ -82,20 +93,19 @@ const LoginForm = (props) => {
     )
 }
 
-const LoginReduxForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
+const RegistrationReduxForm = reduxForm({form: 'RegistrationForm', validate})(RegistrationForm)
 
-const Login = (props) => {
-    debugger
+const Registration = (props) => {
     const onSubmit = (submitData) => {
-        props.setUserLogin(submitData.login, submitData.password, 'LoginForm')
+        props.setNewUserData(submitData.login, submitData.password, submitData.firstName, submitData.lastName)
 
-}
+    }
 
-if (props.resultCode==1){
-    return (
-        <Redirect to={`/profile/${props.userID}/Photo`}  />
-    )
-}
+    // if (props.resultCode==1){
+    //     return (
+    //         <Redirect to={`/profile/${props.userID}/Photo`}  />
+    //     )
+    // }
     return (
         <div className={s.wrapper}>
             <Container maxWidth="sm">
@@ -103,16 +113,12 @@ if (props.resultCode==1){
                     <div className={s.background}></div>
                     <div className={s.form}>
                         <div className={s.form__headline}> Account Sign-in</div>
-                        <LoginReduxForm onSubmit={onSubmit}/>
+                        <RegistrationReduxForm onSubmit={onSubmit}/>
                         <div className={s.defolt__user}>
                             <p className={s.block__icon}>
-                                <FaInfoCircle/>
+                                {/*<FaInfoCircle/>*/}
                             </p>
 
-                            <p>
-                                Use the following credentials to log-in as user:
-                                login: <span>b.pitt@gmail.com</span> password: <span>bpitt1234</span>
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -120,4 +126,4 @@ if (props.resultCode==1){
         </div>
     )
 }
-export default Login
+export default Registration
