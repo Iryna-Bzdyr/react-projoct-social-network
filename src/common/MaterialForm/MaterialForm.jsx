@@ -4,7 +4,8 @@ import s from "./MaterialForm.module.css";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FilledInput from "@material-ui/core/FilledInput";
-
+import TextField from "@material-ui/core/TextField"
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 export const renderFromHelper = ({touched, error, label}) => {
     if (!(touched && error)) {
@@ -16,12 +17,13 @@ export const renderFromHelper = ({touched, error, label}) => {
 }
 
 
-export  const renderFilledInput = ({
-                               label,
-                               input,
-                               meta: {touched, invalid, error},
-                               ...custom
-                           }) => (
+export const renderFilledInput = ({
+                                      label,
+                                      input,
+
+                                      meta: {touched, invalid, error},
+                                      ...custom
+                                  }) => (
     <FormControl className={s.input__area}>
         <InputLabel htmlFor={label}>{label}</InputLabel>
         <FilledInput
@@ -36,4 +38,22 @@ export  const renderFilledInput = ({
     </FormControl>
 )
 
-
+export const renderAutocomplete = ({
+                                       label,
+                                       input,
+                                       options,
+                                       meta: {touched, invalid, error},
+                                       ...custom
+                                   }) => (
+    <FormControl className={s.input__area}>
+        <InputLabel htmlFor={label}>{label}</InputLabel>
+        <Autocomplete
+            id="combo-box-demo"
+            options={options}
+            getOptionLabel={(option) => option.title}
+            style={{width: 300}}
+            renderInput={(params) => <TextField {...params} label={label}/>}
+        />
+        {renderFromHelper({touched, error, label})}
+    </FormControl>
+)

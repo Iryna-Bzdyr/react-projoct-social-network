@@ -2,11 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import Registration from "./Registration";
 import {setNewUserDataThunk} from "../../Redux/Reducer/registration-reducer";
+import {setCountriesThunk} from "../../Redux/Reducer/location";
 
 
 class registrationAPIContainer extends React.Component{
 
     componentDidMount(){
+        this.props.setCountriesThunk()
     }
 
     setNewUserData = (login, password, firsName, lastName)=>{
@@ -23,12 +25,14 @@ class registrationAPIContainer extends React.Component{
 
 let mapStateToProps= (state)=>{
     return{
+       countries:state.location.countries
     }
 
 }
 
 const RegistrationContainer = connect(mapStateToProps, {
-    setNewUserDataThunk
+    setNewUserDataThunk,
+    setCountriesThunk
 })(registrationAPIContainer)
 
 export default RegistrationContainer

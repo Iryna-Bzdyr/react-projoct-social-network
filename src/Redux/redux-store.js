@@ -7,6 +7,7 @@ import authReducer from "./Reducer/auth-reducer";
 import { reducer as formReducer } from 'redux-form'
 import thunk from "redux-thunk";
 import registrationReducer from "./Reducer/registration-reducer";
+import locationReducer from "./Reducer/location";
 
 let reducers = combineReducers({
     profilePage:profileReducer,
@@ -15,6 +16,7 @@ let reducers = combineReducers({
     usersPage:userReducer,
     auth:authReducer,
     registration:registrationReducer,
+    location:locationReducer,
     form: formReducer
 })
 

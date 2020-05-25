@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './Profile.module.css'
-import SearchBar from "./SearchBar/SearchBar";
+import SearchBarNavigation from "./SearchBar/SearchBarNavigation";
 import {Redirect, Route} from "react-router-dom";
 import Activity from "./Activity/Activity";
 import Friends from "./Friends/Friends";
@@ -11,9 +11,9 @@ import PhotoContainer from "./Photos/PhotoContainer";
 
 const Profile = (props) => {
 
-    let navigationElement = props.searchBar.map((pathName, index) => <SearchBar key={index}
-                                                                                pathName={pathName.name}
-                                                                                currentUserId={props.currentUserId}
+    let navigationElement = props.searchBar.map((pathName, index) => <SearchBarNavigation key={index}
+                                                                                          pathName={pathName.name}
+                                                                                          currentUserId={props.currentUserId}
     />)
     return (
         <div className={s.wrapper}>

@@ -2,7 +2,7 @@ import React from "react";
 import s from './SearchBar.module.css'
 import {NavLink} from "react-router-dom";
 
-let SearchBar = (props)=>{
+let SearchBarNavigation = (props)=>{
 
     return (
         <div className={s.wrapper}>
@@ -12,4 +12,4 @@ let SearchBar = (props)=>{
         </div>
     )
 }
-export default  SearchBar
+export default  SearchBarNavigation

@@ -68,37 +68,37 @@ export const toggleIsFetchingAC = (status) => ({type:toggleIsFetching, isFetchin
 export const setCurrentUserIdAC = (userID)=>({type:setCurrentUserId, currentUserId:userID})
 
 
-export const getUsersThunkCreator = (pageSize, currentPage) => (dispath)=>{
+export const getUsersThunkCreator = (pageSize, currentPage) => (dispatch)=>{
 
-    dispath(toggleIsFetchingAC(true))
+    dispatch(toggleIsFetchingAC(true))
 
     usersAPI.on('value', (snap)=> {
         let count = snap.numChildren()
-        dispath(setTotalUsersCountAC(count))
-        dispath(toggleIsFetchingAC(false))
+        dispatch(setTotalUsersCountAC(count))
+        dispatch(toggleIsFetchingAC(false))
     });
 
     usersAPI.orderByKey().startAt(`0`).limitToFirst(pageSize).on('value', (snap) => {
-        dispath(setCurrentPageAC(currentPage))
+        dispatch(setCurrentPageAC(currentPage))
         let users = []
         snap.forEach(u=>{
             users.push(u.val())
         })
-        dispath(setUsersAC(users))
+        dispatch(setUsersAC(users))
     });
 }
 
-export const changeUserPage = (index, page, pageSize) => (dispath)=>{
-    dispath(toggleIsFetchingAC(true))
+export const changeUserPage = (index, page, pageSize) => (dispatch)=>{
+    dispatch(toggleIsFetchingAC(true))
     let startPoint = index*pageSize+1
     usersAPI.orderByKey().startAt(`${startPoint}`).limitToFirst(pageSize).on('value', (snap) => {
         let users = []
         snap.forEach(u=>{
             users.push(u.val())
         })
-        dispath(setCurrentPageAC(page))
-        dispath(setUsersAC(users))
-        dispath(toggleIsFetchingAC(false))
+        dispatch(setCurrentPageAC(page))
+        dispatch(setUsersAC(users))
+        dispatch(toggleIsFetchingAC(false))
     });
 }
 
