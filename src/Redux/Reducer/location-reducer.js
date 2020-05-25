@@ -1,4 +1,4 @@
-import {Query as countryAPI} from "firebase";
+import  {countryAPI} from "../../firebase";
 
 const setCountries = 'SET-COUNTRIES'
 let initialState = {
@@ -22,10 +22,17 @@ const setCountriesAC =  (countries) => ({type:setCountries, countries})
 export const setCountriesThunk = ()=>(dispatch)=>{
     countryAPI.on('value', (snap)=> {
         let countries = []
+        let countriesArray = []
         snap.forEach(u=>{
-            countries.push(u.val())
+            countriesArray.push(u.val())
         })
+       countriesArray.forEach(el=>{
+
+               countries.push(el.country)
+
+       })
         dispatch(setCountriesAC(countries))
+       console.log(countries)
     });
 
 }

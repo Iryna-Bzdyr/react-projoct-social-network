@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import Registration from "./Registration";
 import {setNewUserDataThunk} from "../../Redux/Reducer/registration-reducer";
-import {setCountriesThunk} from "../../Redux/Reducer/location";
+import {setCountriesThunk} from "../../Redux/Reducer/location-reducer";
 
 
 class registrationAPIContainer extends React.Component{
