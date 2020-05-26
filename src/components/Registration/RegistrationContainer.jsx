@@ -17,7 +17,8 @@ class registrationAPIContainer extends React.Component{
     render() {
         return (
             <Registration
-                setNewUserData={this.setNewUserData}
+                setNewUserData={this.setNewUserData} countries={this.props.countries}
+                setCountries={this.props.setCountriesThunk}
             />
         );
     }

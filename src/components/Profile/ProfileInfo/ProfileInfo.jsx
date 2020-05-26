@@ -2,6 +2,7 @@ import React from "react";
 import s from './ProfileInfo.module.css'
 import {Lines} from "react-preloaders";
 import Status from "./Status/Status";
+import StatusWithHooks from "./Status/StatusWithHooks";
 
 
 const ProfileInfo = (props) => {
@@ -24,7 +25,7 @@ const ProfileInfo = (props) => {
                                 <span>{props.userData[0].location.city}</span>
                                 <span>{props.userData[0].location.country}</span>
                             </div>
-                            <Status userStatus={props.userStatus} updateStatus={props.updateStatus} currentID={props.userData[0].id}/>
+                            <StatusWithHooks userStatus={props.userStatus} updateStatus={props.updateStatus} currentID={props.userData[0].id}/>
                         </div>
                     </div>
 

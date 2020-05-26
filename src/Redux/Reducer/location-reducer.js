@@ -17,7 +17,7 @@ let locationReducer = (state=initialState, action)=>{
     }
 }
 
-const setCountriesAC =  (countries) => ({type:setCountries, countries})
+const setCountriesAC =  (countries) => ({type:setCountries, countries:countries})
 
 export const setCountriesThunk = ()=>(dispatch)=>{
     countryAPI.on('value', (snap)=> {
@@ -32,7 +32,6 @@ export const setCountriesThunk = ()=>(dispatch)=>{
 
        })
         dispatch(setCountriesAC(countries))
-       console.log(countries)
     });
 
 }

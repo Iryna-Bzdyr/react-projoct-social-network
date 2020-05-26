@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import s from "../Login/Login.module.css";
 import {Field, reduxForm} from "redux-form";
 import {renderAutocomplete, renderFilledInput} from "../../common/MaterialForm/MaterialForm";
@@ -9,12 +9,15 @@ import Button from "@material-ui/core/Button";
 import validate from "../../common/Validate/Validate";
 import {Redirect} from "react-router-dom";
 import Container from "@material-ui/core/Container";
+import {connect} from "react-redux";
+import {setCountriesThunk} from "../../Redux/Reducer/location-reducer";
 // import {FaInfoCircle} from "react-icons";
 
 
 
 
-const RegistrationForm = (props) => {
+let RegistrationForm = (props) => {
+    // console.log(props)
     const [values, setValues] = React.useState({
         amount: '',
         password: '',
@@ -22,6 +25,14 @@ const RegistrationForm = (props) => {
         weightRange: '',
         showPassword: false,
     });
+    const [countries, setCountries] = React.useState(props.countries)
+    console.log(countries)
+    useEffect(()=>{
+        props.setCountries()
+    }, [props.countries])
+    // const setCountries = ()=>{
+    //
+    // }
     const handleChange = (prop) => (event) => {
         setValues({...values, [prop]: event.target.value});
     };
@@ -72,7 +83,8 @@ const RegistrationForm = (props) => {
                     label="Last Name"
                 />
                 <Field
-                    options = {props.countries}
+                    onChange={props.setCountriesThunk}
+                    options = {countries}
                     name="country"
                     component={renderAutocomplete}
                 />
@@ -98,9 +110,20 @@ const RegistrationForm = (props) => {
     )
 }
 
-const RegistrationReduxForm = reduxForm({form: 'RegistrationForm', validate})(RegistrationForm)
+
+
+ RegistrationForm = reduxForm({form: 'RegistrationForm', validate})(RegistrationForm)
+//  RegistrationForm = connect(
+//     state => ({
+//         countries:state.location.countries
+//     }),
+//     { setCountriesThunk }
+// )(RegistrationForm)
+
+
 
 const Registration = (props) => {
+    console.log(props)
     const onSubmit = (submitData) => {
         props.setNewUserData(submitData.login, submitData.password, submitData.firstName, submitData.lastName)
 
@@ -112,7 +135,7 @@ const Registration = (props) => {
                     <div className={s.background}></div>
                     <div className={s.form}>
                         <div className={s.form__headline}> Account Sign-in</div>
-                        <RegistrationReduxForm onSubmit={onSubmit}/>
+                        <RegistrationForm onSubmit={onSubmit} countries={props.countries} setCountries={props.setCountries}/>
                         <div className={s.defolt__user}>
                             <p className={s.block__icon}>
                                 {/*<FaInfoCircle/>*/}
