@@ -1,4 +1,5 @@
 import  {countryAPI} from "../../firebase";
+import {toggleIsFetchingAC} from "./user-reducer";
 
 const setCountries = 'SET-COUNTRIES'
 let initialState = {
@@ -20,20 +21,23 @@ let locationReducer = (state=initialState, action)=>{
 const setCountriesAC =  (countries) => ({type:setCountries, countries:countries})
 
 export const setCountriesThunk = ()=>(dispatch)=>{
+    let countries = []
     countryAPI.on('value', (snap)=> {
-        let countries = []
         let countriesArray = []
         snap.forEach(u=>{
             countriesArray.push(u.val())
         })
        countriesArray.forEach(el=>{
 
-               countries.push(el.country)
+               countries.push({country:el.country})
 
        })
         dispatch(setCountriesAC(countries))
-    });
 
+    });
+    if(countries.length>0){
+        dispatch(toggleIsFetchingAC(false))
+    }
 }
 
 export default locationReducer

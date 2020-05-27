@@ -3,32 +3,39 @@ import {connect} from "react-redux";
 import Registration from "./Registration";
 import {setNewUserDataThunk} from "../../Redux/Reducer/registration-reducer";
 import {setCountriesThunk} from "../../Redux/Reducer/location-reducer";
+import {Sugar} from "react-preloaders";
 
 
-class registrationAPIContainer extends React.Component{
+class registrationAPIContainer extends React.Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.setCountriesThunk()
     }
 
-    setNewUserData = (login, password, firsName, lastName)=>{
+    setNewUserData = (login, password, firsName, lastName) => {
         this.props.setNewUserDataThunk(login, password, firsName, lastName)
     }
+
     render() {
         return (
-            <Registration
-                setNewUserData={this.setNewUserData} countries={this.props.countries}
-                setCountries={this.props.setCountriesThunk}
-            />
+            <>
+                <Sugar customLoading={this.props.isFetching} background="blur"/>
+               <Registration
+                        setNewUserData={this.setNewUserData} countries={this.props.countries}
+                        setCountries={this.props.setCountriesThunk}
+                        isFetching = {this.props.isFetching}
+                    />
+
+            </>
         );
     }
 }
 
-let mapStateToProps= (state)=>{
-    return{
-       countries:state.location.countries
+let mapStateToProps = (state) => {
+    return {
+        isFetching: state.usersPage.isFetching,
+        countries: state.location.countries
     }
-
 }
 
 const RegistrationContainer = connect(mapStateToProps, {

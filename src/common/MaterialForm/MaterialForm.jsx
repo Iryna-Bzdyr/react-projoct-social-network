@@ -50,7 +50,7 @@ export const renderAutocomplete = ({
         <Autocomplete
             id="combo-box-demo"
             options={options}
-            getOptionLabel={(option) => option.title}
+            getOptionLabel={(option) => option.country}
             style={{width: 300}}
             renderInput={(params) => <TextField {...params} label={label}/>}
         />
