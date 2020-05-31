@@ -10,7 +10,7 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UserContainer from "./components/Users/UsersContainer";
 import LoginContainer from "./components/Login/LoginContainer";
-import RegistrationContainer from "./components/Registration/RegistrationContainer";
+import Registration from "./components/Registration/Registration";
 
 
 
@@ -22,7 +22,7 @@ const App = (props) => {
 
                 <div className='app-wrapper-content'>
                     <Route path='/login' render={()=> <LoginContainer/>} />
-                    <Route path='/registration' render={()=> <RegistrationContainer/>} />
+                    <Route path='/registration' render={()=> <Registration/>} />
                     <Route path='/dialogs' render={()=> <DialogsContainer/>} />
                     <Route path='/profile/:userID?' render={()=><ProfileContainer/>} />
                     <Route path='/news' component={News} />

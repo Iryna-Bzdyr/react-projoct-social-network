@@ -22,11 +22,13 @@ const setCountriesAC =  (countries) => ({type:setCountries, countries:countries}
 
 export const setCountriesThunk = ()=>(dispatch)=>{
     let countries = []
+    let newCountries = []
     countryAPI.on('value', (snap)=> {
         let countriesArray = []
         snap.forEach(u=>{
             countriesArray.push(u.val())
         })
+        newCountries = countriesArray
        countriesArray.forEach(el=>{
 
                countries.push({country:el.country})
@@ -37,6 +39,9 @@ export const setCountriesThunk = ()=>(dispatch)=>{
     });
     if(countries.length>0){
         dispatch(toggleIsFetchingAC(false))
+    }
+    else{
+        dispatch(toggleIsFetchingAC(true))
     }
 }
 

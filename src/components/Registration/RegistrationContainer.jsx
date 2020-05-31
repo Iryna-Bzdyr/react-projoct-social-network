@@ -8,9 +8,9 @@ import {Sugar} from "react-preloaders";
 
 class registrationAPIContainer extends React.Component {
 
-    componentDidMount() {
-        this.props.setCountriesThunk()
-    }
+    // componentDidMount() {
+    //     this.props.setCountriesThunk()
+    // }
 
     setNewUserData = (login, password, firsName, lastName) => {
         this.props.setNewUserDataThunk(login, password, firsName, lastName)
