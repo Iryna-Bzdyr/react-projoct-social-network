@@ -85,7 +85,8 @@ const LoginForm = (props) => {
 const LoginReduxForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 
 const Login = (props) => {
-    debugger
+
+
     const onSubmit = (submitData) => {
         props.setUserLogin(submitData.login, submitData.password, 'LoginForm')
 
