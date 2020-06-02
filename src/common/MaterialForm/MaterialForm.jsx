@@ -6,6 +6,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FilledInput from "@material-ui/core/FilledInput";
 import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import {useDispatch} from "react-redux";
+import {setCitiesThunk} from "../../Redux/Reducer/location-reducer";
 
 export const renderFromHelper = ({touched, error, label}) => {
     if (!(touched && error)) {
@@ -38,20 +40,43 @@ export const renderFilledInput = ({
     </FormControl>
 )
 
-export const renderAutocomplete = ({
-                                       label,
-                                       input,
-                                       options,
-                                       meta: {touched, invalid, error},
-                                       ...custom
-                                   }) => (
+
+export const renderAutocompleteCountries = ({
+                                                label,
+                                                input,
+                                                options,
+                                                meta: {touched, invalid, error},
+                                                ...custom
+                                            }) => (
     <FormControl className={s.input__area}>
         <InputLabel htmlFor={label}>{label}</InputLabel>
         <Autocomplete
             id="combo-box-demo"
             options={options}
             getOptionLabel={(option) => option.country}
-            style={{width: 300}}
+            style={{width: 200}}
+            renderInput={(params) => <TextField {...params} label={label}/>}
+        />
+        {renderFromHelper({touched, error, label})}
+    </FormControl>
+)
+
+
+export const renderAutocompleteCities = ({
+                                             label,
+                                             input,
+                                             options,
+                                             status,
+                                             meta: {touched, invalid, error},
+                                             ...custom
+                                         }) => (
+    <FormControl className={s.input__area}>
+        <InputLabel htmlFor={label}>{label}</InputLabel>
+        <Autocomplete
+            disabled={true}
+            options={options}
+            getOptionLabel={(option) => option.country}
+            style={{width: 200}}
             renderInput={(params) => <TextField {...params} label={label}/>}
         />
         {renderFromHelper({touched, error, label})}

@@ -10,6 +10,8 @@ import {Field, reduxForm} from "redux-form";
 import validate from '../../common/Validate/Validate'
 import {Link, Redirect} from "react-router-dom";
 import {renderFilledInput} from "../../common/MaterialForm/MaterialForm";
+import {useDispatch, useSelector} from "react-redux";
+import {checkLogin} from "../../Redux/Reducer/auth-reducer";
 
 
 
@@ -84,16 +86,19 @@ const LoginForm = (props) => {
 
 const LoginReduxForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 
-const Login = (props) => {
-    debugger
-    const onSubmit = (submitData) => {
-        props.setUserLogin(submitData.login, submitData.password, 'LoginForm')
 
+const Login = (props) => {
+    const dispatch = useDispatch();
+    const resultCode = useSelector(state => state.auth.resultCode)
+    const userID = useSelector(state => state.auth.userID)
+
+    const onSubmit = (submitData) => {
+        dispatch(checkLogin(submitData.login, submitData.password, 'LoginForm'))
 }
 
-if (props.resultCode==1){
+if (resultCode==1){
     return (
-        <Redirect to={`/profile/${props.userID}/Photo`}  />
+        <Redirect to={`/profile/${userID}/Photo`}  />
     )
 }
     return (

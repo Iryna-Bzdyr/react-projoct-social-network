@@ -30,4 +30,10 @@ export const currentUserAPI = (id) => {
     )
 }
 
+export const citiesAPI = (country) => {
+    return (
+        countryAPI.orderByChild('country').equalTo(country)
+    )
+}
+
 export default database;
