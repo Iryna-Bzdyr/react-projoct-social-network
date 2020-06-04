@@ -3,8 +3,7 @@ import s from "../Login/Login.module.css";
 import {Field, reduxForm} from "redux-form";
 import {
     renderAutocompleteCities,
-    renderAutocompleteCountries,
-    renderFilledInput
+    renderFilledInput, renderFromHelper
 } from "../../common/MaterialForm/MaterialForm";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,14 +11,18 @@ import {Visibility, VisibilityOff} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import validate from "../../common/Validate/Validate";
 import Container from "@material-ui/core/Container";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setCitiesThunk, setCountriesThunk} from "../../Redux/Reducer/location-reducer";
 import {Sugar} from "react-preloaders";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 // import {FaInfoCircle} from "react-icons";
 
 
 let RegistrationForm = (props) => {
-    const dispatch = useDispatch();
+
 
     const [values, setValues] = React.useState({
         amount: '',
@@ -27,12 +30,13 @@ let RegistrationForm = (props) => {
         weight: '',
         weightRange: '',
         showPassword: false,
-        country:'',
-        showCities:false
+        country: '',
+        showCities: false
     });
 
     const handleChangeCountry = (prop) => (event) => {
         setValues({...values, [prop]: event.target.value});
+        console.log('Hello')
     };
 
 
@@ -49,7 +53,9 @@ let RegistrationForm = (props) => {
     };
 
     const {handleSubmit, pristine, reset, submitting, valid} = props
-
+    let onSelectChange = () => {
+        console.log("Hello")
+    }
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -84,15 +90,51 @@ let RegistrationForm = (props) => {
                     <Field name="lastName" component={renderFilledInput} label="Last Name"
                     />
                     <div className={s.location__block}>
-                        <Field options={props.countries[0]} name="country" component={renderAutocompleteCountries}
-                               onChange={()=>dispatch(setCitiesThunk('Urraine'))}
+                        <Field options={props.countries[0]} name="country" component={({
+                                                                                           label,
+                                                                                           input,
+                                                                                           options,
+                                                                                           value,
+                                                                                           meta: {touched, invalid, error},
+                                                                                           ...custom
+                                                                                       }) => (
+                            <FormControl className={s.input__area}>
+                                <InputLabel htmlFor={label}>{label}</InputLabel>
+                                <Autocomplete
+                                    options={options}
+                                    onChange={handleChangeCountry}
+                                    getOptionLabel={(option) => option.country}
+                                    style={{width: 200}}
+                                    renderInput={(params) => <TextField {...params} label={label} value={value}/>}
+                                />
+                                {renderFromHelper({touched, error, label})}
+                            </FormControl>
+                        )}
                         />
-                        <Field name="city" component={renderAutocompleteCities} options={props.countries[0]}
 
+                        <Field options={props.cities} name="city" component={({
+                                                                                  label,
+                                                                                  input,
+                                                                                  options,
+                                                                                  meta: {touched, invalid, error},
+                                                                                  ...custom
+                                                                              }) => (
+                            <FormControl className={s.input__area}>
+                                <InputLabel htmlFor={label}>{label}</InputLabel>
+                                <Autocomplete
+                                    options={options}
+                                    onOpen={() => props.dispatch(setCitiesThunk('Ukraine'))}
+                                    getOptionLabel={(option) => option.city}
+                                    style={{width: 200}}
+                                    renderInput={(params) => <TextField {...params} label={label}/>}
+                                />
+                                {renderFromHelper({touched, error, label})}
+                            </FormControl>
+                        )}
                         />
                     </div>
-
                 </div>
+
                 <div className={s.button__area}>
                     <Button variant="contained" color="secondary" type="submit"
                             disabled={!props.valid}
@@ -125,6 +167,7 @@ const Registration = (props) => {
     }, [dispatch])
 
     const countries = useSelector(state => state.location.countries)
+    const cities = useSelector(state => state.location.cities)
     const isFetching = useSelector(state => state.usersPage.isFetching)
 
     const onSubmit = (submitData) => {
@@ -141,7 +184,8 @@ const Registration = (props) => {
                         <div className={s.background}></div>
                         <div className={s.form}>
                             <div className={s.form__headline}> Account Sign-in</div>
-                            <RegistrationForm onSubmit={onSubmit} countries={countries}/>
+                            <RegistrationForm onSubmit={onSubmit} countries={countries} cities={cities}
+                                              dispatch={dispatch}/>
                             <div className={s.defolt__user}>
                                 <p className={s.block__icon}>
                                     {/*<FaInfoCircle/>*/}
