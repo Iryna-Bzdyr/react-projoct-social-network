@@ -22,22 +22,13 @@ import TextField from "@material-ui/core/TextField";
 
 
 let RegistrationForm = (props) => {
-
-
     const [values, setValues] = React.useState({
         amount: '',
         password: '',
         weight: '',
         weightRange: '',
         showPassword: false,
-        country: '',
-        showCities: false
     });
-
-    const handleChangeCountry = (prop) => (event) => {
-        setValues({...values, [prop]: event.target.value});
-        console.log('Hello')
-    };
 
 
     const handleChange = (prop) => (event) => {
@@ -53,9 +44,12 @@ let RegistrationForm = (props) => {
     };
 
     const {handleSubmit, pristine, reset, submitting, valid} = props
+
+
     let onSelectChange = () => {
         console.log("Hello")
     }
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -101,8 +95,9 @@ let RegistrationForm = (props) => {
                             <FormControl className={s.input__area}>
                                 <InputLabel htmlFor={label}>{label}</InputLabel>
                                 <Autocomplete
+                                    id='countrySelect'
                                     options={options}
-                                    onChange={handleChangeCountry}
+                                    // onChange={handleChangeCountry}
                                     getOptionLabel={(option) => option.country}
                                     style={{width: 200}}
                                     renderInput={(params) => <TextField {...params} label={label} value={value}/>}
@@ -122,8 +117,9 @@ let RegistrationForm = (props) => {
                             <FormControl className={s.input__area}>
                                 <InputLabel htmlFor={label}>{label}</InputLabel>
                                 <Autocomplete
+                                    id='citySelect'
                                     options={options}
-                                    onOpen={() => props.dispatch(setCitiesThunk('Ukraine'))}
+                                    // onOpen={() => props.dispatch(setCitiesThunk('Ukraine'))}
                                     getOptionLabel={(option) => option.city}
                                     style={{width: 200}}
                                     renderInput={(params) => <TextField {...params} label={label}/>}

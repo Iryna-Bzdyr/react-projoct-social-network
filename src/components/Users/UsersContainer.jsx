@@ -9,6 +9,13 @@ import Users from "./Users";
 import {Sugar} from "react-preloaders";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../Redux/Selectors/user-selectors";
 
 
 class UsersComponent extends React.Component {
@@ -32,13 +39,15 @@ class UsersComponent extends React.Component {
     }
 }
 
+
+
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
     }
 }
 
@@ -53,6 +62,16 @@ export default compose(
 )(UsersComponent)
 
 
+
+// let mapStateToProps = (state) => {
+// //     return {
+// //         users: state.usersPage.users,
+// //         pageSize: state.usersPage.pageSize,
+// //         totalUsersCount: state.usersPage.totalUsersCount,
+// //         currentPage: state.usersPage.currentPage,
+// //         isFetching: state.usersPage.isFetching,
+// //     }
+// // }
 
 
 //
