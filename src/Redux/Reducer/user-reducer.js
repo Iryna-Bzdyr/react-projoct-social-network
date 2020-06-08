@@ -113,5 +113,14 @@ export const setUserThunk = (id) => (dispath)=>{
     });
 }
 
+export const setCurrentUserThunk = (id) => (dispath)=>{
+    userAPI(id).on('value', (snap) => {
+        let user = []
+        snap.forEach(u=>{
+            user.push(u.val())
+        })
+        dispath(setUsersAC(user))
+    });
+}
 
 export default userReducer

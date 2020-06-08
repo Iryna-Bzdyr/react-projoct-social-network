@@ -5,9 +5,9 @@ import {Redirect, Route} from "react-router-dom";
 import Activity from "./Activity/Activity";
 import Friends from "./Friends/Friends";
 import Groups from "./Groups/Groups";
-import MyPostsContainer from "./MyPosts/MyPostsConrainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import PhotoContainer from "./Photos/PhotoContainer";
+import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = (props) => {
 
@@ -26,7 +26,7 @@ const Profile = (props) => {
                 </div>
                 <div>
                     <Route path='/profile/:userID?/Activity' render={() => <Activity/>}/>
-                    <Route path={`/profile/:userID?/MyPost`} render={() => <MyPostsContainer/>}/>
+                    <Route path={`/profile/:userID?/MyPost`} render={() => <MyPosts/>}/>
                     <Route path='/profile/:userID?/Friends' render={() => <Friends/>}/>
                     <Route path='/profile/:userID?/Groups' render={() => <Groups/>}/>
                     <Route path='/profile/:userID?/Photo' render={() => <PhotoContainer/>}/>
