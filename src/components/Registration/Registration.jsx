@@ -45,12 +45,6 @@ let RegistrationForm = (props) => {
     const {handleSubmit, pristine, reset, submitting, valid} = props
 
 
-    let onSelectChange = () => {
-        // console.log("Hello")
-        // props.dispatch(setCountryAC('Poland'))
-        props.dispatch(setCitiesThunk("Ukraine"))
-        console.log(props.cities)
-    }
 
     return (
         <>
@@ -99,9 +93,7 @@ let RegistrationForm = (props) => {
                                 <Autocomplete
                                     id='countrySelect'
                                     options={options}
-                                    onChange={onSelectChange}
-                                    getOptionSelected={(option, value) => {conc})}
-                                    // onChange={props.dispatch(setCitiesThunk('Ukraine'))}
+                                    getOptionSelected={(option, value) => ( props.dispatch(setCitiesThunk(value.country)))}
                                     getOptionLabel={(option) => option.country}
                                     style={{width: 200}}
                                     renderInput={(params) => <TextField {...params} label={label} value={value}/>}
