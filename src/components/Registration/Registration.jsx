@@ -93,7 +93,9 @@ let RegistrationForm = (props) => {
                                 <Autocomplete
                                     id='countrySelect'
                                     options={options}
-                                    getOptionSelected={(option, value) => ( props.dispatch(setCitiesThunk(value.country)))}
+                                    value={"Ukraine"}
+                                    onChange={(event, value) => props.dispatch(setCitiesThunk(value.country))}
+                                    // getOptionSelected={(option, value) =>(props.dispatch(setCitiesThunk(value.country)))}
                                     getOptionLabel={(option) => option.country}
                                     style={{width: 200}}
                                     renderInput={(params) => <TextField {...params} label={label} value={value}/>}
@@ -115,7 +117,7 @@ let RegistrationForm = (props) => {
                                 <Autocomplete
                                     id='citySelect'
                                     options={options}
-                                    // onChange={() => props.dispatch(setCountryAC('Poland'))}
+                                    disabled={!props.cities[0]}
                                     getOptionLabel={(option) => option.city}
                                     style={{width: 200}}
                                     renderInput={(params) => <TextField {...params} label={label}/>}
@@ -161,7 +163,6 @@ const Registration = (props) => {
 
     useEffect(() => {
         dispatch(setCountriesThunk())
-        {cities.length<=0? dispatch(setCitiesThunk("Ukraine")):dispatch(setCitiesThunk(country))}
     }, [dispatch])
 
 
