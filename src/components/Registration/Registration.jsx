@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 import validate from "../../common/Validate/Validate";
 import Container from "@material-ui/core/Container";
 import {useDispatch, useSelector} from "react-redux";
-import {setCitiesThunk, setCountriesThunk} from "../../Redux/Reducer/location-reducer";
+import {setCitiesThunk, setCountriesThunk, setCountryAC} from "../../Redux/Reducer/location-reducer";
 import {Sugar} from "react-preloaders";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -46,7 +46,10 @@ let RegistrationForm = (props) => {
 
 
     let onSelectChange = () => {
-        console.log("Hello")
+        // console.log("Hello")
+        // props.dispatch(setCountryAC('Poland'))
+        props.dispatch(setCitiesThunk("Ukraine"))
+        console.log(props.cities)
     }
 
     return (
@@ -96,7 +99,9 @@ let RegistrationForm = (props) => {
                                 <Autocomplete
                                     id='countrySelect'
                                     options={options}
-                                    // onChange={handleChangeCountry}
+                                    onChange={onSelectChange}
+                                    getOptionSelected={(option, value) => {conc})}
+                                    // onChange={props.dispatch(setCitiesThunk('Ukraine'))}
                                     getOptionLabel={(option) => option.country}
                                     style={{width: 200}}
                                     renderInput={(params) => <TextField {...params} label={label} value={value}/>}
@@ -106,7 +111,7 @@ let RegistrationForm = (props) => {
                         )}
                         />
 
-                        <Field options={props.cities} name="city" component={({
+                        <Field options={props.cities[0]} name="city" component={({
                                                                                   label,
                                                                                   input,
                                                                                   options,
@@ -118,7 +123,7 @@ let RegistrationForm = (props) => {
                                 <Autocomplete
                                     id='citySelect'
                                     options={options}
-                                    // onOpen={() => props.dispatch(setCitiesThunk('Ukraine'))}
+                                    // onChange={() => props.dispatch(setCountryAC('Poland'))}
                                     getOptionLabel={(option) => option.city}
                                     style={{width: 200}}
                                     renderInput={(params) => <TextField {...params} label={label}/>}
@@ -156,14 +161,18 @@ let RegistrationForm = (props) => {
 RegistrationForm = reduxForm({form: 'RegistrationForm', validate})(RegistrationForm)
 
 const Registration = (props) => {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(setCountriesThunk())
-    }, [dispatch])
-
     const countries = useSelector(state => state.location.countries)
     const cities = useSelector(state => state.location.cities)
+    const country = useSelector(state => state.location.country)
     const isFetching = useSelector(state => state.usersPage.isFetching)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setCountriesThunk())
+        {cities.length<=0? dispatch(setCitiesThunk("Ukraine")):dispatch(setCitiesThunk(country))}
+    }, [dispatch])
+
+
 
     const onSubmit = (submitData) => {
         props.setNewUserData(submitData.login, submitData.password, submitData.firstName, submitData.lastName)
@@ -179,7 +188,7 @@ const Registration = (props) => {
                         <div className={s.background}></div>
                         <div className={s.form}>
                             <div className={s.form__headline}> Account Sign-in</div>
-                            <RegistrationForm onSubmit={onSubmit} countries={countries} cities={cities}
+                            <RegistrationForm onSubmit={onSubmit} countries={countries} cities={cities} country={country}
                                               dispatch={dispatch}/>
                             <div className={s.defolt__user}>
                                 <p className={s.block__icon}>

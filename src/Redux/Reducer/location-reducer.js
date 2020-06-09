@@ -2,10 +2,12 @@ import {citiesAPI, countryAPI} from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
 
 const setCountries = 'SET-COUNTRIES'
+const setCountry = 'SET-COUNTRY'
 const setCities = 'SET-CITIES'
 let initialState = {
     countries: [],
     cities: [],
+    country:''
 }
 
 let locationReducer = (state = initialState, action) => {
@@ -14,6 +16,11 @@ let locationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 countries: [action.countries]
+            }
+        case setCountry:
+            return {
+                ...state,
+                country: action.country
             }
         case setCities:
             return {
@@ -27,7 +34,7 @@ let locationReducer = (state = initialState, action) => {
 
 const setCountriesAC = (countries) => ({type: setCountries, countries: countries})
 const setCitiesAC = (cities) => ({type: setCities, cities: cities})
-
+export const setCountryAC = (country) => ({type: setCountry, cities: country})
 export const setCountriesThunk = () => (dispatch) => {
     let countries = []
     let newCountries = []
