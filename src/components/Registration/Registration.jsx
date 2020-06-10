@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import s from "../Login/Login.module.css";
 import {Field, reduxForm} from "redux-form";
 import {
     renderAutocompleteCities,
-    renderFilledInput, renderFromHelper
+    renderFilledInput, renderFromHelper, renderSelectField
 } from "../../common/MaterialForm/MaterialForm";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +18,10 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+import {setNewUserDataThunk} from "../../Redux/Reducer/registration-reducer";
 // import {FaInfoCircle} from "react-icons";
 
 
@@ -41,11 +45,29 @@ let RegistrationForm = (props) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    const [val, setValue] = React.useState('');
 
     const {handleSubmit, pristine, reset, submitting, valid} = props
 
 
+    // let onChange = (country) => {
+    //     if (country) {
+    //         console.log(country)
+    //         props.dispatch(setCitiesThunk(country))
+    //         setValue(country)
+    //     }
+    // }
+    let optionCityElement  = props.cities[0].map((city,index)=>(<option value={city.city}>{city.city}</option>))
+    let onChange = (event) => {
+        props.dispatch(setCitiesThunk(event.target.value))
 
+    }
+   let resetValue = ()=>{
+       setValue('')
+   }
+    let optionCountryElement = props.countries[0].map((country,index)=>(<option value={country.country}>{country.country}</option>))
+     // = props.cities.map((city,index)=>(<option value={city.city}>{city.city}</option>))
+console.log(props.cities)
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -79,54 +101,67 @@ let RegistrationForm = (props) => {
                     />
                     <Field name="lastName" component={renderFilledInput} label="Last Name"
                     />
-                    <div className={s.location__block}>
-                        <Field options={props.countries[0]} name="country" component={({
-                                                                                           label,
-                                                                                           input,
-                                                                                           options,
-                                                                                           value,
-                                                                                           meta: {touched, invalid, error},
-                                                                                           ...custom
-                                                                                       }) => (
-                            <FormControl className={s.input__area}>
-                                <InputLabel htmlFor={label}>{label}</InputLabel>
-                                <Autocomplete
-                                    id='countrySelect'
-                                    options={options}
-                                    value={"Ukraine"}
-                                    onChange={(event, value) => props.dispatch(setCitiesThunk(value.country))}
-                                    // getOptionSelected={(option, value) =>(props.dispatch(setCitiesThunk(value.country)))}
-                                    getOptionLabel={(option) => option.country}
-                                    style={{width: 200}}
-                                    renderInput={(params) => <TextField {...params} label={label} value={value}/>}
-                                />
-                                {renderFromHelper({touched, error, label})}
-                            </FormControl>
-                        )}
-                        />
+                    <Field name="country" component={renderSelectField} label="Country" onChange={onChange}>
+                        {optionCountryElement}
+                    </Field>
 
-                        <Field options={props.cities[0]} name="city" component={({
-                                                                                  label,
-                                                                                  input,
-                                                                                  options,
-                                                                                  meta: {touched, invalid, error},
-                                                                                  ...custom
-                                                                              }) => (
-                            <FormControl className={s.input__area}>
-                                <InputLabel htmlFor={label}>{label}</InputLabel>
-                                <Autocomplete
-                                    id='citySelect'
-                                    options={options}
-                                    disabled={!props.cities[0]}
-                                    getOptionLabel={(option) => option.city}
-                                    style={{width: 200}}
-                                    renderInput={(params) => <TextField {...params} label={label}/>}
-                                />
-                                {renderFromHelper({touched, error, label})}
-                            </FormControl>
-                        )}
-                        />
-                    </div>
+                    <Field name="city" component={renderSelectField} label="City" disabled={!props.cities}>
+                        {optionCityElement}
+                    </Field>
+
+                    {/*    <div className={s.location__block}>*/}
+
+
+                    {/*    <Field options={props.countries[0]} name="country" component={({*/}
+                    {/*                                                                       label,*/}
+                    {/*                                                                       input,*/}
+                    {/*                                                                       options,*/}
+                    {/*                                                                       value,*/}
+                    {/*                                                                       meta: {touched, invalid, error},*/}
+                    {/*                                                                       ...custom*/}
+                    {/*                                                                   }) => (*/}
+                    {/*        <FormControl className={s.input__area}>*/}
+                    {/*            <InputLabel htmlFor={label}>{label}</InputLabel>*/}
+                    {/*            <Autocomplete*/}
+                    {/*                id='countrySelect'*/}
+                    {/*                options={options}*/}
+                    {/*                inputValue={val}*/}
+                    {/*                onOpen={()=>{resetValue()}}*/}
+                    {/*                onInputChange={(event, value, reason) => (onChange(value))}*/}
+                    {/*                getOptionLabel={(option) => option.country}*/}
+                    {/*                style={{width: 200}}*/}
+                    {/*                renderInput={(params) => (*/}
+                    {/*                    <TextField {...params} label={label}/>*/}
+
+                    {/*                )}*/}
+                    {/*            />*/}
+                    {/*            {renderFromHelper({touched, error, label})}*/}
+                    {/*        </FormControl>*/}
+                    {/*    )}*/}
+                    {/*    />*/}
+
+                    {/*    <Field options={props.cities[0]} name="city" component={({*/}
+                    {/*                                                                 label,*/}
+                    {/*                                                                 input,*/}
+                    {/*                                                                 options,*/}
+                    {/*                                                                 meta: {touched, invalid, error},*/}
+                    {/*                                                                 ...custom*/}
+                    {/*                                                             }) => (*/}
+                    {/*        <FormControl className={s.input__area}>*/}
+                    {/*            <InputLabel htmlFor={label}>{label}</InputLabel>*/}
+                    {/*            <Autocomplete*/}
+                    {/*                id='citySelect'*/}
+                    {/*                options={options}*/}
+                    {/*                disabled={!props.cities[0]}*/}
+                    {/*                getOptionLabel={(option) => option.city}*/}
+                    {/*                style={{width: 200}}*/}
+                    {/*                renderInput={(params) => <TextField {...params} label={label}/>}*/}
+                    {/*            />*/}
+                    {/*            {renderFromHelper({touched, error, label})}*/}
+                    {/*        </FormControl>*/}
+                    {/*    )}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                 </div>
 
                 <div className={s.button__area}>
@@ -163,12 +198,13 @@ const Registration = (props) => {
 
     useEffect(() => {
         dispatch(setCountriesThunk())
+        dispatch(setCitiesThunk('Ukraine'))
     }, [dispatch])
 
 
-
     const onSubmit = (submitData) => {
-        props.setNewUserData(submitData.login, submitData.password, submitData.firstName, submitData.lastName)
+        debugger
+        dispatch(setNewUserDataThunk((submitData.login, submitData.password, submitData.firstName, submitData.lastName, submitData.country, submitData.city)))
 
     }
 

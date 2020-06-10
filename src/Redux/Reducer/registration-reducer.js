@@ -23,7 +23,7 @@ const registrationReducer = (state = initialState, action) => {
 }
 
 const setNewUserDataAC = (newUser) => ({type: setNewUserData, newUser})
-export const setNewUserDataThunk = (login, password, firsName, lastName) => (dispatch) => {
+export const setNewUserDataThunk = (login, password, firsName, lastName, country, city) => (dispatch) => {
     let checkUser = []
     let action = stopSubmit('RegistrationForm', {_error:"User with such login already exit"})
 
@@ -45,13 +45,12 @@ export const setNewUserDataThunk = (login, password, firsName, lastName) => (dis
                     lastName: lastName
                 },
                 location:{
-                    country:'',
-                    city:''
+                    country:country,
+                    city:city
                 }
             }
             dispatch(setNewUserDataAC(user))
             usersAPI.push(user)
-
     }
     })
 }

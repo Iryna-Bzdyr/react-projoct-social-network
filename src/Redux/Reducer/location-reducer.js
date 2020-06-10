@@ -67,6 +67,7 @@ export const setCitiesThunk = (country) => (dispatch) => {
         })
     })
     dispatch(setCitiesAC(cities))
+    console.log(cities)
 }
 
 export default locationReducer

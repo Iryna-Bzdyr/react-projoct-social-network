@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField"
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {useDispatch} from "react-redux";
 import {setCitiesThunk} from "../../Redux/Reducer/location-reducer";
+import Select from "@material-ui/core/Select";
 
 export const renderFromHelper = ({touched, error, label}) => {
     if (!(touched && error)) {
@@ -37,5 +38,29 @@ export const renderFilledInput = ({
             {...custom}
         />
         {renderFromHelper({touched, error, label})}
+    </FormControl>
+)
+
+export const renderSelectField = ({
+                               input,
+                               label,
+                               meta: { touched, error },
+                               children,
+                               ...custom
+                           }) => (
+    <FormControl error={touched && error}>
+        <InputLabel htmlFor="color-native-simple">{label}</InputLabel>
+        <Select
+            native
+            {...input}
+            {...custom}
+            inputProps={{
+                name: input.name,
+                id: 'color-native-simple'
+            }}
+        >
+            {children}
+        </Select>
+        {renderFromHelper({ touched, error })}
     </FormControl>
 )
