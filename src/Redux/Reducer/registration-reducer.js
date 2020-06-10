@@ -24,10 +24,12 @@ const registrationReducer = (state = initialState, action) => {
 
 const setNewUserDataAC = (newUser) => ({type: setNewUserData, newUser})
 export const setNewUserDataThunk = (login, password, firsName, lastName, country, city) => (dispatch) => {
+    debugger
     let checkUser = []
     let action = stopSubmit('RegistrationForm', {_error:"User with such login already exit"})
 
     userLogin.orderByChild('data/login').equalTo(login).on('value', (snap) => {
+
         snap.forEach(u => {
             checkUser.push(u.val())
         })
@@ -37,8 +39,8 @@ export const setNewUserDataThunk = (login, password, firsName, lastName, country
         else {
             let userId = (new Date()).getTime()
             let user = {
-                login: login,
-                password: password,
+                // login: login,
+                // password: password,
                 id: userId,
                 fullName:{
                     firsName: firsName,

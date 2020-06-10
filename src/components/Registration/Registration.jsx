@@ -203,7 +203,6 @@ const Registration = (props) => {
 
 
     const onSubmit = (submitData) => {
-        debugger
         dispatch(setNewUserDataThunk((submitData.login, submitData.password, submitData.firstName, submitData.lastName, submitData.country, submitData.city)))
 
     }
