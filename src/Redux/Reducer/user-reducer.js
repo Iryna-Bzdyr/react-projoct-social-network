@@ -75,7 +75,7 @@ export const getUsersThunkCreator = (pageSize, currentPage) => (dispatch)=>{
     usersAPI.on('value', (snap)=> {
         let count = snap.numChildren()
         dispatch(setTotalUsersCountAC(count))
-        dispatch(toggleIsFetchingAC(false))
+
     });
 
     usersAPI.orderByKey().startAt(`0`).limitToFirst(pageSize).on('value', (snap) => {
@@ -85,12 +85,15 @@ export const getUsersThunkCreator = (pageSize, currentPage) => (dispatch)=>{
             users.push(u.val())
         })
         dispatch(setUsersAC(users))
+        if(users.length>0){
+            dispatch(toggleIsFetchingAC(false))
+        }
     });
 }
 
-export const changeUserPage = (index, page, pageSize) => (dispatch)=>{
+export const changeUserPage = ( page, pageSize) => (dispatch)=>{
     dispatch(toggleIsFetchingAC(true))
-    let startPoint = index*pageSize+1
+    let startPoint = (page-1)*pageSize+1
     usersAPI.orderByKey().startAt(`${startPoint}`).limitToFirst(pageSize).on('value', (snap) => {
         let users = []
         snap.forEach(u=>{
@@ -98,7 +101,9 @@ export const changeUserPage = (index, page, pageSize) => (dispatch)=>{
         })
         dispatch(setCurrentPageAC(page))
         dispatch(setUsersAC(users))
-        dispatch(toggleIsFetchingAC(false))
+        if(users.length>0){
+            dispatch(toggleIsFetchingAC(false))
+        }
     });
 }
 

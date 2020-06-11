@@ -24,8 +24,8 @@ class UsersComponent extends React.Component {
         this.props.getUsersThunkCreator(this.props.pageSize, this.props.currentPage)
     }
 
-    onPageChange = (page, index) => {
-        this.props.changeUserPage(index, page, this.props.pageSize)
+    onPageChange = (page) => {
+        this.props.changeUserPage(page, this.props.pageSize)
     }
 
     render() {

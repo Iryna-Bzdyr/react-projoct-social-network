@@ -1,9 +1,4 @@
-.pages__block{
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    padding: 2%;
-}
+
 .user__avatar{
     display: flex;
     justify-content: center;
@@ -44,21 +39,12 @@
 }
 
 
-.pages__block button{
-    padding: 0% 1%;
-    border: 0 none;
-    border-radius: 3px;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    height: 25px;
-    margin: 2px;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
-}
 
-.activePage{
-    color: white;
-    font-weight: bold;
-    background: #6020d2;
-    background: linear-gradient(to bottom, #6020d2 0, #673ab7 100%);
+.pagination__block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    background-color: red;
+    z-index: 1000;
 }
