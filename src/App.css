@@ -14,5 +14,14 @@ ul li {
     /*margin-top: 1%;*/
 }
 
+.spinner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+
+
 
 

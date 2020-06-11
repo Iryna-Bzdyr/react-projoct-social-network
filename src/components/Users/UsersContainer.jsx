@@ -6,7 +6,6 @@ import {
     unfollowAC
 } from "../../Redux/Reducer/user-reducer";
 import Users from "./Users";
-import {Sugar} from "react-preloaders";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 import {
@@ -16,6 +15,7 @@ import {
     getTotalUsersCount,
     getUsers, getUsersSelector
 } from "../../Redux/Selectors/user-selectors";
+import PreLoader from "../../common/PreLoader/PreLoader";
 
 
 
@@ -30,12 +30,15 @@ class UsersComponent extends React.Component {
 
     render() {
         return <>
-            <Sugar customLoading={this.props.isFetching} background="blur"/>
-            <Users totalUsersCount={this.props.totalUsersCount} pageSize={this.props.pageSize}
-                   currentPage={this.props.currentPage}
-                   users={this.props.users} follow={this.props.follow} unFollow={this.props.unFollow}
-                   onPageChange={this.onPageChange}
-            />
+            {this.props.isFetching?
+                <PreLoader></PreLoader>:
+                <Users totalUsersCount={this.props.totalUsersCount} pageSize={this.props.pageSize}
+                       currentPage={this.props.currentPage}
+                       users={this.props.users} follow={this.props.follow} unFollow={this.props.unFollow}
+                       onPageChange={this.onPageChange}
+                />
+            }
+
         </>
     }
 }

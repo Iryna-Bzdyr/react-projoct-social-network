@@ -44,7 +44,7 @@ export const renderSelectField = ({
                                children,
                                ...custom
                            }) => (
-    <FormControl error={touched && error}>
+    <FormControl error={touched && error} className={s.input__area} variant="filled">
         <InputLabel>{label}</InputLabel>
         <Select
             native

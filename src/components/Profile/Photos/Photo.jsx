@@ -5,8 +5,6 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { AutoRotatingCarousel, Slide } from 'material-auto-rotating-carousel'
 
 let Photo = (props) => {
-// console.log(props)
-//     let photoElement = props.photoData.map(photo=><img src={photo.url}/>)
     return (
         <>
             <AutoRotatingCarousel

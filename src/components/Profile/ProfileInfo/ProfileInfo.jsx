@@ -1,13 +1,13 @@
 import React from "react";
 import s from './ProfileInfo.module.css'
-import {Lines} from "react-preloaders";
 import Status from "./Status/Status";
 import StatusWithHooks from "./Status/StatusWithHooks";
+import PreLoader from "../../../common/PreLoader/PreLoader";
 
 
 const ProfileInfo = (props) => {
     if (props.userData.length == 0) {
-        return <Lines background="blur"/>
+        return <PreLoader></PreLoader>
     } else {
         return (
             <div>

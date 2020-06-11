@@ -5,7 +5,7 @@ import {withRouter} from "react-router-dom";
 import database from "../../../firebase";
 import {setPhotoDataAC, sliderIsOpenAC} from "../../../Redux/Reducer/profile-reducer";
 import {toggleIsFetchingAC} from "../../../Redux/Reducer/user-reducer";
-import {Sugar} from "react-preloaders";
+import PreLoader from "../../../common/PreLoader/PreLoader";
 
 class PhotoAPIContainer extends React.Component {
     componentDidMount() {
@@ -40,11 +40,12 @@ class PhotoAPIContainer extends React.Component {
     render() {
         return (
             <>
-
-                <Sugar customLoading={this.props.isFetching} background="blur"/>
-                <Photo photoData={this.props.photoData} sliderIsOpen={this.props.sliderIsOpen}
-                       sliderAutoplay={this.props.sliderAutoplay}
-                       setSlider={this.props.setSliderIsOpen}/>
+                {this.props.isFetching ?
+                    <PreLoader></PreLoader> :
+                    <Photo photoData={this.props.photoData} sliderIsOpen={this.props.sliderIsOpen}
+                           sliderAutoplay={this.props.sliderAutoplay}
+                           setSlider={this.props.setSliderIsOpen}/>
+                }
             </>
         )
     }
@@ -55,8 +56,8 @@ let mapStateToProps = (state) => {
     return {
         photoData: state.profilePage.photoData,
         isFetching: state.usersPage.isFetching,
-        sliderIsOpen:state.profilePage.sliderIsOpen,
-        sliderAutoplay:state.profilePage.sliderAutoplay
+        sliderIsOpen: state.profilePage.sliderIsOpen,
+        sliderAutoplay: state.profilePage.sliderAutoplay
     }
 }
 
@@ -65,6 +66,6 @@ const withURLPhotoAPIContainer = withRouter(PhotoAPIContainer)
 const PhotoContainer = connect(mapStateToProps, {
     setPhotoData: setPhotoDataAC,
     setToggleFetching: toggleIsFetchingAC,
-    setSliderIsOpen:sliderIsOpenAC
+    setSliderIsOpen: sliderIsOpenAC
 })(withURLPhotoAPIContainer)
 export default PhotoContainer

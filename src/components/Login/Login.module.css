@@ -10,7 +10,11 @@
     border-radius: 10px;
     height: 450px;
 }
-
+.form__block__registration{
+    position: relative;
+    border-radius: 10px;
+    height: 650px;
+}
 .background {
     top: 0;
     left: 0;

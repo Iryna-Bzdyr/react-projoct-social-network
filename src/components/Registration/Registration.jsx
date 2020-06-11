@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import s from "../Login/Login.module.css";
 import {Field, reduxForm} from "redux-form";
 import {
@@ -13,9 +13,9 @@ import Container from "@material-ui/core/Container";
 import {useDispatch, useSelector} from "react-redux";
 import {setCitiesThunk, setCountriesThunk} from "../../Redux/Reducer/location-reducer";
 import {setNewUserDataThunk} from "../../Redux/Reducer/registration-reducer";
-import Loader from 'react-loader-spinner'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import {Redirect} from "react-router-dom";
+import PreLoader from "../../common/PreLoader/PreLoader";
 
 let RegistrationForm = (props) => {
     const [values, setValues] = React.useState({
@@ -135,28 +135,22 @@ const Registration = (props) => {
     const onSubmit = (submitData) => {
         dispatch(setNewUserDataThunk(submitData.email, submitData.password, submitData.firstName, submitData.lastName, submitData.country, submitData.city))
     }
-    if (correctRegistration){
+    if (correctRegistration) {
         return (
-            <Redirect to={`/login/`}  />
+            <Redirect to={`/login/`}/>
         )
     }
     return (
         countries.length <= 0 ?
-            <Loader
-                type="ThreeDots" color="#00BFFF" height={80} width={80}
-            />
+            <PreLoader></PreLoader>
             : <div className={s.wrapper}>
                 <Container maxWidth="sm">
-                    <div className={s.form__block}>
+                    <div className={s.form__block__registration}>
                         <div className={s.background}></div>
                         <div className={s.form}>
                             <div className={s.form__headline}> Account Sign-in</div>
                             <RegistrationForm onSubmit={onSubmit} countries={countries} cities={cities} country={country}
                                               dispatch={dispatch}/>
-                            <div className={s.defolt__user}>
-                                <p className={s.block__icon}>
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </Container>
