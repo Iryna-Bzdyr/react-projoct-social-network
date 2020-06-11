@@ -3,7 +3,7 @@ import s from './Photo.module.css'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import { AutoRotatingCarousel, Slide } from 'material-auto-rotating-carousel'
-
+import { red, blue, green } from "@material-ui/core/colors";
 let Photo = (props) => {
     return (
         <>
@@ -12,12 +12,15 @@ let Photo = (props) => {
                 autoplay = {props.sliderAutoplay}
                 onClose={() => props.setSlider({ open: false })}
                 onStart={() => props.setSlider({ open: false })}
-                style={{ position: 'absolute' }}
+                style={{ position: 'absolute'}}
                 >
                 {props.photoData.map((photo) =>(
                         <Slide
+
                             media={<img src={photo.url} className={s.slider__photo}/>}
                         >
+                            mediaBackgroundStyle={{ backgroundColor: red[400] }}
+                            style={{ backgroundColor: red[600] }}
                             <button onClick={() => props.setSlider({ open: false })}>Close</button>
                         </Slide>))}
 
