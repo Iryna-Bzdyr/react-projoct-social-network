@@ -3,7 +3,11 @@ export default function(values) {
     const requiredFields = [
         'login',
         'password',
-        'email'
+        'email',
+        'firstName',
+        'lastName',
+        'country',
+        'city'
     ];
     requiredFields.forEach(field => {
         if (!values[field]) {

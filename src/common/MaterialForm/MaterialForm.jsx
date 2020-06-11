@@ -4,10 +4,6 @@ import s from "./MaterialForm.module.css";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import FilledInput from "@material-ui/core/FilledInput";
-import TextField from "@material-ui/core/TextField"
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import {useDispatch} from "react-redux";
-import {setCitiesThunk} from "../../Redux/Reducer/location-reducer";
 import Select from "@material-ui/core/Select";
 
 export const renderFromHelper = ({touched, error, label}) => {
@@ -49,18 +45,19 @@ export const renderSelectField = ({
                                ...custom
                            }) => (
     <FormControl error={touched && error}>
-        <InputLabel htmlFor="color-native-simple">{label}</InputLabel>
+        <InputLabel>{label}</InputLabel>
         <Select
             native
             {...input}
             {...custom}
             inputProps={{
                 name: input.name,
-                id: 'color-native-simple'
+                value:input.value
             }}
+
         >
             {children}
         </Select>
-        {renderFromHelper({ touched, error })}
+        {renderFromHelper({ touched, error, label })}
     </FormControl>
 )

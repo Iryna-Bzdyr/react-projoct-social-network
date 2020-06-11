@@ -34,10 +34,9 @@ let locationReducer = (state = initialState, action) => {
 
 const setCountriesAC = (countries) => ({type: setCountries, countries: countries})
 const setCitiesAC = (cities) => ({type: setCities, cities: cities})
-export const setCountryAC = (country) => ({type: setCountry, cities: country})
+export const setCountryAC = (country) => ({type: setCountry, country: country})
 export const setCountriesThunk = () => (dispatch) => {
     let countries = []
-    let newCountries = []
     countryAPI.on('value', (snap) => {
         let countriesArray = []
         snap.forEach(u => {
@@ -67,7 +66,7 @@ export const setCitiesThunk = (country) => (dispatch) => {
         })
     })
     dispatch(setCitiesAC(cities))
-    console.log(cities)
+    dispatch(setCountryAC(country))
 }
 
 export default locationReducer

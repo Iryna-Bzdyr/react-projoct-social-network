@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import s from './Login.module.css'
 import Container from '@material-ui/core/Container';
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -12,6 +12,7 @@ import {Link, Redirect} from "react-router-dom";
 import {renderFilledInput} from "../../common/MaterialForm/MaterialForm";
 import {useDispatch, useSelector} from "react-redux";
 import {checkLogin} from "../../Redux/Reducer/auth-reducer";
+import {checkRegistrationAC} from "../../Redux/Reducer/registration-reducer";
 
 
 
@@ -92,6 +93,9 @@ const Login = (props) => {
     const resultCode = useSelector(state => state.auth.resultCode)
     const userID = useSelector(state => state.auth.userID)
 
+    useEffect(()=>{
+        dispatch(checkRegistrationAC(false))
+    })
     const onSubmit = (submitData) => {
         dispatch(checkLogin(submitData.login, submitData.password, 'LoginForm'))
 }

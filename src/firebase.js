@@ -17,7 +17,7 @@ const fire = firebase.initializeApp(config);
 const database = fire.database();
 export const usersAPI =  database.ref('database/users/')
 export const profileAPI =  database.ref('database/profile/')
-export const userLogin = database.ref('database/loginData/')
+export const userLoginAPI = database.ref('database/loginData/')
 export const countryAPI =  database.ref('citiesData/')
 export const userAPI = (id)=>{
     return (

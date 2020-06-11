@@ -1,4 +1,4 @@
-import {usersAPI, userLogin} from "../../firebase";
+import {usersAPI, userLoginAPI} from "../../firebase";
 import {reset, stopSubmit} from 'redux-form';
 
 const setResultCode = 'SET-RESULT-CODE'
@@ -43,7 +43,7 @@ export const setUserIDAC = (userID) => ({type: setUserID, userID: userID})
 export const checkLogin = (login, password, formName) => (dispatch) => {
     let user = []
     let action = stopSubmit('LoginForm', {_error:"Incorrect login or password"})
-    userLogin.orderByChild('data/login').equalTo(login).on('value', (snap) => {
+    userLoginAPI.orderByChild('data/login').equalTo(login).on('value', (snap) => {
         snap.forEach(u => {
             user.push(u.val())
         })
@@ -64,7 +64,6 @@ export const checkLogin = (login, password, formName) => (dispatch) => {
             });
         } else {
             dispatch(setResultCodeAC(0))
-            debugger
             dispatch(action)
         }
 

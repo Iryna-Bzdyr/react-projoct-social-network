@@ -1,59 +1,65 @@
 import {stopSubmit} from "redux-form";
-import {userLogin, usersAPI} from "../../firebase";
+import {userLoginAPI, usersAPI, profileAPI} from "../../firebase";
 
 
-
-const setNewUserData = 'SET-NEW-USER-DATA'
+const checkRegistration = 'CHECK-REGISTRATION'
 
 let initialState = {
-    newUser: {},
+    correctRegistration: false,
 
 }
 
 const registrationReducer = (state = initialState, action) => {
     switch (action.type) {
-        case setNewUserData:
+        case checkRegistration:
             return {
                 ...state,
-                newUser: action.newUser,
+                correctRegistration: action.correctRegistration,
             }
         default:
             return state
     }
 }
 
-const setNewUserDataAC = (newUser) => ({type: setNewUserData, newUser})
-export const setNewUserDataThunk = (login, password, firsName, lastName, country, city) => (dispatch) => {
-    debugger
+export const checkRegistrationAC = (correctRegistration)=>({type:checkRegistration,correctRegistration:correctRegistration})
+export const setNewUserDataThunk = (login, password, firstName, lastName, country, city) => (dispatch) => {
     let checkUser = []
-    let action = stopSubmit('RegistrationForm', {_error:"User with such login already exit"})
+    let action = stopSubmit('RegistrationForm', {_error: "User with such login already exit"})
 
-    userLogin.orderByChild('data/login').equalTo(login).on('value', (snap) => {
-
+    userLoginAPI.orderByChild('data/login').equalTo(login).on('value', (snap) => {
         snap.forEach(u => {
             checkUser.push(u.val())
         })
         if (!checkUser.length == 0) {
             dispatch(action)
-        }
-        else {
+        } else {
             let userId = (new Date()).getTime()
             let user = {
-                // login: login,
-                // password: password,
                 id: userId,
-                fullName:{
-                    firsName: firsName,
+                fullName: {
+                    firstName: firstName,
                     lastName: lastName
                 },
-                location:{
-                    country:country,
-                    city:city
+                location: {
+                    country: country,
+                    city: city
                 }
             }
-            dispatch(setNewUserDataAC(user))
             usersAPI.push(user)
-    }
+            let userLoginData = {
+                data: {
+                    login: login,
+                    password: password,
+                    userID: userId
+                }
+            }
+            userLoginAPI.push(userLoginData)
+            let profileData = {
+                userID: userId
+            }
+            profileAPI.push(profileData)
+            dispatch(checkRegistrationAC(true))
+        }
     })
 }
 export default registrationReducer
