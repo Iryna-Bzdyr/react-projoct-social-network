@@ -15,6 +15,8 @@ export const config = {
 const fire = firebase.initializeApp(config);
 
 const database = fire.database();
+const storage = fire.storage()
+
 export const usersAPI =  database.ref('database/users/')
 export const profileAPI =  database.ref('database/profile/')
 export const userLoginAPI = database.ref('database/loginData/')
@@ -36,5 +38,10 @@ export const citiesAPI = (country) => {
         countryAPI.orderByChild('country').equalTo(country)
     )
 }
+
+const name="123"+Date.now();
+
+export const avatarStorageRef= storage.ref('/avatar/'+name)
+export const photoStorageRef= storage.ref('/photos/'+name)
 
 export default database;

@@ -1,4 +1,5 @@
 import database, {currentUserAPI, userAPI, usersAPI, profileAPI} from "../../firebase";
+import {toggleIsFetchingAC} from "./user-reducer";
 
 
 const addPost = 'ADD-POST';
@@ -25,7 +26,6 @@ let initialState = {
     sliderIsOpen: false,
     sliderAutoplay: false,
     userStatus: ""
-
 }
 
 
@@ -91,9 +91,37 @@ export const setUserPostThunk = (id) => (dispatch) => {
         snap.forEach(u => {
             data.push(u.val())
         })
+
+
         dispatch(setPostDataAC(data[0].post))
+        dispatch(toggleIsFetchingAC(false))
     })
 }
+
+
+export const setUserPhotoThunk = (id) => (dispatch) => {
+    let data = []
+    profileAPI.orderByChild('userID').equalTo(id).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+        let rowOrder = 0
+        let setRowOrder = (index) => {
+            if (index == 0 || index % 4 == 0) {
+                rowOrder = 3
+            } else if (index == 1 || index % 5 == 0) {
+                rowOrder = 1
+            } else {
+                rowOrder = 2
+            }
+            return rowOrder
+        }
+        const newData = data[0].photo.map((v, indexV) => ({...v, rows: setRowOrder(indexV)}))
+
+        dispatch(setPhotoDataAC(newData))
+    })
+}
+
 
 export const setUserStatusThunk = (id) => (dispath) => {
     userAPI(id).on('value', (snap) => {

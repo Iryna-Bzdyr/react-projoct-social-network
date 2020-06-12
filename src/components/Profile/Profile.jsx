@@ -6,8 +6,8 @@ import Activity from "./Activity/Activity";
 import Friends from "./Friends/Friends";
 import Groups from "./Groups/Groups";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import PhotoContainer from "./Photos/PhotoContainer";
 import MyPosts from "./MyPosts/MyPosts";
+import Photo from "./Photos/Photo";
 
 const Profile = (props) => {
 
@@ -29,7 +29,7 @@ const Profile = (props) => {
                     <Route path={`/profile/:userID?/MyPost`} render={() => <MyPosts/>}/>
                     <Route path='/profile/:userID?/Friends' render={() => <Friends/>}/>
                     <Route path='/profile/:userID?/Groups' render={() => <Groups/>}/>
-                    <Route path='/profile/:userID?/Photo' render={() => <PhotoContainer/>}/>
+                    <Route path='/profile/:userID?/Photo' render={() => <Photo/>}/>
 
                 </div>
             </div>

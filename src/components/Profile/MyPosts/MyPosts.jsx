@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './MyPosts.module.css'
 import {Button} from 'reactstrap';
 import {useParams} from "react-router";
@@ -9,16 +9,17 @@ import {setCurrentUserThunk} from "../../../Redux/Reducer/user-reducer";
 
 const MyPosts = React.memo(props => {
     let paramsData = useParams();
-    let id = +paramsData.userID
+    let [id, setID] = useState(+paramsData.userID)
     const loginUserID = useSelector(state => state.auth.userID)
     const postData = useSelector(state => state.profilePage.postData)
     const userData = useSelector(state => state.usersPage.users)
     const dispatch = useDispatch();
+
     useEffect(() => {
-        {
             !id ? dispatch(setUserPostThunk(loginUserID)) && dispatch(setCurrentUserThunk(loginUserID)) : dispatch(setUserPostThunk(id)) && dispatch(setCurrentUserThunk(id))
-        }
-    }, [dispatch])
+            setID(+paramsData.userID)
+
+    }, [paramsData.userID])
 
     // let newPostElement = React.createRef()
     // let addNewPost = () => {
@@ -28,7 +29,9 @@ const MyPosts = React.memo(props => {
     //     let text = newPostElement.current.value
     //     props.upDateNewPostText(text)
     // }
-
+        let addNewPost = () => {
+           console.log('Hello')
+        }
     return (
         <div>
             My post
@@ -36,8 +39,8 @@ const MyPosts = React.memo(props => {
                 {/*<div className={s.new__post__area}>*/}
                 {/*    <textarea onChange={onPostChange} ref={newPostElement}*/}
                 {/*              value={props.newPostText}/>*/}
-                {/*    <Button onClick={addNewPost} color="warning">Add</Button>{' '}*/}
-                {/*</div>*/}
+                    <Button onClick={addNewPost} color="warning">Add</Button>{' '}
+
                 New post
                 {
                     postData.map(post => <div>

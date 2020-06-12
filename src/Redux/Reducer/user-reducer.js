@@ -107,24 +107,30 @@ export const changeUserPage = ( page, pageSize) => (dispatch)=>{
     });
 }
 
-export const setUserThunk = (id) => (dispath)=>{
+export const setUserThunk = (id) => (dispatch)=>{
+    dispatch(toggleIsFetchingAC(true))
+    let user = []
     userAPI(id).on('value', (snap) => {
-        let user = []
         snap.forEach(u=>{
             user.push(u.val())
         })
-        dispath(setUsersAC(user))
-        dispath(setCurrentUserIdAC(id))
+        dispatch(setUsersAC(user))
+        dispatch(setCurrentUserIdAC(id))
+
     });
+    // if(user.length>0){
+    //     dispatch(toggleIsFetchingAC(false))
+    // }
+ setTimeout((  dispatch(toggleIsFetchingAC(false))), 2000)
 }
 
-export const setCurrentUserThunk = (id) => (dispath)=>{
+export const setCurrentUserThunk = (id) => (dispatch)=>{
     userAPI(id).on('value', (snap) => {
         let user = []
         snap.forEach(u=>{
             user.push(u.val())
         })
-        dispath(setUsersAC(user))
+        dispatch(setUsersAC(user))
     });
 }
 
