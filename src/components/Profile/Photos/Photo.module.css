@@ -17,3 +17,8 @@
 .Slide-text-174{
     display: none;
 }
+.changePhotoBlock{
+    position: absolute;
+    left: 20%;
+    top: 80%;
+}

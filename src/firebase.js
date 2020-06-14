@@ -32,6 +32,11 @@ export const currentUserAPI = (id) => {
         database.ref(`database/users/${id}`)
     )
 }
+export const currentUserPhotoAPI = (id) => {
+    return (
+        database.ref(`database/profile/${id}/photo`)
+    )
+}
 
 export const citiesAPI = (country) => {
     return (
@@ -39,9 +44,6 @@ export const citiesAPI = (country) => {
     )
 }
 
-const name="123"+Date.now();
 
-export const avatarStorageRef= storage.ref('/avatar/'+name)
-export const photoStorageRef= storage.ref('/photos/'+name)
-
+export const photoStorageRef=(name)=> storage.ref('/photo/'+name)
 export default database;

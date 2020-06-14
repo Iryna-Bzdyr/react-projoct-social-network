@@ -1,4 +1,4 @@
-import database, {currentUserAPI, userAPI, usersAPI, profileAPI} from "../../firebase";
+import database, {currentUserAPI, userAPI, currentUserPhotoAPI, profileAPI} from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
 
 
@@ -103,8 +103,10 @@ export const setUserPhotoThunk = (id) => (dispatch) => {
     let data = []
     profileAPI.orderByChild('userID').equalTo(id).on('value', (snap) => {
         snap.forEach(u => {
+            console.log(u.val)
             data.push(u.val())
         })
+        console.log(data)
         let rowOrder = 0
         let setRowOrder = (index) => {
             if (index == 0 || index % 4 == 0) {
@@ -144,5 +146,28 @@ export const updateStatusThunk = (id, status) => (dispath) => {
     // }))
 }
 
+export const addNewPhotoThunk = (id, url) => (dispath) => {
+    let data = []
+    profileAPI.orderByChild('userID').equalTo(id).on('value', (snap) => {
+        snap.forEach(u => {
+            console.log(u.val)
+            data.push(u.val())
+        })})
+    // console.log(currentUserPhotoAPI(id))
+    const photoID = Date.now()
+   let ref  = currentUserPhotoAPI(id).key()
+    console.log(ref)
+    //
+   // currentUserPhotoAPI(id).key().set({
+   //     id: photoID,
+   //     likes: 0,
+   //     url: url
+   // })
+    // ref.set({
+    //     id: photoID,
+    //     likes: 0,
+    //     url: url
+    // })
+}
 
 export default profileReducer
