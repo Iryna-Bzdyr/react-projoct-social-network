@@ -11,7 +11,7 @@ import MyFriends from "./MyFriends/MyFriends";
 const Navbar = (props) => {
 
     let friendsElement = props.users.map((friend, index) => <MyFriends key={index} id={friend.id}
-                                                                       imageUrl={friend.photo}/>)
+                                                                       imageUrl={friend.avatar.url}/>)
     return (
         <div className={s.nav}>
             <div>

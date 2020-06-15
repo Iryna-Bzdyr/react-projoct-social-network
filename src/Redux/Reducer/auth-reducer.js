@@ -1,25 +1,25 @@
-import {usersAPI, userLoginAPI} from "../../firebase";
+import {userLoginAPI} from "../../firebase";
 import {reset, stopSubmit} from 'redux-form';
+import {setCurrentUserIdAC, setCurrentUserMainData} from "./user-reducer";
+import {setCurrentUserProfileData} from "./profile-reducer";
 
 const setResultCode = 'SET-RESULT-CODE'
 const setUserID = 'SET-USER-ID'
-const setCurrentUser = 'SET-CURRENT-USER'
+const setCurrentLoginData = 'SET-CURRENT-USER'
 
 let initialState = {
-    login: null,
-    password: null,
     userID: null,
-    currentUser: [],
+    currentUserLoginData: '',
     resultCode: null,
     isFetching: false
 }
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case setCurrentUser:
+        case setCurrentLoginData:
             return {
                 ...state,
-                currentUser: [...action.currentUser]
+                currentUserLoginData: action.currentUserLoginData
             }
         case setResultCode:
             return {
@@ -36,39 +36,40 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setCurrentUserAC = (currentUser) => ({type: setCurrentUser, currentUser: currentUser})
+export const setCurrentUserLoginDataAC = (currentUserLoginData) => ({
+    type: setCurrentLoginData,
+    currentUserLoginData: currentUserLoginData
+})
 export const setResultCodeAC = (resultCode) => ({type: setResultCode, resultCode: resultCode})
 export const setUserIDAC = (userID) => ({type: setUserID, userID: userID})
 
-export const checkLogin = (login, password, formName) => (dispatch) => {
-    let user = []
-    let action = stopSubmit('LoginForm', {_error:"Incorrect login or password"})
+export const setLoginData =(login)=>(dispatch) =>{
     userLoginAPI.orderByChild('/login').equalTo(login).on('value', (snap) => {
-        snap.forEach(u => {
-            user.push(u.val())
-        })
-
-        if (user.length == 0) {
-            dispatch(setResultCodeAC(0))
-            dispatch(action)
-        } else if (user[0].password == password) {
-            dispatch(setUserIDAC(user[0].id))
-            usersAPI.orderByChild('id').equalTo(user[0].id).on('value', (snap) => {
-                let user = []
-                snap.forEach(u => {
-                    user.push(u.val())
-                })
-                dispatch(setCurrentUserAC(user))
-                dispatch(setResultCodeAC(1))
-                dispatch(reset(formName));
-            });
-        } else {
-            dispatch(setResultCodeAC(0))
-            dispatch(action)
-        }
-
+        snap.forEach(u=>(
+            dispatch(setCurrentUserLoginDataAC(u.val()))
+        ))
     })
 }
+
+export const checkLogin = (login, password, formName, currentUserLoginData) => (dispatch) => {
+    let action = stopSubmit('LoginForm', {_error: "Incorrect login or password"})
+if(!currentUserLoginData){
+    dispatch(setResultCodeAC(0))
+    dispatch(action)
+}
+else if (currentUserLoginData.password == password){
+    dispatch(setCurrentUserIdAC(currentUserLoginData.id))
+    dispatch(setCurrentUserMainData(currentUserLoginData.id))
+    dispatch(setCurrentUserProfileData(currentUserLoginData.id))
+    dispatch(setResultCodeAC(1))
+    dispatch(reset(formName))
+}
+else {
+    dispatch(setResultCodeAC(0))
+    dispatch(action)
+}
+}
+
 
 export default authReducer
 

@@ -11,12 +11,12 @@ import validate from '../../common/Validate/Validate'
 import {Link, Redirect} from "react-router-dom";
 import {renderFilledInput} from "../../common/MaterialForm/MaterialForm";
 import {useDispatch, useSelector} from "react-redux";
-import {checkLogin} from "../../Redux/Reducer/auth-reducer";
+import {checkLogin, setLoginData} from "../../Redux/Reducer/auth-reducer";
 import {checkRegistrationAC} from "../../Redux/Reducer/registration-reducer";
 
 
 
-const LoginForm = (props) => {
+let LoginForm = (props) => {
     const [values, setValues] = React.useState({
         amount: '',
         password: '',
@@ -34,11 +34,15 @@ const LoginForm = (props) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    const onLoginChange =(e)=>{
+props.dispatch(setLoginData(e.target.value))
+    }
     const {handleSubmit, pristine, reset, submitting, valid} = props
     return (
         <form onSubmit={handleSubmit}>
             <div className={s.form__wrapper}>
                 <Field
+                    onChange={onLoginChange}
                     name="login"
                     component={renderFilledInput}
                     label="Login"
@@ -85,19 +89,19 @@ const LoginForm = (props) => {
     )
 }
 
-const LoginReduxForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
+  LoginForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 
 
 const Login = (props) => {
     const dispatch = useDispatch();
     const resultCode = useSelector(state => state.auth.resultCode)
-    const userID = useSelector(state => state.auth.userID)
+    const currentUserLoginData = useSelector(state => state.auth.currentUserLoginData)
 
     useEffect(()=>{
         dispatch(checkRegistrationAC(false))
     })
     const onSubmit = (submitData) => {
-        dispatch(checkLogin(submitData.login, submitData.password, 'LoginForm'))
+        dispatch(checkLogin(submitData.login, submitData.password, 'LoginForm',currentUserLoginData))
 }
 
 if (resultCode==1){
@@ -113,7 +117,7 @@ if (resultCode==1){
                     <div className={s.background}></div>
                     <div className={s.form}>
                         <div className={s.form__headline}> Account Sign-in</div>
-                        <LoginReduxForm onSubmit={onSubmit}/>
+                        <LoginForm onSubmit={onSubmit} dispatch={dispatch}/>
                         <div className={s.defolt__user}>
                             <p className={s.block__icon}>
                                 <FaInfoCircle/>

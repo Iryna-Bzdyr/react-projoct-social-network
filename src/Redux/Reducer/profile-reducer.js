@@ -1,5 +1,14 @@
-import database, {currentUserAPI, userAPI, currentUserPhotoAPI, profileAPI, profileDataBase} from "../../firebase";
-import {setTotalUsersCountAC, toggleIsFetchingAC} from "./user-reducer";
+import database, {
+    currentUserAPI,
+    userAPI,
+    currentUserPhotoAPI,
+    profileAPI,
+    profileDataBase,
+    profilePhotoBase,
+    userAvatar,
+    currentUserProfileAPI
+} from "../../firebase";
+import {toggleIsFetchingAC} from "./user-reducer";
 
 
 const addPost = 'ADD-POST';
@@ -12,7 +21,7 @@ const setUserStatus = 'SET-USER-STATUS'
 
 
 let initialState = {
-    profileData: [],
+    profileData: '',
     postData: [],
     photoData: [],
     searchBar: [
@@ -34,7 +43,7 @@ const profileReducer = (state = initialState, action) => {
         case setProfileData:
             return {
                 ...state,
-                profileData: [...action.profileData]
+                profileData: action.profileData
             }
         case setPostData: {
             return {
@@ -75,8 +84,15 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-
 export const setProfileDataAC = (profileData) => ({type: setProfileData, profileData: profileData})
+
+export const setCurrentUserProfileData=(id)=>(dispatch)=>{
+    currentUserProfileAPI(id).on('value', (snap)=>{
+        dispatch(setProfileDataAC( snap.val()))
+    })
+}
+
+
 export const setPostDataAC = (postData) => ({type: setPostData, postData: postData})
 export const setPhotoDataAC = (photoData) => ({type: setPhotoData, photoData: photoData})
 export const addPostActionCreator = () => ({type: addPost})
@@ -103,10 +119,9 @@ export const setUserPhotoThunk = (id) => (dispatch) => {
     let data = []
     profileAPI.orderByChild('userID').equalTo(id).on('value', (snap) => {
         snap.forEach(u => {
-            console.log(u.val)
             data.push(u.val())
         })
-        console.log(data)
+
         let rowOrder = 0
         let setRowOrder = (index) => {
             if (index == 0 || index % 4 == 0) {
@@ -147,17 +162,35 @@ export const updateStatusThunk = (id, status) => (dispath) => {
 }
 
 export const addNewPhotoThunk = (id, url) => (dispath) => {
-
-    const photoID = 'PH'+Date.now()
-    let photoData = {photo:[{
-            id:photoID,
-            url:url,
-            likes:0
-        }]}
-    profileDataBase(id).set(photoData)
-
-
-
-
+    const photoID = 'PH' + Date.now()
+    let photoData = {
+        id: photoID,
+        url: url,
+        likes: 0
+    }
+    profilePhotoBase(id, photoID).set(photoData)
 }
+
+export const changeUserAvatar = (id, url) => (dispath) => {
+    let currentUser = {}
+
+    console.log(currentUser)
+    // if(currentUser.length>0){
+    //     userAvatar(id).update({
+    //         id: avatarData.id,
+    //         url: url,
+    //         likes: 0
+    //     })
+    // }
+    // else {
+    //     const photoID = 'AV' + Date.now()
+    //     let photoData = {
+    //         id: photoID,
+    //         url: url,
+    //         likes: 0
+    //     }
+    //     userAvatar(id).set(photoData)
+    // }
+}
+
 export default profileReducer

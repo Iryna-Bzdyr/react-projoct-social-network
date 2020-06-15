@@ -35,7 +35,7 @@ const Users = (props) => {
                                     <Grid item xs={3}>
                                         <div className={s.user__avatar}>
                                             <NavLink to={`/profile/${u.id}/Photo`}>
-                                                <img src={u.photo}/>
+                                                <img src={u.avatar.url}/>
                                             </NavLink>
                                             <div>
                                                 {u.followed

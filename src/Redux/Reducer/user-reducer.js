@@ -1,4 +1,4 @@
-import  {userAPI, usersAPI} from "../../firebase";
+import {currentUserAPI, userAPI, usersAPI} from "../../firebase";
 
 const follow = 'FOLLOW'
 const unFollow = 'UN-FOLLOW'
@@ -8,16 +8,16 @@ const setTotalUsersCount = 'SET-TOTAL-USERS-COUNT'
 const setPageSize = 'SET-PAGE-SIZE'
 const toggleIsFetching ='TOGGLE-IS-FETCHING'
 const setCurrentUserId = 'SET-CURRENT-USER-ID'
-
+const setCurrentUserData = 'SET-CURRENT-USER-DATA'
 
 let initialState = {
     users: [],
+    currentUserData:{},
     currentUserId:0,
     pageSize: 3,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching:false,
-
 }
 
 let userReducer = (state = initialState, action) => {
@@ -47,6 +47,11 @@ let userReducer = (state = initialState, action) => {
                 ...state,
                 users: [...action.users]
             }
+        case setCurrentUserData:
+            return {
+                ...state,
+                currentUserData:action.currentUserData
+            }
         case setCurrentPage:
             return {...state, currentPage: action.page}
         case setTotalUsersCount:
@@ -66,6 +71,13 @@ export const setTotalUsersCountAC = (totalUsers) => ({type: setTotalUsersCount, 
 export const setPageSizeAC = (pageSize) => ({type: setPageSize, pageSize: pageSize})
 export const toggleIsFetchingAC = (status) => ({type:toggleIsFetching, isFetching:status})
 export const setCurrentUserIdAC = (userID)=>({type:setCurrentUserId, currentUserId:userID})
+export const setCurrentUserDataAC = (currentUserData)=>({type:setCurrentUserData, currentUserData:currentUserData})
+
+export const setCurrentUserMainData=(id)=>(dispath)=>{
+    currentUserAPI(id).on('value', (snap)=>{
+        dispath(setCurrentUserDataAC( snap.val()))
+    })
+}
 
 
 export const getUsersThunkCreator = (pageSize, currentPage) => (dispatch)=>{

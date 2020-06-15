@@ -3,7 +3,7 @@ import s from './Settings.module.css'
 import UploadPhoto from "../../common/UploadPhoto/UploadPhoto";
 import {useDispatch, useSelector} from "react-redux";
 import {setOpenModalAC} from "../../Redux/Reducer/photo-reducer";
-import {addNewPhotoThunk} from "../../Redux/Reducer/profile-reducer";
+import {addNewPhotoThunk, changeUserAvatar} from "../../Redux/Reducer/profile-reducer";
 
 const Settings = (props) => {
     const dispatch = useDispatch();
@@ -13,11 +13,16 @@ const Settings = (props) => {
         dispatch(setOpenModalAC(false));
         dispatch(addNewPhotoThunk(authUserID,uploadFile))
     }
+    const changeAvatar = () => {
+        dispatch(setOpenModalAC(false));
+        dispatch(changeUserAvatar(authUserID,uploadFile))
+    }
 
     return (
         <div className={s.block}>
             Settings
-            <UploadPhoto display={true} backgroundColor="purple" width={800} label='Change avatar' changePhoto={addPhoto} />
+            <UploadPhoto display={true} backgroundColor="purple" label='Add photo' changePhoto={addPhoto} />
+            <UploadPhoto display={true} backgroundColor="purple"  label='Change avatar' changePhoto={changeAvatar} />
         </div>
     )
 }
