@@ -1,5 +1,5 @@
 import {stopSubmit} from "redux-form";
-import {userLoginAPI, usersAPI, profileAPI} from "../../firebase";
+import {userLoginAPI, usersAPI, profileAPI, userDataBase, loginDataBase, profileDataBase} from "../../firebase";
 
 
 const checkRegistration = 'CHECK-REGISTRATION'
@@ -21,7 +21,10 @@ const registrationReducer = (state = initialState, action) => {
     }
 }
 
-export const checkRegistrationAC = (correctRegistration)=>({type:checkRegistration,correctRegistration:correctRegistration})
+export const checkRegistrationAC = (correctRegistration) => ({
+    type: checkRegistration,
+    correctRegistration: correctRegistration
+})
 export const setNewUserDataThunk = (login, password, firstName, lastName, country, city) => (dispatch) => {
     let checkUser = []
     let action = stopSubmit('RegistrationForm', {_error: "User with such login already exit"})
@@ -34,7 +37,20 @@ export const setNewUserDataThunk = (login, password, firstName, lastName, countr
             dispatch(action)
         } else {
             let userId = (new Date()).getTime()
-            let user = {
+            // let user = {
+            //     id: userId,
+            //     fullName: {
+            //         firstName: firstName,
+            //         lastName: lastName
+            //     },
+            //     location: {
+            //         country: country,
+            //         city: city
+            //     }
+            // }
+            // usersAPI.push(user)
+
+            userDataBase(userId).set({
                 id: userId,
                 fullName: {
                     firstName: firstName,
@@ -44,20 +60,28 @@ export const setNewUserDataThunk = (login, password, firstName, lastName, countr
                     country: country,
                     city: city
                 }
-            }
-            usersAPI.push(user)
-            let userLoginData = {
-                data: {
-                    login: login,
-                    password: password,
-                    userID: userId
-                }
-            }
-            userLoginAPI.push(userLoginData)
-            let profileData = {
-                userID: userId
-            }
-            profileAPI.push(profileData)
+            })
+            loginDataBase(userId).set({
+                id: userId,
+                login: login,
+                password: password,
+            })
+
+            // let userLoginData = {
+            //     data: {
+            //         login: login,
+            //         password: password,
+            //         userID: userId
+            //     }
+            // }
+            // userLoginAPI.push(userLoginData)
+            profileDataBase(userId).set({
+                id: userId,
+            })
+            // let profileData = {
+            //     userID: userId
+            // }
+            // profileAPI.push(profileData)
             dispatch(checkRegistrationAC(true))
         }
     })

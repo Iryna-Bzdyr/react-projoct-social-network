@@ -79,6 +79,276 @@ window.store = store
 // //
 // // }]
 // //
+let profil = [
+    {  userID:1,
+        post:[
+            {
+                id:1,
+                text:'Hello World',
+                likes:2
+            },
+            {
+                id:2,
+                text:'Hello World',
+                likes:4
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+                likes:10
+            },
+        ],},
+    { userID:2,
+        post:[
+            {
+                id:1,
+                text:'Your limitation—it’s only your imagination.',
+                likes:2
+            },
+            {
+                id:2,
+                text:'Push yourself, because no one else is going to do it for you.',
+                likes:4
+            },
+            {
+                id:3,
+                text:'Sometimes later becomes never. Do it now.',
+                likes:2
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://www.whoa.in/20140224-Whoa/Beautiful-Natural-Sunrise-with-Orange-Background-HD-Wallpaper.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://thewallpaper.co/wp-content/uploads/2016/10/HD-Nature-Backgrounds-windows-apple-mac-wallpapers-4k-best-wallpaper-ever-wallpaper-for-iphone-free-download-1920x1080.jpg',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://i.pinimg.com/originals/ca/a2/65/caa2654e79e2dc88c6a3c18e1a353452.jpg',
+                likes:10
+            },
+            {
+                id:4,
+                url:'https://s1.1zoom.me/big0/24/Scenery_Seasons_Winter_469080.jpg',
+                likes:25
+            },
+        ],},
+    { userID:3,
+        post:[
+            {
+                id:1,
+                text:' Great things never come from comfort zones.',
+                likes:2
+            },
+            {
+                id:2,
+                text:'Dream it. Wish it. Do it.',
+                likes:4
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://www.ecopetit.cat/wpic/mpic/35-351275_hd-nature-wallpaper-plant-fresh-air-high-resolution.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://www.pixelstalk.net/wp-content/uploads/2016/07/Desktop-autumn-hd-wallpaper-3D.jpg',
+                likes:10
+            },
+        ],},
+    {userID:4,
+        post:[
+            {
+                id:1,
+                text:'Success doesn’t just find you. You have to go out and get it.',
+                likes:2
+            },
+            {
+                id:2,
+                text:'The harder you work for something, the greater you’ll feel when you achieve it.',
+                likes:4
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://i.ytimg.com/vi/xgTwHQjQsPc/maxresdefault.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://images-na.ssl-images-amazon.com/images/I/91eEfPOs3ML.jpg',
+                likes:10
+            },
+        ],},
+    { userID:5,
+        post:[
+            {
+                id:1,
+                text:'Don’t stop when you’re tired. Stop when you’re done.',
+                likes:2
+            },
+            {
+                id:2,
+                text:'Wake up with determination. Go to bed with satisfaction.',
+                likes:4
+            },
+            {
+                id:3,
+                text:'Do something today that your future self will thank you for.',
+                likes:25
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+                likes:10
+            },
+        ],},
+    {userID:5,
+        post:[
+            {
+                id:1,
+                text:'Don’t stop when you’re tired. Stop when you’re done.',
+                likes:2
+            },
+            {
+                id:2,
+                text:'Wake up with determination. Go to bed with satisfaction.',
+                likes:4
+            },
+            {
+                id:3,
+                text:'Do something today that your future self will thank you for.',
+                likes:25
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+                likes:10
+            },
+        ],},
+    {userID:7,
+        post:[
+            {
+                id:1,
+                text:'Don’t wait for opportunity. Create it.',
+                likes:2
+            },
+            {
+                id:2,
+                text:'Sometimes we’re tested not to show our weaknesses, but to discover our strengths.',
+                likes:4
+            },
+            {
+                id:3,
+                text:'The key to success is to focus on goals, not obstacles.',
+                likes:4
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+                likes:10
+            },
+        ],},
+    {userID:8,
+        post:[
+            {
+                id:1,
+                text:'Dream it. Believe it. Build it.',
+                likes:2
+            },
+            {
+                id:2,
+                text:' Don’t wait for opportunity. Create it.',
+                likes:4
+            }
+        ],
+        photo:[
+            {
+                id:1,
+                url:'https://i.pinimg.com/originals/3a/9f/02/3a9f0210ff7d1e83039ff237c81bacae.jpg',
+                likes:4
+            },
+            {
+                id:2,
+                url:'https://lh3.googleusercontent.com/proxy/gXn-Z2qng6aEp8mhx8Fd5LWTaNTSxpUKs9fBTKXz0q8f_8bXNG-0uQTEWihgoufD4ytY8znOSTWnv_3qTnHMrfKAD9aOYEMerfczu5x7cJsGhQqcVCGgFd1R9uzdOySI4BdZNkpuuIobZdVMSojcQmBKUfRF5NaAI3VWQhgn',
+                likes:4
+            },
+            {
+                id:3,
+                url:'https://pbs.twimg.com/media/DrkeOQ3U8AYk81m.jpg',
+                likes:10
+            },
+        ],},
+]
+
+
+//
 // // let profile=[
 //     {
 //         1:{
@@ -454,6 +724,12 @@ window.store = store
 // ]
 //
 //
+//
+
+
+
+
+
 // let loginData = {
 //     1: {
 //         resultCode: 1,
@@ -496,7 +772,7 @@ window.store = store
 //         data: {
 //             userID: 5,
 //             login: 'j.biel@gmail.com',
-//             password: 'jbiel1234'
+//                 password: 'jbiel1234'
 //         },
 //         messages: []
 //     },
@@ -530,4 +806,77 @@ window.store = store
 //
 // }
 
-
+// loginData=[
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 1,
+//             login: 'b.pitt@gmail.com',
+//             password: 'bpitt1234'
+//         },
+//         messages: []
+//     },
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 2,
+//             login: 'j.aniston@gmail.com',
+//             password: 'janiston1234'
+//         },
+//         messages: []
+//     },
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 3,
+//             login: 'c.hunnam@gmail.com',
+//             password: 'chunnam1234'
+//         },
+//         messages: []
+//     },
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 4,
+//             login: 'k.jenner@gmail.com',
+//             password: 'kjenner1234'
+//         },
+//         messages: []
+//     },
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 5,
+//             login: 'j.biel@gmail.com',
+//             password: 'jbiel1234'
+//         },
+//         messages: []
+//     },
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 6,
+//             login: 'j.leto@gmail.com',
+//             password: 'jleto1234'
+//         },
+//         messages: []
+//     },
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 7,
+//             login: 'l.dicaprio@gmail.com',
+//             password: 'ldicaprio1234'
+//         },
+//         messages: []
+//     },
+//     {
+//         resultCode: 1,
+//         data: {
+//             userID: 8,
+//             login: 'c.pine@gmail.com',
+//             password: 'cpine1234'
+//         },
+//         messages: []
+//     }
+// ]

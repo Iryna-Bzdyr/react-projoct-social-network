@@ -28,7 +28,7 @@ const AuthBlock =(props)=>{
 
         return (
            <div className={s.user__block}>
-               <img src={props.userData[0].photo}/>
+               {/*<img src={props.userData[0].photo}/>*/}
            </div>
         )
     }

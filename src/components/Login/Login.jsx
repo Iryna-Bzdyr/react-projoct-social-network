@@ -102,7 +102,8 @@ const Login = (props) => {
 
 if (resultCode==1){
     return (
-        <Redirect to={`/profile/${userID}/Photo`}  />
+        // <Redirect to={`/profile/${userID}/Photo`}  />
+        <Redirect to={`/settings`}  />
     )
 }
     return (

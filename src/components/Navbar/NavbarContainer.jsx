@@ -11,7 +11,7 @@ class NavbarIPIContainer extends React.Component {
         // axios.get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`).then(responce => {
         //     this.props.getUsers(responce.data)
         // })
-        database.ref('database/users/').on('value', (snap) => {
+        database.ref('database/userData/').on('value', (snap) => {
             let users = []
             snap.forEach(u => {
                 users.push(u.val())

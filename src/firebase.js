@@ -17,7 +17,7 @@ const fire = firebase.initializeApp(config);
 const database = fire.database();
 const storage = fire.storage()
 
-export const usersAPI =  database.ref('database/users/')
+export const usersAPI =  database.ref('database/userData/')
 export const profileAPI =  database.ref('database/profile/')
 export const userLoginAPI = database.ref('database/loginData/')
 export const countryAPI =  database.ref('citiesData/')
@@ -29,9 +29,10 @@ export const userAPI = (id)=>{
 
 export const currentUserAPI = (id) => {
     return (
-        database.ref(`database/users/${id}`)
+        database.ref(`database/userData/${id}`)
     )
 }
+
 export const currentUserPhotoAPI = (id) => {
     return (
         database.ref(`database/profile/${id}/photo`)
@@ -44,6 +45,22 @@ export const citiesAPI = (country) => {
     )
 }
 
+export const userDataBase= (id) =>{
+    return (
+        database.ref(`database/users/${id}`)
+    )
+}
+
+export const loginDataBase= (id) =>{
+    return (
+        database.ref(`database/loginData/${id}`)
+    )
+}
+export const profileDataBase= (id) =>{
+    return (
+        database.ref(`database/profile/${id}`)
+    )
+}
 
 export const photoStorageRef=(name)=> storage.ref('/photo/'+name)
 export default database;
