@@ -8,7 +8,6 @@ const setUserID = 'SET-USER-ID'
 const setCurrentLoginData = 'SET-CURRENT-USER'
 
 let initialState = {
-    userID: null,
     currentUserLoginData: '',
     resultCode: null,
     isFetching: false
@@ -41,7 +40,7 @@ export const setCurrentUserLoginDataAC = (currentUserLoginData) => ({
     currentUserLoginData: currentUserLoginData
 })
 export const setResultCodeAC = (resultCode) => ({type: setResultCode, resultCode: resultCode})
-export const setUserIDAC = (userID) => ({type: setUserID, userID: userID})
+
 
 export const setLoginData =(login)=>(dispatch) =>{
     userLoginAPI.orderByChild('/login').equalTo(login).on('value', (snap) => {

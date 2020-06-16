@@ -24,8 +24,6 @@ let  mapStateToProps = (state)=>{
     }
 }
 
-const AuthBlockContainer = connect(mapStateToProps, {
-    setUserThunk
-})(AuthBlockAPIContainer)
+const AuthBlockContainer = connect(mapStateToProps)(AuthBlockAPIContainer)
 
 export  default  AuthBlockContainer

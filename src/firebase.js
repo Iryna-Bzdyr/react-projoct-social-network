@@ -81,4 +81,5 @@ export const userAvatar= (id) =>{
 }
 
 export const photoStorageRef=(name)=> storage.ref('/photo/'+name)
+export const photoRef=(ImageUrl) => storage.refFromURL(ImageUrl)
 export default database;

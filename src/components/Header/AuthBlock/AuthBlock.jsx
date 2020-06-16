@@ -24,13 +24,13 @@ const AuthBlock =(props)=>{
             </div>
         )
     }
-    else {
-
-        return (
-           <div className={s.user__block}>
-               {/*<img src={props.userData[0].photo}/>*/}
-           </div>
-        )
-    }
+    // else {
+    //
+    //     return (
+    //        <div className={s.user__block}>
+    //            {/*<img src={props.userData[0].photo}/>*/}
+    //        </div>
+    //     )
+    // }
 }
 export default AuthBlock

@@ -6,9 +6,10 @@ import database, {
     profileDataBase,
     profilePhotoBase,
     userAvatar,
-    currentUserProfileAPI
+    currentUserProfileAPI, photoStorageRef,photoRef
 } from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
+import {deleteUploadAvatar, setFileRefAC, setUpLoadFileAC} from "./photo-reducer";
 
 
 const addPost = 'ADD-POST';
@@ -161,7 +162,7 @@ export const updateStatusThunk = (id, status) => (dispath) => {
     // }))
 }
 
-export const addNewPhotoThunk = (id, url) => (dispath) => {
+export const addNewPhotoThunk = (id, url) => (dispatch) => {
     const photoID = 'PH' + Date.now()
     let photoData = {
         id: photoID,
@@ -169,9 +170,11 @@ export const addNewPhotoThunk = (id, url) => (dispath) => {
         likes: 0
     }
     profilePhotoBase(id, photoID).set(photoData)
+    dispatch(setUpLoadFileAC(''))
+    dispatch(setFileRefAC(''))
 }
 
-export const changeUserAvatar = (id, url, currentUserData) => (dispath) => {
+export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
     const photoID = 'AV' + Date.now()
     if (!currentUserData.avatar) {
         userAvatar(id).set({
@@ -181,11 +184,21 @@ export const changeUserAvatar = (id, url, currentUserData) => (dispath) => {
             }
         )
     } else {
-        userAvatar(id).update({
-                url: url,
-            }
-        )
+
+        photoRef(currentUserData.avatar.url).delete().then(function () {
+            console.log('File was deleted')
+            userAvatar(id).update({
+                    url: url,
+                }
+            )
+        }).catch(function (error) {
+            // Uh-oh, an error occurred!
+        });
+        // dispatch(deleteUploadAvatar(photoStorageRef(currentUserData.avatar.url)))
+
     }
+    dispatch(setUpLoadFileAC(''))
+    dispatch(setFileRefAC(''))
 }
 
 export default profileReducer

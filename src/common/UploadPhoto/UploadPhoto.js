@@ -3,7 +3,13 @@ import {makeStyles} from '@material-ui/core';
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUploadAvatar, setOpenModalAC, setProgressAC, uploadAvatar} from "../../Redux/Reducer/photo-reducer";
+import {
+    deleteUploadAvatar, setFileRefAC,
+    setOpenModalAC,
+    setProgressAC,
+    setUpLoadFileAC,
+    uploadAvatar
+} from "../../Redux/Reducer/photo-reducer";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -80,7 +86,6 @@ const UploadPhoto = (props) => {
     }, [progress, openModal]);
 
     const handleOpen = () => {
-        debugger
         dispatch(setOpenModalAC(true));
         dispatch(setProgressAC(0))
     };
@@ -107,6 +112,8 @@ const UploadPhoto = (props) => {
             dispatch(setOpenModalAC(false));
             dispatch(setProgressAC(0))
             setBuffer(10)
+            dispatch(setUpLoadFileAC(''))
+            dispatch(setFileRefAC(''))
         }
     }
 

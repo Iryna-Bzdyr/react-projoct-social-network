@@ -8,18 +8,18 @@ import {setCurrentUserThunk} from "../../../Redux/Reducer/user-reducer";
 
 
 const MyPosts = React.memo(props => {
-    let paramsData = useParams();
-    let [id, setID] = useState(+paramsData.userID)
-    const loginUserID = useSelector(state => state.auth.userID)
-    const postData = useSelector(state => state.profilePage.postData)
-    const userData = useSelector(state => state.usersPage.users)
-    const dispatch = useDispatch();
+    // let paramsData = useParams();
+    // let [id, setID] = useState(+paramsData.userID)
+    // const loginUserID = useSelector(state => state.auth.userID)
+    // const postData = useSelector(state => state.profilePage.postData)
+    // const userData = useSelector(state => state.usersPage.users)
+    // const dispatch = useDispatch();
 
-    useEffect(() => {
-            !id ? dispatch(setUserPostThunk(loginUserID)) && dispatch(setCurrentUserThunk(loginUserID)) : dispatch(setUserPostThunk(id)) && dispatch(setCurrentUserThunk(id))
-            setID(+paramsData.userID)
-
-    }, [paramsData.userID])
+    // useEffect(() => {
+    //         !id ? dispatch(setUserPostThunk(loginUserID)) && dispatch(setCurrentUserThunk(loginUserID)) : dispatch(setUserPostThunk(id)) && dispatch(setCurrentUserThunk(id))
+    //         setID(+paramsData.userID)
+    //
+    // }, [paramsData.userID])
 
     // let newPostElement = React.createRef()
     // let addNewPost = () => {
@@ -29,33 +29,33 @@ const MyPosts = React.memo(props => {
     //     let text = newPostElement.current.value
     //     props.upDateNewPostText(text)
     // }
-        let addNewPost = () => {
-           console.log('Hello')
-        }
+    //     let addNewPost = () => {
+    //        console.log('Hello')
+    //     }
     return (
         <div>
             My post
-            <div>
+            {/*<div>*/}
                 {/*<div className={s.new__post__area}>*/}
                 {/*    <textarea onChange={onPostChange} ref={newPostElement}*/}
                 {/*              value={props.newPostText}/>*/}
-                    <Button onClick={addNewPost} color="warning">Add</Button>{' '}
+            {/*        <Button onClick={addNewPost} color="warning">Add</Button>{' '}*/}
 
-                New post
-                {
-                    postData.map(post => <div>
-                        <div className={s.wrapper}>
-                            <div className={s.avatar}>
-                                <img src={userData[0].photo}/>
-                            </div>
-                            <div>
-                                {post.text}
-                                {post.likes}
-                            </div>
-                        </div>
-                    </div>)
-                }
-            </div>
+            {/*    New post*/}
+            {/*    {*/}
+            {/*        postData.map(post => <div>*/}
+            {/*            <div className={s.wrapper}>*/}
+            {/*                <div className={s.avatar}>*/}
+            {/*                    <img src={userData[0].photo}/>*/}
+            {/*                </div>*/}
+            {/*                <div>*/}
+            {/*                    {post.text}*/}
+            {/*                    {post.likes}*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>)*/}
+            {/*    }*/}
+            {/*</div>*/}
         </div>
     )
 }

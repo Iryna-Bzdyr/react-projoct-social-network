@@ -81,9 +81,7 @@ export const setCurrentUserMainData=(id)=>(dispath)=>{
 
 
 export const getUsersThunkCreator = (pageSize, currentPage) => (dispatch)=>{
-
     dispatch(toggleIsFetchingAC(true))
-
     usersAPI.on('value', (snap)=> {
         let count = snap.numChildren()
         dispatch(setTotalUsersCountAC(count))
@@ -130,9 +128,7 @@ export const setUserThunk = (id) => (dispatch)=>{
         dispatch(setCurrentUserIdAC(id))
 
     });
-    // if(user.length>0){
-    //     dispatch(toggleIsFetchingAC(false))
-    // }
+
  setTimeout((  dispatch(toggleIsFetchingAC(false))), 2000)
 }
 

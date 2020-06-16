@@ -18,7 +18,7 @@ const Header = (props) => {
                     <input/>
                     <i><IoIosSearch/></i>
                 </div>
-               <AuthBlockContainer/>
+               {/*<AuthBlockContainer/>*/}
 
             </div>
         </header>
