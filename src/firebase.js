@@ -74,7 +74,7 @@ export const profilePhotoBase= (id, photoId) =>{
     )
 }
 
-export const userAvatar= (id, photoId) =>{
+export const userAvatar= (id) =>{
     return (
         database.ref(`database/users/${id}/avatar`)
     )

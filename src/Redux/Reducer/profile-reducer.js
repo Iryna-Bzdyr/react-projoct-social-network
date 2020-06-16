@@ -86,9 +86,9 @@ const profileReducer = (state = initialState, action) => {
 
 export const setProfileDataAC = (profileData) => ({type: setProfileData, profileData: profileData})
 
-export const setCurrentUserProfileData=(id)=>(dispatch)=>{
-    currentUserProfileAPI(id).on('value', (snap)=>{
-        dispatch(setProfileDataAC( snap.val()))
+export const setCurrentUserProfileData = (id) => (dispatch) => {
+    currentUserProfileAPI(id).on('value', (snap) => {
+        dispatch(setProfileDataAC(snap.val()))
     })
 }
 
@@ -171,26 +171,21 @@ export const addNewPhotoThunk = (id, url) => (dispath) => {
     profilePhotoBase(id, photoID).set(photoData)
 }
 
-export const changeUserAvatar = (id, url) => (dispath) => {
-    let currentUser = {}
-
-    console.log(currentUser)
-    // if(currentUser.length>0){
-    //     userAvatar(id).update({
-    //         id: avatarData.id,
-    //         url: url,
-    //         likes: 0
-    //     })
-    // }
-    // else {
-    //     const photoID = 'AV' + Date.now()
-    //     let photoData = {
-    //         id: photoID,
-    //         url: url,
-    //         likes: 0
-    //     }
-    //     userAvatar(id).set(photoData)
-    // }
+export const changeUserAvatar = (id, url, currentUserData) => (dispath) => {
+    const photoID = 'AV' + Date.now()
+    if (!currentUserData.avatar) {
+        userAvatar(id).set({
+                id: photoID,
+                url: url,
+                likes: 0
+            }
+        )
+    } else {
+        userAvatar(id).update({
+                url: url,
+            }
+        )
+    }
 }
 
 export default profileReducer

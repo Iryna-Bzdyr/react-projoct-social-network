@@ -80,6 +80,7 @@ const UploadPhoto = (props) => {
     }, [progress, openModal]);
 
     const handleOpen = () => {
+        debugger
         dispatch(setOpenModalAC(true));
         dispatch(setProgressAC(0))
     };

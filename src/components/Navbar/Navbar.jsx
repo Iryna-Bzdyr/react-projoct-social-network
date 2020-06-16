@@ -10,8 +10,8 @@ import MyFriends from "./MyFriends/MyFriends";
 
 const Navbar = (props) => {
 
-    let friendsElement = props.users.map((friend, index) => <MyFriends key={index} id={friend.id}
-                                                                       imageUrl={friend.avatar.url}/>)
+    // let friendsElement = props.users.map((friend, index) => <MyFriends key={index} id={friend.id}
+    //                                                                    imageUrl={friend.avatar.url}/>)
     return (
         <div className={s.nav}>
             <div>
@@ -78,7 +78,7 @@ const Navbar = (props) => {
 
 
             <div className={s.friend__block}>
-                {friendsElement}
+                {/*{friendsElement}*/}
             </div>
         </div>
     )
