@@ -23,10 +23,14 @@ export const userLoginAPI = database.ref('database/loginData/')
 export const countryAPI =  database.ref('citiesData/')
 export const userAPI = (id)=>{
     return (
-     usersAPI.orderByChild('id').equalTo(id)
+     usersAPI.orderByKey().equalTo(id)
     )
 }
-
+export const userProfileAPI = (id)=>{
+    return (
+        profileAPI.orderByChild('id').equalTo(id)
+    )
+}
 export const currentUserAPI = (id) => {
     return (
         database.ref(`database/users/${id}`)

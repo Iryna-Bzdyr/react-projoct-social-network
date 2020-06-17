@@ -7,9 +7,9 @@ import database, {
     profilePhotoBase,
     userAvatar,
     currentUserProfileAPI,
-    storage
+    storage, userProfileAPI
 } from "../../firebase";
-import {toggleIsFetchingAC} from "./user-reducer";
+import {setCurrentUserDataAC, toggleIsFetchingAC} from "./user-reducer";
 import {setFileRefAC, setUpLoadFileAC} from "./photo-reducer";
 
 
@@ -23,7 +23,7 @@ const setUserStatus = 'SET-USER-STATUS'
 
 
 let initialState = {
-    profileData: '',
+    profileData: [],
     postData: [],
     photoData: [],
     searchBar: [
@@ -45,7 +45,7 @@ const profileReducer = (state = initialState, action) => {
         case setProfileData:
             return {
                 ...state,
-                profileData: action.profileData
+                profileData: [...action.profileData]
             }
         case setPostData: {
             return {
@@ -89,8 +89,12 @@ const profileReducer = (state = initialState, action) => {
 export const setProfileDataAC = (profileData) => ({type: setProfileData, profileData: profileData})
 
 export const setCurrentUserProfileData = (id) => (dispatch) => {
-    currentUserProfileAPI(id).on('value', (snap) => {
-        dispatch(setProfileDataAC(snap.val()))
+    userProfileAPI(id).on('value', (snap) => {
+        let data = []
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+        dispatch(setProfileDataAC(data))
     })
 }
 
@@ -103,13 +107,13 @@ export const upDateNewPostTextActionCreator = (text) => (
 export const sliderIsOpenAC = (status) => ({type: sliderIsOpen, sliderIsOpen: status})
 export const setUsersStatusAC = (userStatus) => ({type: setUserStatus, userStatus})
 
+
 export const setUserPostThunk = (id) => (dispatch) => {
     let data = []
     profileAPI.orderByChild('userID').equalTo(id).on('value', (snap) => {
         snap.forEach(u => {
             data.push(u.val())
         })
-
 
         dispatch(setPostDataAC(data[0].post))
         dispatch(toggleIsFetchingAC(false))

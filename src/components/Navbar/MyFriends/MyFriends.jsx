@@ -21,8 +21,7 @@ let MyFriends = (props) => {
     //     this.props.changeUserPage(page, this.props.pageSize)
     // }
     let avatarUnit = usersData.map(u => (
-        u.avatar.url ? <Avatar src={u.avatar.url}></Avatar> : <Avatar
-            src='https://firebasestorage.googleapis.com/v0/b/react-social-network-a5dc0.appspot.com/o/photo%2F1014-512.png?alt=media&token=954ffa60-d24a-4f30-b890-9f8548b29167'></Avatar>
+       <Avatar src={u.avatar.url}></Avatar>
     ))
     return (
         <AvatarGroup max={4}>

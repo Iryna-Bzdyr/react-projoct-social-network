@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {setProfileDataAC, setUserStatusThunk, updateStatusThunk} from "../../Redux/Reducer/profile-reducer";
@@ -13,6 +13,7 @@ import PreLoader from "../../common/PreLoader/PreLoader";
 class ProfileContainer extends React.Component{
     componentDidMount() {
         let userID = +this.props.match.params.userID
+
 
         if(!userID){
             userID =this.props.userID

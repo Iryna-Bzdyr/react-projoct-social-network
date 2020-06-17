@@ -8,10 +8,10 @@ import Music from "./components/Music/Music";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
-import UserContainer from "./components/Users/UsersContainer";
 import Registration from "./components/Registration/Registration";
 import Login from "./components/Login/Login";
 import Users from "./components/Users/Users";
+import Profile from "./components/Profile/Profile";
 
 
 
@@ -25,7 +25,7 @@ const App = (props) => {
                     <Route path='/login' render={()=> <Login/>} />
                     <Route path='/registration' render={()=> <Registration/>} />
                     <Route path='/dialogs' render={()=> <DialogsContainer/>} />
-                    <Route path='/profile/:userID?' render={()=><ProfileContainer/>} />
+                    <Route path='/profile/:userID?' render={()=><Profile/>} />
                     <Route path='/news' component={News} />
                     <Route path='/music' component={Music} />
                     <Route path='/settings' component={Settings} />
