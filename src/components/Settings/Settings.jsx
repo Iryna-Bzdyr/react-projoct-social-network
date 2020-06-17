@@ -9,7 +9,7 @@ const Settings = (props) => {
     const dispatch = useDispatch();
     const uploadFile = useSelector(state => state.uploadPhotoReducer.upLoadFile)
     const authUserID = useSelector(state => state.usersPage.currentUserId)
-    const currentUserData = useSelector(state => state.usersPage.currentUserData)
+    const currentUserLoginData = useSelector(state => state.usersPage.currentUserData)
 
 
     const addPhoto = () => {
@@ -20,18 +20,18 @@ const Settings = (props) => {
 
     const changeAvatar = () => {
         dispatch(setOpenModalAC(false));
-        dispatch(changeUserAvatar(authUserID, uploadFile, currentUserData))
+        dispatch(changeUserAvatar(authUserID, uploadFile, currentUserLoginData))
 
     }
 
-    return (
-        <div className={s.block}>
-            Settings
-           
-            {/*<UploadPhoto display={true} backgroundColor="red" label='Add photo' changePhoto={addPhoto}/>*/}
-            <UploadPhoto display={true} backgroundColor="purple" label='Change avatar' changePhoto={changeAvatar}/>
-        </div>
-    )
+
+return (
+    <div className={s.block}>
+        Settings
+        {/*<UploadPhoto display={true} backgroundColor="red" label='Add photo' changePhoto={addPhoto}/>*/}
+        <UploadPhoto display={true} backgroundColor="purple" label='Change avatar' changePhoto={changeAvatar}/>
+    </div>
+)
 }
 
 

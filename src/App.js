@@ -11,6 +11,7 @@ import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UserContainer from "./components/Users/UsersContainer";
 import Registration from "./components/Registration/Registration";
 import Login from "./components/Login/Login";
+import Users from "./components/Users/Users";
 
 
 
@@ -28,7 +29,7 @@ const App = (props) => {
                     <Route path='/news' component={News} />
                     <Route path='/music' component={Music} />
                     <Route path='/settings' component={Settings} />
-                    <Route path='/users' render={()=><UserContainer/>}/>
+                    <Route path='/users' render={()=><Users/>}/>
                 </div>
             </div>
     );

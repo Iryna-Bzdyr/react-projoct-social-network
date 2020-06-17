@@ -6,10 +6,11 @@ import database, {
     profileDataBase,
     profilePhotoBase,
     userAvatar,
-    currentUserProfileAPI, photoStorageRef,photoRef
+    currentUserProfileAPI,
+    storage
 } from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
-import {deleteUploadAvatar, setFileRefAC, setUpLoadFileAC} from "./photo-reducer";
+import {setFileRefAC, setUpLoadFileAC} from "./photo-reducer";
 
 
 const addPost = 'ADD-POST';
@@ -162,7 +163,7 @@ export const updateStatusThunk = (id, status) => (dispath) => {
     // }))
 }
 
-export const addNewPhotoThunk = (id, url) => (dispatch) => {
+export const addNewPhotoThunk = (id, url) => (dispath) => {
     const photoID = 'PH' + Date.now()
     let photoData = {
         id: photoID,
@@ -170,35 +171,33 @@ export const addNewPhotoThunk = (id, url) => (dispatch) => {
         likes: 0
     }
     profilePhotoBase(id, photoID).set(photoData)
-    dispatch(setUpLoadFileAC(''))
-    dispatch(setFileRefAC(''))
 }
 
 export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
     const photoID = 'AV' + Date.now()
-    if (!currentUserData.avatar) {
-        userAvatar(id).set({
+    if (currentUserData.avatar.default) {
+        userAvatar(id).update({
                 id: photoID,
                 url: url,
-                likes: 0
+                likes: 0,
+                default: false
             }
         )
     } else {
 
-        photoRef(currentUserData.avatar.url).delete().then(function () {
-            console.log('File was deleted')
+        storage.refFromURL(currentUserData.avatar.url).delete().then(function () {
             userAvatar(id).update({
-                    url: url,
-                }
-            )
+                url: url,
+                likes: 0,
+                default: false
+            })
+
         }).catch(function (error) {
             // Uh-oh, an error occurred!
         });
-        // dispatch(deleteUploadAvatar(photoStorageRef(currentUserData.avatar.url)))
-
+        dispatch(setUpLoadFileAC(''))
+        dispatch(setFileRefAC(''))
     }
-    dispatch(setUpLoadFileAC(''))
-    dispatch(setFileRefAC(''))
 }
 
 export default profileReducer

@@ -15,7 +15,7 @@ export const config = {
 const fire = firebase.initializeApp(config);
 
 const database = fire.database();
-const storage = fire.storage()
+export const storage = fire.storage()
 
 export const usersAPI =  database.ref('database/users/')
 export const profileAPI =  database.ref('database/profile/')
