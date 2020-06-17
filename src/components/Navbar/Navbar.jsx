@@ -78,7 +78,7 @@ const Navbar = (props) => {
 
 
             <div className={s.friend__block}>
-                {/*{friendsElement}*/}
+               <MyFriends/>
             </div>
         </div>
     )

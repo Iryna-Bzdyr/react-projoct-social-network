@@ -6,9 +6,11 @@ import database, {
     profileDataBase,
     profilePhotoBase,
     userAvatar,
-    currentUserProfileAPI
+    currentUserProfileAPI,
+    storage
 } from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
+import {setFileRefAC, setUpLoadFileAC} from "./photo-reducer";
 
 
 const addPost = 'ADD-POST';
@@ -171,20 +173,30 @@ export const addNewPhotoThunk = (id, url) => (dispath) => {
     profilePhotoBase(id, photoID).set(photoData)
 }
 
-export const changeUserAvatar = (id, url, currentUserData) => (dispath) => {
+export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
     const photoID = 'AV' + Date.now()
-    if (!currentUserData.avatar) {
-        userAvatar(id).set({
+    if (currentUserData.avatar.default) {
+        userAvatar(id).update({
                 id: photoID,
                 url: url,
-                likes: 0
+                likes: 0,
+                default: false
             }
         )
     } else {
-        userAvatar(id).update({
+
+        storage.refFromURL(currentUserData.avatar.url).delete().then(function () {
+            userAvatar(id).update({
                 url: url,
-            }
-        )
+                likes: 0,
+                default: false
+            })
+
+        }).catch(function (error) {
+            // Uh-oh, an error occurred!
+        });
+        dispatch(setUpLoadFileAC(''))
+        dispatch(setFileRefAC(''))
     }
 }
 

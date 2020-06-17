@@ -38,7 +38,7 @@ let uploadPhotoReducer = (state = initialState, action) => {
     }
 }
 
-const setFileRefAC = (fileRef) => ({type: setFileRef, fileRef: fileRef})
+export const setFileRefAC = (fileRef) => ({type: setFileRef, fileRef: fileRef})
 export const setUpLoadFileAC = (upLoadFile) => ({type: setUpLoadFile, upLoadFile: upLoadFile})
 export const setProgressAC = (progress) => ({type: setProgress, progress: progress})
 export const setOpenModalAC = (openModal) => ({type: setOpenModal, openModal: openModal})

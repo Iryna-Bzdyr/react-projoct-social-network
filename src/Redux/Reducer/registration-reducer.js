@@ -52,6 +52,12 @@ export const setNewUserDataThunk = (login, password, firstName, lastName, countr
 
             userDataBase(userId).set({
                 id: userId,
+                avatar: {
+                    id: 'AV' + userId,
+                    likes: 0,
+                    url: 'https://firebasestorage.googleapis.com/v0/b/react-social-network-a5dc0.appspot.com/o/photo%2F1014-512.png?alt=media&token=566a73ee-6ba4-4b80-9a6f-3bf52f08eed0',
+                    default:true
+                },
                 fullName: {
                     firstName: firstName,
                     lastName: lastName
