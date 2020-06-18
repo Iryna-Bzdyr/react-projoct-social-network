@@ -21,13 +21,14 @@ const Users = (props) => {
     let [currentPage, setCurrentPage] = useState(1)
     let [pageSize] = useState(2)
     let [pagesCount, setPagesCount] = useState(0)
-
+    const [ spinner, setSpinner ] = useState(true);
     useEffect(() => {
         dispatch(changeUserPage(currentPage, pageSize))
         dispatch(setTotalUserCount())
         if (totalUserCount) {
             setPagesCount(Math.ceil(totalUserCount / pageSize))
         }
+        setTimeout(() => setSpinner(false), 1000)
     }, [totalUserCount, currentPage])
 
     let onPageChange = (page) => {
@@ -35,7 +36,7 @@ const Users = (props) => {
     }
 
     return (
-        !usersData.length ? <PreLoader></PreLoader> :
+        spinner ? <PreLoader></PreLoader> :
             <Container maxWidth="lg">
 
                 <div className={s.pagination__block}>

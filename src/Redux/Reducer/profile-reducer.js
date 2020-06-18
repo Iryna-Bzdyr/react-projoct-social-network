@@ -175,8 +175,8 @@ export const addNewPhotoThunk = (id, url) => (dispatch) => {
     dispatch(setFileRefAC(''))
 }
 
-export const deleteCurrentUserPhoto =(id,url)=>(dispatch)=>{
-    profilePhotoBase(id,url).remove().then(function () {
+export const deleteCurrentUserPhoto =(userId,photoId,url)=>(dispatch)=>{
+    profilePhotoBase(userId,photoId).remove().then(function () {
         storage.refFromURL(url).delete().then(function () {
             console.log('File was deleted')
         })

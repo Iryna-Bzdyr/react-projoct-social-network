@@ -5,16 +5,34 @@ import GridListTile from '@material-ui/core/GridListTile';
 import {AutoRotatingCarousel, Slide} from 'material-auto-rotating-carousel'
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {addNewPhotoThunk, setProfileDataAC, setUserPhotoThunk} from "../../../Redux/Reducer/profile-reducer";
+import {
+    addNewPhotoThunk,
+    deleteCurrentUserPhoto,
+    setUserPhotoThunk
+} from "../../../Redux/Reducer/profile-reducer";
 import UploadPhoto from "../../../common/UploadPhoto/UploadPhoto";
 import {setOpenModalAC} from "../../../Redux/Reducer/photo-reducer";
 import PreLoader from "../../../common/PreLoader/PreLoader";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import GridListTileBar from "@material-ui/core/GridListTileBar";
+import {makeStyles} from '@material-ui/core';
+import DeleteBtn from "../../../common/DeleteBtn/DeleteBtn";
 
+const useStyles = makeStyles((theme) => (
+    {
+        gridList:{
+            width: '80%'
+        },
+        gridListTileBar: {
+            backgroundColor: '#e6d2d1',
+            opacity: 0.8
+        },
+    }
+))
 
 let Photo = (props) => {
+    const classes = useStyles(props);
     let paramsData = useParams();
     let [id, setUserID] = useState('')
     const authUserID = useSelector(state => state.usersPage.currentUserId)
@@ -24,6 +42,8 @@ let Photo = (props) => {
     const photoData = useSelector(state => state.profilePage.photoData)
     const [changePhotoBlock, setChangePhotoBlock] = useState(false)
     const uploadFile = useSelector(state => state.uploadPhotoReducer.upLoadFile)
+    const [spinner, setSpinner] = useState(true);
+    const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
     useEffect(() => {
         if (!paramsData.userID) {
@@ -36,10 +56,11 @@ let Photo = (props) => {
 
             if (authUserID == id) {
                 setChangePhotoBlock(true)
+                setShowDeleteBtn(true)
             }
         }
-
-    }, [id])
+        setTimeout(() => setSpinner(false), 1000)
+    }, [id,setShowDeleteBtn])
 
     const openSlider = () => {
         setSliderIsOpen(true)
@@ -53,9 +74,18 @@ let Photo = (props) => {
         dispatch(addNewPhotoThunk(id, uploadFile))
         dispatch(setUserPhotoThunk(id))
     }
+    const deletePhoto = (userId,photoId,url)=>{
+        dispatch(deleteCurrentUserPhoto(userId,photoId,url))
+        dispatch(setUserPhotoThunk(id))
+    }
+const deleteBtn = (userId,photoId,url)=>{
+    return(
+        showDeleteBtn? <DeleteBtn deleteItem={()=>{deletePhoto(userId,photoId,url)}}></DeleteBtn>:<></>
+    )
+}
 
     return (
-        !id ? <PreLoader></PreLoader> :
+        spinner ? <PreLoader></PreLoader> :
             <>
                 <div className={s.changePhotoBlock}>
                     <UploadPhoto display={changePhotoBlock} label='Add photo' changePhoto={addPhoto}/>
@@ -79,17 +109,16 @@ let Photo = (props) => {
                 </AutoRotatingCarousel>
 
                 <div className={s.root}>
-                    <GridList className={s.gridList} cols={4} cellHeight={350}>
+                    <GridList cols={4} cellHeight={280} className={classes.gridList}>
                         {photoData.map((photo) => (
                             <GridListTile key={photo.id} cols={photo.rows || 2} >
                                 <img src={photo.url} onClick={openSlider} lassName={s.img}/>
-                                <GridListTileBar
-                                    actionIcon={
-                                        <IconButton
-                                            aria-label="delete"  className={s.deleteBtn}>
-                                            <DeleteIcon/>
-                                        </IconButton>
-                                    }
+                                <GridListTileBar className={classes.gridListTileBar}
+                                                 actionIcon={
+                                                    <div>
+                                                        {deleteBtn(authUserID,photo.id,photo.url)}
+                                                    </div>
+                                                 }
                                 />
 
                             </GridListTile>

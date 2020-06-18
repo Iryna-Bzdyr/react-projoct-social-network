@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import { Route } from "react-router-dom";
@@ -12,11 +12,18 @@ import Registration from "./components/Registration/Registration";
 import Login from "./components/Login/Login";
 import Users from "./components/Users/Users";
 import Profile from "./components/Profile/Profile";
+import PreLoader from "./common/PreLoader/PreLoader";
 
 
 
 const App = (props) => {
+    const [ spinner, setSpinner ] = useState(true);
+    useEffect(() => {
+        setTimeout(() => setSpinner(false), 2000)
+    }, []);
+
     return (
+        spinner ? <PreLoader></PreLoader> :
             <div className='app-wrapper'>
                 <Header />
                 <NavbarContainer/>

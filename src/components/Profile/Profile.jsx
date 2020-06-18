@@ -22,6 +22,7 @@ const Profile = (props) => {
     let [id, setUserID] = useState('')
     const authUserID = useSelector(state => state.usersPage.currentUserId)
     const searchBar = useSelector(state => state.profilePage.searchBar)
+    const [ spinner, setSpinner ] = useState(true);
 
     useEffect(() => {
         if (!paramsData.userID) {
@@ -31,6 +32,7 @@ const Profile = (props) => {
         }
         dispatch(setCurrentUserMainData(id))
         dispatch(setCurrentUserProfileData(id))
+        setTimeout(() => setSpinner(false), 1000)
     }, [id])
 
     let navigationElement = searchBar.map((pathName, index) => <SearchBarNavigation key={index}
@@ -38,7 +40,7 @@ const Profile = (props) => {
                                                                                     currentUserId={id}
     />)
     return (
-        !id ? <PreLoader></PreLoader> :
+        spinner ? <PreLoader></PreLoader> :
         <div className={s.wrapper}>
             <div className={s.content__inner}>
                 <ProfileInfo currentUserId={id}/>
