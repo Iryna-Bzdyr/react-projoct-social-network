@@ -22,3 +22,11 @@
     left: 20%;
     top: 80%;
 }
+
+.deleteBtn{
+     position: absolute;
+    z-index: 1000;
+ }
+.img{
+    z-index: 0;
+}

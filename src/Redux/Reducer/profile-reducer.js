@@ -175,7 +175,13 @@ export const addNewPhotoThunk = (id, url) => (dispatch) => {
     dispatch(setFileRefAC(''))
 }
 
-
+export const deleteCurrentUserPhoto =(id,url)=>(dispatch)=>{
+    profilePhotoBase(id,url).remove().then(function () {
+        storage.refFromURL(url).delete().then(function () {
+            console.log('File was deleted')
+        })
+    })
+}
 
 export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
     const photoID = 'AV' + Date.now()
@@ -196,7 +202,6 @@ export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
             })
 
         }).catch(function (error) {
-            // Uh-oh, an error occurred!
         });
         dispatch(setUpLoadFileAC(''))
         dispatch(setFileRefAC(''))

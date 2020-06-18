@@ -13,6 +13,8 @@ import {
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
 
 
 const useStyles = makeStyles((theme) => (
@@ -127,11 +129,11 @@ const UploadPhoto = (props) => {
         <div className={classes.paper}>
             <div className={classes.buttonBlock}>
                 <Button variant="contained" color="secondary" onClick={() => deletePhoto(fileRef)}
-                        disabled={uploadProgress < 100}>
+                        disabled={uploadProgress < 100} startIcon={<DeleteIcon />}>
                     Delete
                 </Button>
                 <Button variant="contained" color="primary" onClick={props.changePhoto}
-                        disabled={uploadProgress < 100}>
+                        disabled={uploadProgress < 100} endIcon={<SaveIcon />}>
                     {props.label}
                 </Button>
             </div>

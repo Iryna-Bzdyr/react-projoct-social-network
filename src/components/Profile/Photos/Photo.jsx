@@ -9,6 +9,9 @@ import {addNewPhotoThunk, setProfileDataAC, setUserPhotoThunk} from "../../../Re
 import UploadPhoto from "../../../common/UploadPhoto/UploadPhoto";
 import {setOpenModalAC} from "../../../Redux/Reducer/photo-reducer";
 import PreLoader from "../../../common/PreLoader/PreLoader";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import GridListTileBar from "@material-ui/core/GridListTileBar";
 
 
 let Photo = (props) => {
@@ -71,14 +74,24 @@ let Photo = (props) => {
                             mediaBackgroundStyle={{height: 450}}
                             style={{height: 450}}
                         >
+
                         </Slide>))}
                 </AutoRotatingCarousel>
 
                 <div className={s.root}>
-                    <GridList className={s.gridList} cols={4}>
+                    <GridList className={s.gridList} cols={4} cellHeight={350}>
                         {photoData.map((photo) => (
-                            <GridListTile key={photo.id} cols={photo.rows || 2}>
-                                <img src={photo.url} onClick={openSlider}/>
+                            <GridListTile key={photo.id} cols={photo.rows || 2} >
+                                <img src={photo.url} onClick={openSlider} lassName={s.img}/>
+                                <GridListTileBar
+                                    actionIcon={
+                                        <IconButton
+                                            aria-label="delete"  className={s.deleteBtn}>
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    }
+                                />
+
                             </GridListTile>
                         ))}
                     </GridList>
