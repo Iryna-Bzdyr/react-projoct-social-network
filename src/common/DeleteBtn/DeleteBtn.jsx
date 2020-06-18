@@ -27,9 +27,11 @@ const DeleteBtn = (props) =>{
     const dispatch = useDispatch();
     const openModal = useSelector(state => state.uploadPhotoReducer.openModal)
     const [openModal2,setModalOpen]=useState(false)
-    useEffect(() => {
-        setModalOpen(openModal)
-    }, [openModal]);
+    //
+    // useEffect(() => {
+    //     setModalOpen(false)
+    // }, [openModal2]);
+
     const handleOpen = () => {
         setModalOpen(true)
     };
@@ -50,7 +52,7 @@ const DeleteBtn = (props) =>{
                 aria-describedby="simple-modal-description"
             >
                 <div>
-                    <Button variant="contained" color="secondary" onClick={() => handleClose()}>
+                    <Button variant="contained" color="secondary" onClick={handleClose}>
                        NO
                     </Button>
                     <Button variant="contained" color="primary" onClick={props.deleteItem}
