@@ -3,13 +3,11 @@ import database, {
     userAPI,
     currentUserPhotoAPI,
     profileAPI,
-    profileDataBase,
     profilePhotoBase,
     userAvatar,
-    currentUserProfileAPI,
-    storage, userProfileAPI
+    storage, userProfileAPI,
 } from "../../firebase";
-import {setCurrentUserDataAC, toggleIsFetchingAC} from "./user-reducer";
+import {toggleIsFetchingAC} from "./user-reducer";
 import {setFileRefAC, setUpLoadFileAC} from "./photo-reducer";
 
 
@@ -123,11 +121,10 @@ export const setUserPostThunk = (id) => (dispatch) => {
 
 export const setUserPhotoThunk = (id) => (dispatch) => {
     let data = []
-    profileAPI.orderByChild('userID').equalTo(id).on('value', (snap) => {
+    currentUserPhotoAPI(id).on('value', (snap) => {
         snap.forEach(u => {
             data.push(u.val())
         })
-
         let rowOrder = 0
         let setRowOrder = (index) => {
             if (index == 0 || index % 4 == 0) {
@@ -139,9 +136,8 @@ export const setUserPhotoThunk = (id) => (dispatch) => {
             }
             return rowOrder
         }
-        const newData = data[0].photo.map((v, indexV) => ({...v, rows: setRowOrder(indexV)}))
-
-        dispatch(setPhotoDataAC(newData))
+        const newPhotoData = data.map((v, indexV) => ({...v, rows: setRowOrder(indexV)}))
+        dispatch(setPhotoDataAC(newPhotoData))
     })
 }
 
@@ -167,7 +163,7 @@ export const updateStatusThunk = (id, status) => (dispath) => {
     // }))
 }
 
-export const addNewPhotoThunk = (id, url) => (dispath) => {
+export const addNewPhotoThunk = (id, url) => (dispatch) => {
     const photoID = 'PH' + Date.now()
     let photoData = {
         id: photoID,
@@ -175,7 +171,11 @@ export const addNewPhotoThunk = (id, url) => (dispath) => {
         likes: 0
     }
     profilePhotoBase(id, photoID).set(photoData)
+    dispatch(setUpLoadFileAC(''))
+    dispatch(setFileRefAC(''))
 }
+
+
 
 export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
     const photoID = 'AV' + Date.now()
@@ -188,7 +188,6 @@ export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
             }
         )
     } else {
-
         storage.refFromURL(currentUserData.avatar.url).delete().then(function () {
             userAvatar(id).update({
                 url: url,

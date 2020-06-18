@@ -1,5 +1,5 @@
 import {stopSubmit} from "redux-form";
-import {userLoginAPI, usersAPI, profileAPI, userDataBase, loginDataBase, profileDataBase} from "../../firebase";
+import {userLoginAPI, userDataBase, loginDataBase, profileDataBase} from "../../firebase";
 
 
 const checkRegistration = 'CHECK-REGISTRATION'

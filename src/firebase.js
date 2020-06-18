@@ -37,17 +37,12 @@ export const currentUserAPI = (id) => {
     )
 }
 
-export const currentUserProfileAPI = (id) => {
-    return (
-        database.ref(`database/profile/${id}`)
-    )
-}
-
 export const currentUserPhotoAPI = (id) => {
     return (
         database.ref(`database/profile/${id}/photo`)
     )
 }
+
 
 export const citiesAPI = (country) => {
     return (

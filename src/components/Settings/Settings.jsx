@@ -21,7 +21,6 @@ const Settings = (props) => {
     const changeAvatar = () => {
         dispatch(setOpenModalAC(false));
         dispatch(changeUserAvatar(authUserID, uploadFile, currentUserLoginData))
-
     }
 
 

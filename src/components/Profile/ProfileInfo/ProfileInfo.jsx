@@ -9,9 +9,9 @@ import {useSelector} from "react-redux";
 const ProfileInfo = (props) => {
     let [id, setUserID] = useState('')
     const currentUserData = useSelector(state => state.usersPage.currentUserData)
-useEffect(()=>{
-    setUserID(props.currentUserId)
-})
+    useEffect(() => {
+        setUserID(props.currentUserId)
+    })
 
     if (!id) {
         return <PreLoader></PreLoader>
