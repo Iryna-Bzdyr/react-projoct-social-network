@@ -18,11 +18,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import {makeStyles} from '@material-ui/core';
 import DeleteBtn from "../../../common/DeleteBtn/DeleteBtn";
+import {setDeleteModalAC} from "../../../Redux/Reducer/process-reducer";
 
 const useStyles = makeStyles((theme) => (
     {
         gridList:{
-            width: '80%'
+            width: '70%'
         },
         gridListTileBar: {
             backgroundColor: '#e6d2d1',
@@ -77,10 +78,11 @@ let Photo = (props) => {
     const deletePhoto = (userId,photoId,url)=>{
         dispatch(deleteCurrentUserPhoto(userId,photoId,url))
         dispatch(setUserPhotoThunk(id))
+        dispatch(setDeleteModalAC(false))
     }
 const deleteBtn = (userId,photoId,url)=>{
     return(
-        showDeleteBtn? <DeleteBtn deleteItem={()=>{deletePhoto(userId,photoId,url)}}></DeleteBtn>:<></>
+        showDeleteBtn? <DeleteBtn deleteItem={()=>{deletePhoto(userId,photoId,url)}} label='Do you want to delete this photo'></DeleteBtn>:<></>
     )
 }
 

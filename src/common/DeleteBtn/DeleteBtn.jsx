@@ -8,59 +8,95 @@ import {setOpenModalAC} from "../../Redux/Reducer/photo-reducer";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import processReducer, {setDeleteModalAC} from "../../Redux/Reducer/process-reducer";
 
 const useStyles = makeStyles((theme) => (
     {
-        root:{
-            display: props => props.display===true?'flex':'none',
-        },
         modal: {
             display: 'flex',
+            padding: theme.spacing(1),
             alignItems: 'center',
             justifyContent: 'center',
         },
+        paper: {
+            width: 400,
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        },
+
+        btnBlock: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0px 60px'
+        }
     }
 ))
 
-const DeleteBtn = (props) =>{
-    const classes = useStyles(props);
+const DeleteBtn = (props) => {
     const dispatch = useDispatch();
-    const openModal = useSelector(state => state.uploadPhotoReducer.openModal)
-    const [openModal2,setModalOpen]=useState(false)
-    //
-    // useEffect(() => {
-    //     setModalOpen(false)
-    // }, [openModal2]);
+    const classes = useStyles(props);
+    const modalStage = useSelector(state => state.processReducer.deleteModalStage)
+    const [openModal, setModalOpen] = useState(false)
+
+    useEffect(() => {
+        setModalOpen(modalStage)
+    }, [modalStage]);
 
     const handleOpen = () => {
-        setModalOpen(true)
+        dispatch(setDeleteModalAC(true))
+        console.log(openModal)
     };
     const handleClose = () => {
-        setModalOpen(false)}
+        dispatch(setDeleteModalAC(false))
+        console.log(openModal)
+    }
+const body =(
+    <div className={classes.paper}>
 
-    return (
-        <div onClick={()=>{handleOpen()}}>
-            <IconButton color='#de2694'
-                        aria-label="delete" className={s.deleteBtn}>
-                <DeleteIcon/>
-            </IconButton>
-            <Modal
-                open={openModal2}
-                onClose={() => handleClose()}
-                className={classes.modal}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
+        <div>
+            <h3>{props.label}</h3>
+        </div>
+        <div className={classes.btnBlock}>
+            <Button variant="contained" color="secondary" onClick={() => {
+                handleClose()
+            }}>
+                NO
+            </Button>
+            <Button variant="contained" color="primary" onClick={props.deleteItem}
             >
-                <div>
-                    <Button variant="contained" color="secondary" onClick={handleClose}>
-                       NO
-                    </Button>
-                    <Button variant="contained" color="primary" onClick={props.deleteItem}
-                            >
-                       YES
-                    </Button>
-                </div>
-            </Modal>
+                YES
+            </Button>
+        </div>
+
+    </div>
+)
+    return (
+        <div>
+            <div onClick={() => {
+                handleOpen()
+            }}>
+                <IconButton color='#de2694'
+                            aria-label="delete">
+                    <DeleteIcon/>
+                </IconButton>
+            </div>
+
+            <div>
+                <Modal className={classes.modal}
+                       open={openModal}
+                       onClose={() => {
+                           handleClose()
+                       }}
+                       aria-labelledby="simple-modal-title"
+                       aria-describedby="simple-modal-description"
+                >
+                    {body}
+                </Modal>
+            </div>
         </div>
     )
 }

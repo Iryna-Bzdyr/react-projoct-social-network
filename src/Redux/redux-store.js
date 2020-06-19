@@ -9,6 +9,7 @@ import thunk from "redux-thunk";
 import registrationReducer from "./Reducer/registration-reducer";
 import locationReducer from "./Reducer/location-reducer";
 import uploadPhotoReducer from "./Reducer/photo-reducer";
+import processReducer from "./Reducer/process-reducer";
 
 let reducers = combineReducers({
     profilePage:profileReducer,
@@ -19,6 +20,7 @@ let reducers = combineReducers({
     registration:registrationReducer,
     location:locationReducer,
     uploadPhotoReducer:uploadPhotoReducer,
+    processReducer:processReducer,
     form: formReducer
 })
 
