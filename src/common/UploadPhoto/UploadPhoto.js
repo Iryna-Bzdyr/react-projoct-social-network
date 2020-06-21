@@ -4,11 +4,11 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import {useDispatch, useSelector} from "react-redux";
 import {
-    deleteUploadAvatar, setFileRefAC,
+    deleteUploadPhoto, setFileRefAC,
     setOpenModalAC,
     setProgressAC,
     setUpLoadFileAC,
-    uploadAvatar
+    uploadPhoto
 } from "../../Redux/Reducer/photo-reducer";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
@@ -97,19 +97,19 @@ const UploadPhoto = (props) => {
         dispatch(setProgressAC(0))
         setBuffer(10)
         if (photo) {
-            dispatch(deleteUploadAvatar(photo))
+            dispatch(deleteUploadPhoto(photo))
             document.getElementById('photo').value = ''
         }
     };
 
     const getFile = (e) => {
-        dispatch(uploadAvatar(e))
+        dispatch(uploadPhoto(e))
     }
 
 
     const deletePhoto = (photo) => {
         if (photo) {
-            dispatch(deleteUploadAvatar(photo))
+            dispatch(deleteUploadPhoto(photo))
             document.getElementById('photo').value = ''
             dispatch(setOpenModalAC(false));
             dispatch(setProgressAC(0))
@@ -121,7 +121,7 @@ const UploadPhoto = (props) => {
 
 
     const uploadForm = (
-        <Fab htmlFor="photo" component="label" type={'submit'} color="primary"
+        <Fab htmlFor="photo" size="medium" component="label" type={'submit'} color="primary"
              aria-label="add" onClick={() => handleOpen()}><AddIcon/></Fab>
     )
 

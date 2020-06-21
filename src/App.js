@@ -23,8 +23,8 @@ const App = (props) => {
     }, []);
 
     return (
-        spinner ? <PreLoader></PreLoader> :
             <div className='app-wrapper'>
+                <PreLoader display={spinner}></PreLoader>
                 <Header />
                 <NavbarContainer/>
 

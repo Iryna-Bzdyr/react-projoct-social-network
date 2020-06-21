@@ -7,28 +7,42 @@ import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addNewPhotoThunk,
-    deleteCurrentUserPhoto,
+    deleteCurrentUserPhoto, setPhotoDataAC,
     setUserPhotoThunk
 } from "../../../Redux/Reducer/profile-reducer";
 import UploadPhoto from "../../../common/UploadPhoto/UploadPhoto";
-import {setOpenModalAC} from "../../../Redux/Reducer/photo-reducer";
 import PreLoader from "../../../common/PreLoader/PreLoader";
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import {makeStyles} from '@material-ui/core';
 import DeleteBtn from "../../../common/DeleteBtn/DeleteBtn";
-import {setDeleteModalAC} from "../../../Redux/Reducer/process-reducer";
+import PhotoLikeBtn from "./PhotoLikeBtn";
+import LikePhotoUsers from "./LikePhotoUsers";
+import *as AOS from "aos";
+import "aos/dist/aos.css";
+import PhotoDeleteBtn from "./PhotoDeleteBtn";
 
 const useStyles = makeStyles((theme) => (
     {
-        gridList:{
+        gridList: {
             width: '70%'
         },
         gridListTileBar: {
-            backgroundColor: '#e6d2d1',
-            opacity: 0.8
+            backgroundColor: '#bdbfbd',
+            opacity: 0.8,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            margin:'0px',
+            padding:'0px'
         },
+        titleBlock: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        gridPhoto:{
+            height: '100%'
+        }
     }
 ))
 
@@ -46,6 +60,7 @@ let Photo = (props) => {
     const [spinner, setSpinner] = useState(true);
     const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
+
     useEffect(() => {
         if (!paramsData.userID) {
             setUserID(authUserID)
@@ -60,8 +75,11 @@ let Photo = (props) => {
                 setShowDeleteBtn(true)
             }
         }
+
+        AOS.init();
+        AOS.refresh();
         setTimeout(() => setSpinner(false), 1000)
-    }, [id,setShowDeleteBtn])
+    }, [ id])
 
     const openSlider = () => {
         setSliderIsOpen(true)
@@ -69,26 +87,29 @@ let Photo = (props) => {
     const closeSlider = () => {
         setSliderIsOpen(false)
     }
-
     const addPhoto = () => {
-        dispatch(setOpenModalAC(false));
         dispatch(addNewPhotoThunk(id, uploadFile))
-        dispatch(setUserPhotoThunk(id))
     }
-    const deletePhoto = (userId,photoId,url)=>{
-        dispatch(deleteCurrentUserPhoto(userId,photoId,url))
-        dispatch(setUserPhotoThunk(id))
-        dispatch(setDeleteModalAC(false))
+    const deletePhoto = (userId, photoId, url) => {
+
+        dispatch(deleteCurrentUserPhoto(userId, photoId, url))
+        console.log(photoId)
     }
-const deleteBtn = (userId,photoId,url)=>{
-    return(
-        showDeleteBtn? <DeleteBtn deleteItem={()=>{deletePhoto(userId,photoId,url)}} label='Do you want to delete this photo'></DeleteBtn>:<></>
-    )
-}
+
+    const deleteBtn = (userId, photoId, url) => {
+        return (
+            showDeleteBtn ? <DeleteBtn deleteItem={
+                deletePhoto(userId, photoId, url)
+            } label='Do you want to delete this photo'></DeleteBtn> : <></>
+        )
+    }
+
 
     return (
+
         spinner ? <PreLoader></PreLoader> :
             <>
+
                 <div className={s.changePhotoBlock}>
                     <UploadPhoto display={changePhotoBlock} label='Add photo' changePhoto={addPhoto}/>
                 </div>
@@ -111,18 +132,27 @@ const deleteBtn = (userId,photoId,url)=>{
                 </AutoRotatingCarousel>
 
                 <div className={s.root}>
-                    <GridList cols={4} cellHeight={280} className={classes.gridList}>
-                        {photoData.map((photo) => (
+                    <GridList cols={4} cellHeight={250} className={classes.gridList}>
+                        {photoData.map((photo,index) => (
                             <GridListTile key={photo.id} cols={photo.rows || 2} >
-                                <img src={photo.url} onClick={openSlider} lassName={s.img}/>
+                                <img className={classes.gridPhoto} src={photo.url} onClick={openSlider} lassName={s.img}/>
                                 <GridListTileBar className={classes.gridListTileBar}
+                                                 title={
+
+                                                     <PhotoLikeBtn id={id} photoID={photo.id} photoLikes={photo.likes} authUserID={authUserID}/>
+
+                                                 }
+                                                 subtitle={<LikePhotoUsers photoID={photo.id} id={id} photoLikes={photo.likes}></LikePhotoUsers>}
                                                  actionIcon={
-                                                    <div>
-                                                        {deleteBtn(authUserID,photo.id,photo.url)}
-                                                    </div>
+                                                     // <button onClick={()=>deletePhoto(authUserID,photo.id,photo.url)}>DELETE</button>
+                                                     <PhotoDeleteBtn authUserID={authUserID}
+                                                                     currentUserID={id}
+                                                                     photoID={photo.id}
+                                                                     photoUrl={photo.url}
+                                                     ></PhotoDeleteBtn>
+
                                                  }
                                 />
-
                             </GridListTile>
                         ))}
                     </GridList>

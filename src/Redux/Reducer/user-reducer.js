@@ -1,7 +1,6 @@
-import { userAPI, usersAPI} from "../../firebase";
+import {checkFollowerAPI, followerAPI, userAPI, usersAPI} from "../../firebase";
 
-const follow = 'FOLLOW'
-const unFollow = 'UN-FOLLOW'
+
 const setUsers = 'SET-USERS'
 const setCurrentPage = 'SET-CURRENT-PAGE'
 const setTotalUsersCount = 'SET-TOTAL-USERS-COUNT'
@@ -9,10 +8,12 @@ const setPageSize = 'SET-PAGE-SIZE'
 const toggleIsFetching = 'TOGGLE-IS-FETCHING'
 const setCurrentUserId = 'SET-CURRENT-USER-ID'
 const setCurrentUserData = 'SET-CURRENT-USER-DATA'
+const setFollowUsers = 'SET-FOLLOW-USERS'
 
 let initialState = {
     users: [],
     currentUserData: [],
+    followUsers: [],
     currentUserId: 0,
     pageSize: 3,
     totalUsersCount: 0,
@@ -22,26 +23,6 @@ let initialState = {
 
 let userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case follow:
-            return {
-                ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
-            }
-        case unFollow:
-            return {
-                ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
-            }
         case setUsers:
             return {
                 ...state,
@@ -51,6 +32,11 @@ let userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentUserData: [...action.currentUserData]
+            }
+        case setFollowUsers:
+            return {
+                ...state,
+                followUsers: [...action.followUsers]
             }
         case setCurrentPage:
             return {...state, currentPage: action.page}
@@ -66,15 +52,14 @@ let userReducer = (state = initialState, action) => {
             return state
     }
 }
-export const followAC = (userId) => ({type: follow, userId})
-export const unfollowAC = (userId) => ({type: unFollow, userId})
+
 export const setUsersAC = (users) => ({type: setUsers, users})
 export const setCurrentPageAC = (currentPage) => ({type: setCurrentPage, page: currentPage})
 export const setTotalUsersCountAC = (totalUsers) => ({type: setTotalUsersCount, totalUsersCount: totalUsers})
-export const setPageSizeAC = (pageSize) => ({type: setPageSize, pageSize: pageSize})
 export const toggleIsFetchingAC = (status) => ({type: toggleIsFetching, isFetching: status})
 export const setCurrentUserIdAC = (userID) => ({type: setCurrentUserId, currentUserId: userID})
 export const setCurrentUserDataAC = (currentUserData) => ({type: setCurrentUserData, currentUserData: currentUserData})
+
 
 export const setCurrentUserMainData = (id) => (dispath) => {
     userAPI(`${id}`).on('value', (snap) => {
@@ -161,5 +146,37 @@ export const setCurrentUserThunk = (id) => (dispatch) => {
         dispatch(setUsersAC(user))
     });
 }
+
+export const followThunk = (currentID, followUserID) => (dispatch) => {
+    followerAPI(currentID, followUserID).set({
+        userID: followUserID
+    })
+    dispatch(checkFollow(currentID, followUserID))
+}
+export const unFollowThunk = (currentID, followUserID) => (dispatch) => {
+    followerAPI(currentID, followUserID).remove()
+    dispatch(checkFollow(currentID, followUserID))
+}
+
+export const checkFollow = (currentID, followUserID) => (dispatch) => {
+    let data = []
+    checkFollowerAPI(currentID).orderByChild('userID').equalTo(followUserID).on('value', (snap) => {
+
+        snap.forEach(u => {
+            data.push(u.val())
+            console.log(u.val())
+        })
+    })
+    let check = 0
+    if(data.length>0){
+        check = data[0].userID
+    }
+    else {
+        check = 0
+    }
+    return check
+}
+
+
 
 export default userReducer

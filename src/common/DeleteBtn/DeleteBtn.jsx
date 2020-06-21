@@ -1,18 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton";
-import s from "../../components/Profile/Photos/Photo.module.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import {setOpenModalAC} from "../../Redux/Reducer/photo-reducer";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-import SaveIcon from "@material-ui/icons/Save";
-import processReducer, {setDeleteModalAC} from "../../Redux/Reducer/process-reducer";
+import  {setDeleteModalAC} from "../../Redux/Reducer/process-reducer";
 
 const useStyles = makeStyles((theme) => (
     {
+        root: {
+            alignItems: 'center',
+        },
         modal: {
+            opacity:0.4,
             display: 'flex',
             padding: theme.spacing(1),
             alignItems: 'center',
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => (
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '0px 60px'
-        }
+        },
     }
 ))
 
@@ -66,7 +67,7 @@ const body =(
             }}>
                 NO
             </Button>
-            <Button variant="contained" color="primary" onClick={props.deleteItem}
+            <Button variant="contained" color="primary" onClick={()=>props.deleteItem}
             >
                 YES
             </Button>
@@ -75,7 +76,7 @@ const body =(
     </div>
 )
     return (
-        <div>
+        <div className={classes.root}>
             <div onClick={() => {
                 handleOpen()
             }}>
@@ -93,6 +94,7 @@ const body =(
                        }}
                        aria-labelledby="simple-modal-title"
                        aria-describedby="simple-modal-description"
+
                 >
                     {body}
                 </Modal>

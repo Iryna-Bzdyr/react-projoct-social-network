@@ -43,7 +43,7 @@ export const setUpLoadFileAC = (upLoadFile) => ({type: setUpLoadFile, upLoadFile
 export const setProgressAC = (progress) => ({type: setProgress, progress: progress})
 export const setOpenModalAC = (openModal) => ({type: setOpenModal, openModal: openModal})
 
-export const uploadAvatar = (event) => (dispatch) => {
+export const uploadPhoto = (event) => (dispatch) => {
     const file = event.target.files[0]
     const fileName ="123" + Date.now() + '.' + file.type.split('/')[1]
     const filePath = photoStorageRef(fileName)
@@ -58,7 +58,7 @@ export const uploadAvatar = (event) => (dispatch) => {
     });
 }
 
-export const deleteUploadAvatar = (desertRef) => (dispatch) => {
+export const deleteUploadPhoto = (desertRef) => (dispatch) => {
     desertRef.delete().then(function () {
         console.log('File was deleted')
 

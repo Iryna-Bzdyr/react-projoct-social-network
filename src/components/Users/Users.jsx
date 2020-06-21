@@ -13,6 +13,10 @@ import {
 } from "../../Redux/Reducer/user-reducer";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
+import FollowBtn from "./FollowBtn";
+import *as AOS from "aos";
+import "aos/dist/aos.css";
+
 
 const Users = (props) => {
     const dispatch = useDispatch();
@@ -21,7 +25,8 @@ const Users = (props) => {
     let [currentPage, setCurrentPage] = useState(1)
     let [pageSize] = useState(2)
     let [pagesCount, setPagesCount] = useState(0)
-    const [ spinner, setSpinner ] = useState(true);
+    const [spinner, setSpinner] = useState(true);
+
     useEffect(() => {
         dispatch(changeUserPage(currentPage, pageSize))
         dispatch(setTotalUserCount())
@@ -29,6 +34,8 @@ const Users = (props) => {
             setPagesCount(Math.ceil(totalUserCount / pageSize))
         }
         setTimeout(() => setSpinner(false), 1000)
+        AOS.init();
+        AOS.refresh();
     }, [totalUserCount, currentPage])
 
     let onPageChange = (page) => {
@@ -46,7 +53,7 @@ const Users = (props) => {
                 <Container maxWidth="md" className={s.card__wrapper}>
                     {
                         usersData.map(u =>
-                            <Grid container spacing={5}>
+                            <Grid container spacing={5} data-aos="fade-up" data-aos-duration="2000">
                                 <Grid item xs={12}>
                                     <Paper elevation={3} className={s.user__card}>
                                         <Grid container>
@@ -56,14 +63,7 @@ const Users = (props) => {
                                                         <img src={u.avatar.url}/>
                                                     </NavLink>
                                                     <div>
-                                                        {u.followed
-                                                            ? <button onClick={() => {
-                                                                props.unFollow(u.id)
-                                                            }} className={s.unfollow__btn}>UNFOLLOW</button>
-                                                            : <button onClick={() => {
-                                                                props.follow(u.id)
-                                                            }} className={s.follow__btn}>FOLLOW</button>
-                                                        }
+                                                        <FollowBtn id={u.id}></FollowBtn>
                                                     </div>
                                                 </div>
                                             </Grid>
@@ -91,8 +91,8 @@ const Users = (props) => {
 }
 
 
-// export default compose(
-//     withAuthRedirect
-// )(Users)
+export default compose(
+    withAuthRedirect
+)(Users)
 
-export default Users
+// export default Users

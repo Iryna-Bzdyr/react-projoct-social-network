@@ -5,10 +5,12 @@ import database, {
     profileAPI,
     profilePhotoBase,
     userAvatar,
-    storage, userProfileAPI,
+    storage, userProfileAPI, profilePhotoBaseLike, checkUserPhotoLike, profileDataBase, usersAPI, profilePostBase,
 } from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
-import {setFileRefAC, setUpLoadFileAC} from "./photo-reducer";
+import {setFileRefAC, setOpenModalAC, setUpLoadFileAC} from "./photo-reducer";
+import {setDeleteModalAC} from "./process-reducer";
+import {register} from "../../serviceWorker";
 
 
 const addPost = 'ADD-POST';
@@ -127,17 +129,21 @@ export const setUserPhotoThunk = (id) => (dispatch) => {
         })
         let rowOrder = 0
         let setRowOrder = (index) => {
-            if (index == 0 || index % 4 == 0) {
+            if (index == 0 || index % 8 == 0) {
                 rowOrder = 3
-            } else if (index == 1 || index % 5 == 0) {
+            } else if (index == 1 || index % 5 == 0|| index % 4 == 0|| index % 6 == 0|| index % 7 == 0|| index % 9 == 0) {
                 rowOrder = 1
             } else {
                 rowOrder = 2
             }
             return rowOrder
         }
+        // const orderPhotoData = data.map((v,indexV)=>({...v, order:indexV}))
+        // const sortPhotoData = orderPhotoData.sort((a,b)=>b.order-a.order)
         const newPhotoData = data.map((v, indexV) => ({...v, rows: setRowOrder(indexV)}))
         dispatch(setPhotoDataAC(newPhotoData))
+        // dispatch(setPhotoDataAC(data))
+
     })
 }
 
@@ -171,14 +177,18 @@ export const addNewPhotoThunk = (id, url) => (dispatch) => {
         likes: 0
     }
     profilePhotoBase(id, photoID).set(photoData)
+    dispatch(setOpenModalAC(false));
+    dispatch(setUserPhotoThunk(id))
     dispatch(setUpLoadFileAC(''))
     dispatch(setFileRefAC(''))
 }
 
-export const deleteCurrentUserPhoto =(userId,photoId,url)=>(dispatch)=>{
-    profilePhotoBase(userId,photoId).remove().then(function () {
+export const deleteCurrentUserPhoto = (userId, photoId, url) => (dispatch) => {
+    profilePhotoBase(userId, photoId).remove().then(function () {
         storage.refFromURL(url).delete().then(function () {
             console.log('File was deleted')
+            // dispatch(setUserPhotoThunk(userId))
+            dispatch(setDeleteModalAC(false))
         })
     })
 }
@@ -206,6 +216,76 @@ export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
         dispatch(setUpLoadFileAC(''))
         dispatch(setFileRefAC(''))
     }
+}
+
+//Photo likes block
+
+export const addLikePhoto = (userID, photoID, likes, currentUserID) => (dispatch) => {
+    profilePhotoBase(userID, photoID).update(
+        {likes: likes + 1}
+    )
+    profilePhotoBaseLike(userID, photoID,currentUserID).set({
+        userID: currentUserID
+    })
+    dispatch(setUserPhotoThunk(userID))
+}
+
+export const photoLikesData = (id, photoId,currentUserID) => (dispatch) => {
+    let data = []
+    checkUserPhotoLike(id, photoId).orderByChild('userID').equalTo(currentUserID).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+    })
+let check = 0
+    if(data.length>0){
+        check = data[0].userID
+    }
+    else {
+        check = 0
+    }
+    return check
+}
+
+
+export const deleteLikePhoto = (userID, photoID, likes, currentUserID) => (dispatch) => {
+    profilePhotoBase(userID, photoID).update(
+        {likes: likes - 1}
+    )
+    profilePhotoBaseLike(userID, photoID,currentUserID).remove()
+    dispatch(setUserPhotoThunk(userID))
+}
+
+export const photoLikesUserData= (id,photoId)=>(dispatch)=>{
+    let data =[]
+    usersAPI.on('value', (snap) =>{
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+    })
+    let users = []
+    data.forEach((u)=>{
+        if(dispatch(photoLikesData(id,photoId,u.id))==u.id){
+            users.push(u)
+        }
+    })
+    return users
+}
+
+
+//new post
+export const addNewPostThunk = (id, url) => (dispatch) => {
+    const postID = 'PS' + Date.now()
+    let postData = {
+        id: postID,
+        url: url,
+        likes: 0
+    }
+    profilePostBase(id, postID).set(postData)
+
+    // dispatch(setUserPhotoThunk(id))
+    dispatch(setUpLoadFileAC(''))
+    dispatch(setFileRefAC(''))
 }
 
 export default profileReducer

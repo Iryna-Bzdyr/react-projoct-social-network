@@ -4,6 +4,7 @@ import UploadPhoto from "../../common/UploadPhoto/UploadPhoto";
 import {useDispatch, useSelector} from "react-redux";
 import {setOpenModalAC} from "../../Redux/Reducer/photo-reducer";
 import {addNewPhotoThunk, changeUserAvatar} from "../../Redux/Reducer/profile-reducer";
+import PostBlock from "../../common/PostBlock/PostBlock";
 
 const Settings = (props) => {
     const dispatch = useDispatch();
@@ -28,7 +29,8 @@ return (
     <div className={s.block}>
         Settings
         {/*<UploadPhoto display={true} backgroundColor="red" label='Add photo' changePhoto={addPhoto}/>*/}
-        <UploadPhoto display={true} backgroundColor="purple" label='Change avatar' changePhoto={changeAvatar}/>
+        {/*<UploadPhoto display={true} backgroundColor="purple" label='Change avatar' changePhoto={changeAvatar}/>*/}
+        <PostBlock></PostBlock>
     </div>
 )
 }

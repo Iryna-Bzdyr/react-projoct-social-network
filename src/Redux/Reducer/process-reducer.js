@@ -1,8 +1,10 @@
+import {profilePhotoBase} from "../../firebase";
 
 let setDeleteModal = 'SET-DELETE-MODAL'
-
+let setFetching = 'SET-FETCHING'
 let initialState = {
-    deleteModalStage:false
+    deleteModalStage:false,
+    fetching:true,
 }
 
 let processReducer = (state=initialState,action)=>{
@@ -12,6 +14,11 @@ let processReducer = (state=initialState,action)=>{
                 ...state,
                 deleteModalStage:action.deleteModalStage
             }
+        case setFetching:
+            return {
+                ...state,
+                fetching:action.fetching
+            }
         default: {
                 return state
          }
@@ -20,5 +27,6 @@ let processReducer = (state=initialState,action)=>{
 
 
 export const setDeleteModalAC = (deleteModalStage) => ({type:setDeleteModal,deleteModalStage:deleteModalStage})
+export const setSetFetchingAC = (fetching) => ({type:setFetching,fetching:fetching})
 
 export default processReducer
