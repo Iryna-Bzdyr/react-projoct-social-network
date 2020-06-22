@@ -78,7 +78,6 @@ let Photo = (props) => {
             }
 
         }
-
         AOS.init();
         AOS.refresh();
         setTimeout(() => setSpinner(false), 1000)
@@ -127,7 +126,7 @@ let Photo = (props) => {
                 </AutoRotatingCarousel>
 
                 <div className={s.root}>
-                    <GridList cols={4} cellHeight={320} className={classes.gridList}>
+                    <GridList cols={4} cellHeight={290} className={classes.gridList}>
                         {photoData.map((photo, index) => (
                             <GridListTile key={photo.id} cols={photo.rows || 2}>
                                 <img className={classes.gridPhoto} src={photo.url} onClick={openSlider}

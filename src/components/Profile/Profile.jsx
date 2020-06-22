@@ -35,6 +35,8 @@ const Profile = (props) => {
         setTimeout(() => setSpinner(false), 1000)
     }, [id])
 
+
+
     let navigationElement = searchBar.map((pathName, index) => <SearchBarNavigation key={index}
                                                                                     pathName={pathName.name}
                                                                                     currentUserId={id}

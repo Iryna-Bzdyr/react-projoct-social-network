@@ -1,5 +1,30 @@
 
-
-.postBlock{
+.postBlock {
     padding: 20px 15%;
+}
+
+.root {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.avatar {
+
+}
+
+.media {
+    height: 0;
+    padding-top: 56.25%
+}
+.like__block{
+    width: 100px;
+
+}
+.textArea{
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px 2px #bbc0c7
+}
+.show__btn{
+    float: right;
 }

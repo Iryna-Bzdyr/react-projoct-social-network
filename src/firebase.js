@@ -101,15 +101,27 @@ export const userAvatar= (id) =>{
         database.ref(`database/users/${id}/avatar`)
     )
 }
-//Change user post API
+//Post Block
+//Current user post API
 export const profilePostBase= (id, postId) =>{
     return (
         database.ref(`database/profile/${id}/post/${postId}`)
     )
 }
 
-//friends datadase API
+export const profilePostBaseLike=(id, photoId, likeID) =>{
+    return (
+        database.ref(`database/profile/${id}/post/${photoId}/likeUsers/${likeID}`)
+    )
+}
+export const checkUserPostLike=(id, photoId) =>{
+    return (
+        database.ref(`database/profile/${id}/post/${photoId}/likeUsers`)
+    )
+}
 
+
+//friends datadase API
 export const followerAPI = (id, followUserID)=>{
     return(
         database.ref(`database/follower/${id}/${followUserID}`)

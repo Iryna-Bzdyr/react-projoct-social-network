@@ -12,7 +12,7 @@ import database, {
     profileDataBase,
     usersAPI,
     profilePostBase,
-    currentUserPostAPI,
+    currentUserPostAPI, profilePostBaseLike, checkUserPostLike,
 } from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
 import {setFileRefAC, setOpenModalAC, setUpLoadFileAC} from "./photo-reducer";
@@ -281,7 +281,7 @@ export const addNewPostThunk = (id, url,postText) => (dispatch) => {
     }
     profilePostBase(id, postID).set(postData)
 
-    // dispatch(setUserPhotoThunk(id))
+    dispatch(setUserPostThunk(id))
     dispatch(setUpLoadFileAC(''))
     dispatch(setFileRefAC(''))
 }
@@ -297,6 +297,71 @@ export const setUserPostThunk = (id) => (dispatch) => {
         dispatch(setPostDataAC(sortPhotoData))
     })
 }
+export const deleteCurrentUserPost = (userId, photoId, url) => (dispatch) => {
+    profilePostBase(userId, photoId).remove().then(function () {
+        storage.refFromURL(url).delete().then(function () {
+            console.log('File was deleted')
+        })
+    })
+}
+
+
+
+///Post likes block
+
+export const addLikePost = (userID, photoID, likes, currentUserID) => (dispatch) => {
+    profilePostBase(userID, photoID).update(
+        {likes: likes + 1}
+    )
+    profilePostBaseLike(userID, photoID,currentUserID).set({
+        userID: currentUserID
+    })
+    dispatch(setUserPostThunk(userID))
+}
+
+export const postLikesData = (id, postId,currentUserID) => (dispatch) => {
+    let data = []
+    checkUserPostLike(id, postId).orderByChild('userID').equalTo(currentUserID).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+    })
+    let check = 0
+    if(data.length>0){
+        check = data[0].userID
+    }
+    else {
+        check = 0
+    }
+    return check
+}
+
+
+export const deleteLikePost = (userID, photoID, likes, currentUserID) => (dispatch) => {
+    profilePostBase(userID, photoID).update(
+        {likes: likes - 1}
+    )
+    profilePostBaseLike(userID, photoID,currentUserID).remove()
+    dispatch(setUserPostThunk(userID))
+}
+
+export const postLikesUserData= (id,photoId)=>(dispatch)=> {
+    let data = []
+    usersAPI.on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+    })
+    let users = []
+    data.forEach((u) => {
+        if (dispatch(postLikesData(id, photoId, u.id)) == u.id) {
+            users.push(u)
+        }
+    })
+    return users
+}
+
+
 
 
 export default profileReducer
