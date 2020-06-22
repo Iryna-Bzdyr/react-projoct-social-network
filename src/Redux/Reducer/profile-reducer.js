@@ -5,7 +5,14 @@ import database, {
     profileAPI,
     profilePhotoBase,
     userAvatar,
-    storage, userProfileAPI, profilePhotoBaseLike, checkUserPhotoLike, profileDataBase, usersAPI, profilePostBase,
+    storage,
+    userProfileAPI,
+    profilePhotoBaseLike,
+    checkUserPhotoLike,
+    profileDataBase,
+    usersAPI,
+    profilePostBase,
+    currentUserPostAPI,
 } from "../../firebase";
 import {toggleIsFetchingAC} from "./user-reducer";
 import {setFileRefAC, setOpenModalAC, setUpLoadFileAC} from "./photo-reducer";
@@ -26,6 +33,7 @@ let initialState = {
     profileData: [],
     postData: [],
     photoData: [],
+    photoLikeUsers: [],
     searchBar: [
         {id: 1, name: 'Activity'},
         {id: 2, name: 'MyPost'},
@@ -88,16 +96,6 @@ const profileReducer = (state = initialState, action) => {
 
 export const setProfileDataAC = (profileData) => ({type: setProfileData, profileData: profileData})
 
-export const setCurrentUserProfileData = (id) => (dispatch) => {
-    userProfileAPI(id).on('value', (snap) => {
-        let data = []
-        snap.forEach(u => {
-            data.push(u.val())
-        })
-        dispatch(setProfileDataAC(data))
-    })
-}
-
 
 export const setPostDataAC = (postData) => ({type: setPostData, postData: postData})
 export const setPhotoDataAC = (photoData) => ({type: setPhotoData, photoData: photoData})
@@ -108,15 +106,13 @@ export const sliderIsOpenAC = (status) => ({type: sliderIsOpen, sliderIsOpen: st
 export const setUsersStatusAC = (userStatus) => ({type: setUserStatus, userStatus})
 
 
-export const setUserPostThunk = (id) => (dispatch) => {
-    let data = []
-    profileAPI.orderByChild('userID').equalTo(id).on('value', (snap) => {
+export const setCurrentUserProfileData = (id) => (dispatch) => {
+    userProfileAPI(id).on('value', (snap) => {
+        let data = []
         snap.forEach(u => {
             data.push(u.val())
         })
-
-        dispatch(setPostDataAC(data[0].post))
-        dispatch(toggleIsFetchingAC(false))
+        dispatch(setProfileDataAC(data))
     })
 }
 
@@ -129,21 +125,18 @@ export const setUserPhotoThunk = (id) => (dispatch) => {
         })
         let rowOrder = 0
         let setRowOrder = (index) => {
-            if (index == 0 || index % 8 == 0) {
-                rowOrder = 3
-            } else if (index == 1 || index % 5 == 0|| index % 4 == 0|| index % 6 == 0|| index % 7 == 0|| index % 9 == 0) {
-                rowOrder = 1
-            } else {
+            if (index == 0 ||index == 3 ||index == 4 || index % 9 == 0 || index % 9 == 0|| index % 12 == 0|| index % 13 == 0 || index % 21 == 0|| index % 22 == 0) {
                 rowOrder = 2
+            }
+            else {
+                rowOrder = 1
             }
             return rowOrder
         }
-        // const orderPhotoData = data.map((v,indexV)=>({...v, order:indexV}))
-        // const sortPhotoData = orderPhotoData.sort((a,b)=>b.order-a.order)
-        const newPhotoData = data.map((v, indexV) => ({...v, rows: setRowOrder(indexV)}))
+        const orderPhotoData = data.map((v,indexV)=>({...v, order:indexV}))
+        const sortPhotoData = orderPhotoData.sort((a,b)=>b.order-a.order)
+        const newPhotoData = orderPhotoData.map((v, indexV) => ({...v, rows: setRowOrder(indexV)}))
         dispatch(setPhotoDataAC(newPhotoData))
-        // dispatch(setPhotoDataAC(data))
-
     })
 }
 
@@ -187,7 +180,6 @@ export const deleteCurrentUserPhoto = (userId, photoId, url) => (dispatch) => {
     profilePhotoBase(userId, photoId).remove().then(function () {
         storage.refFromURL(url).delete().then(function () {
             console.log('File was deleted')
-            // dispatch(setUserPhotoThunk(userId))
             dispatch(setDeleteModalAC(false))
         })
     })
@@ -218,7 +210,7 @@ export const changeUserAvatar = (id, url, currentUserData) => (dispatch) => {
     }
 }
 
-//Photo likes block
+///Photo likes block
 
 export const addLikePhoto = (userID, photoID, likes, currentUserID) => (dispatch) => {
     profilePhotoBase(userID, photoID).update(
@@ -237,7 +229,7 @@ export const photoLikesData = (id, photoId,currentUserID) => (dispatch) => {
             data.push(u.val())
         })
     })
-let check = 0
+    let check = 0
     if(data.length>0){
         check = data[0].userID
     }
@@ -273,13 +265,19 @@ export const photoLikesUserData= (id,photoId)=>(dispatch)=>{
 }
 
 
+
+
 //new post
-export const addNewPostThunk = (id, url) => (dispatch) => {
+export const addNewPostThunk = (id, url,postText) => (dispatch) => {
     const postID = 'PS' + Date.now()
+    const  date = (new Date()).toString().split(' ').splice(1,3).join(' ');
+
     let postData = {
         id: postID,
         url: url,
-        likes: 0
+        likes: 0,
+        date:date,
+        post:postText
     }
     profilePostBase(id, postID).set(postData)
 
@@ -287,5 +285,18 @@ export const addNewPostThunk = (id, url) => (dispatch) => {
     dispatch(setUpLoadFileAC(''))
     dispatch(setFileRefAC(''))
 }
+
+export const setUserPostThunk = (id) => (dispatch) => {
+    let data = []
+    currentUserPostAPI(id).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+        const orderPhotoData = data.map((v,indexV)=>({...v, order:indexV}))
+        const sortPhotoData = orderPhotoData.sort((a,b)=>b.order-a.order)
+        dispatch(setPostDataAC(sortPhotoData))
+    })
+}
+
 
 export default profileReducer

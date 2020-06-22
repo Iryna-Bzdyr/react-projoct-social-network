@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-       position:'absolute',
+        position:'absolute',
         left:'65px',
         bottom:'15px',
         '& > *': {
@@ -36,8 +36,8 @@ const LikePhotoUsers = (props) => {
 
     return (
         usersData.length>0?<AvatarGroup max={4} className={classes.root}>
-                {avatarUnit}
-            </AvatarGroup>:<></>
+            {avatarUnit}
+        </AvatarGroup>:<></>
     )
 }
 export default LikePhotoUsers

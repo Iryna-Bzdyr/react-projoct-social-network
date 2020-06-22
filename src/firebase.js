@@ -47,6 +47,13 @@ export const currentUserPhotoAPI = (id) => {
     )
 }
 
+//Current user photo access
+export const currentUserPostAPI = (id) => {
+    return (
+        database.ref(`database/profile/${id}/post`)
+    )
+}
+
 export const userDataBase= (id) =>{
     return (
         database.ref(`database/users/${id}`)

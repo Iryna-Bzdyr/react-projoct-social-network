@@ -20,6 +20,8 @@ import LikePhotoUsers from "./LikePhotoUsers";
 import *as AOS from "aos";
 import "aos/dist/aos.css";
 import PhotoDeleteBtn from "./PhotoDeleteBtn";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => (
     {
@@ -32,15 +34,15 @@ const useStyles = makeStyles((theme) => (
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            margin:'0px',
-            padding:'0px'
+            margin: '0px',
+            padding: '0px'
         },
         titleBlock: {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
         },
-        gridPhoto:{
+        gridPhoto: {
             height: '100%'
         }
     }
@@ -58,12 +60,13 @@ let Photo = (props) => {
     const [changePhotoBlock, setChangePhotoBlock] = useState(false)
     const uploadFile = useSelector(state => state.uploadPhotoReducer.upLoadFile)
     const [spinner, setSpinner] = useState(true);
-    const [showDeleteBtn, setShowDeleteBtn] = useState(false);
+
 
 
     useEffect(() => {
         if (!paramsData.userID) {
             setUserID(authUserID)
+
         } else {
             setUserID(+paramsData.userID)
         }
@@ -72,14 +75,15 @@ let Photo = (props) => {
 
             if (authUserID == id) {
                 setChangePhotoBlock(true)
-                setShowDeleteBtn(true)
             }
+
         }
 
         AOS.init();
         AOS.refresh();
         setTimeout(() => setSpinner(false), 1000)
-    }, [ id])
+    }, [id])
+
 
     const openSlider = () => {
         setSliderIsOpen(true)
@@ -93,17 +97,8 @@ let Photo = (props) => {
     const deletePhoto = (userId, photoId, url) => {
 
         dispatch(deleteCurrentUserPhoto(userId, photoId, url))
-        console.log(photoId)
+        dispatch(setUserPhotoThunk(userId))
     }
-
-    const deleteBtn = (userId, photoId, url) => {
-        return (
-            showDeleteBtn ? <DeleteBtn deleteItem={
-                deletePhoto(userId, photoId, url)
-            } label='Do you want to delete this photo'></DeleteBtn> : <></>
-        )
-    }
-
 
     return (
 
@@ -132,24 +127,30 @@ let Photo = (props) => {
                 </AutoRotatingCarousel>
 
                 <div className={s.root}>
-                    <GridList cols={4} cellHeight={250} className={classes.gridList}>
-                        {photoData.map((photo,index) => (
-                            <GridListTile key={photo.id} cols={photo.rows || 2} >
-                                <img className={classes.gridPhoto} src={photo.url} onClick={openSlider} lassName={s.img}/>
+                    <GridList cols={4} cellHeight={320} className={classes.gridList}>
+                        {photoData.map((photo, index) => (
+                            <GridListTile key={photo.id} cols={photo.rows || 2}>
+                                <img className={classes.gridPhoto} src={photo.url} onClick={openSlider}
+                                     lassName={s.img}/>
                                 <GridListTileBar className={classes.gridListTileBar}
                                                  title={
 
-                                                     <PhotoLikeBtn id={id} photoID={photo.id} photoLikes={photo.likes} authUserID={authUserID}/>
+                                                     <PhotoLikeBtn id={id} photoID={photo.id} photoLikes={photo.likes}
+                                                                   authUserID={authUserID}/>
 
                                                  }
-                                                 subtitle={<LikePhotoUsers photoID={photo.id} id={id} photoLikes={photo.likes}></LikePhotoUsers>}
+                                                 subtitle={<LikePhotoUsers photoID={photo.id} id={id}
+                                                                           photoLikes={photo.likes}></LikePhotoUsers>}
                                                  actionIcon={
-                                                     // <button onClick={()=>deletePhoto(authUserID,photo.id,photo.url)}>DELETE</button>
-                                                     <PhotoDeleteBtn authUserID={authUserID}
-                                                                     currentUserID={id}
-                                                                     photoID={photo.id}
-                                                                     photoUrl={photo.url}
-                                                     ></PhotoDeleteBtn>
+
+                                                     authUserID === id ?
+                                                         <IconButton color='#de2694'
+                                                                     aria-label="delete"
+                                                                     onClick={()=>deletePhoto(authUserID,photo.id,photo.url)}
+                                                         >
+                                                             <DeleteIcon/>
+                                                         </IconButton>
+                                                     : <></>
 
                                                  }
                                 />

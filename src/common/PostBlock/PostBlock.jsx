@@ -26,13 +26,13 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import IconButton from "@material-ui/core/IconButton";
 import {PhotoCamera} from "@material-ui/icons";
 import SaveIcon from '@material-ui/icons/Save';
-import {upDateNewPostTextActionCreator} from "../../Redux/Reducer/profile-reducer";
+import {addNewPostThunk, upDateNewPostTextActionCreator} from "../../Redux/Reducer/profile-reducer";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        padding: '2% 10%'
+        padding: '2% 15%'
     },
     paper: {
         padding: '1% 3%',
@@ -105,6 +105,8 @@ const PostBlock = (props) => {
     const [uploadProgress, setUploadProgress] = useState(0)
     const [buffer, setBuffer] = React.useState(10);
     const newPostText = useSelector(state => state.profilePage.newPostText)
+    const [expanded, setExpanded] = React.useState(false);
+
 
     useEffect(() => {
         setUploadProgress(progress)
@@ -127,14 +129,25 @@ const PostBlock = (props) => {
             setBuffer(10)
             dispatch(setUpLoadFileAC(''))
             dispatch(setFileRefAC(''))
+            setExpanded(false)
         }
     }
 
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
 
     const uploadForm = (
         <Fab htmlFor="postPhoto" size="small" color="secondary" component="label" type={'submit'}
              aria-label="add"><AddIcon/></Fab>
     )
+
+    let addNewPost = (authUserID) => {
+        dispatch(addNewPostThunk(authUserID, uploadFile, newPostText))
+        setExpanded(false)
+        dispatch(upDateNewPostTextActionCreator(''))
+    }
+
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
@@ -144,9 +157,10 @@ const PostBlock = (props) => {
                             className={classes.textArea}
                             multiline
                             rows={2}
-                           placeholder={props.label}
+                            placeholder={props.label}
                             variant="outlined"
                             onChange={onPostChange}
+                            value={newPostText}
                         />
                         <Button
                             variant="contained"
@@ -155,14 +169,15 @@ const PostBlock = (props) => {
                             className={classes.button}
                             startIcon={<SaveIcon/>}
                             disabled={!newPostText}
-                            onClick={props.addPost}
+                            onClick={() => addNewPost(props.userID)}
                         >
                             Save
                         </Button>
                     </Paper>
                 </Grid>
             </Grid>
-            <ExpansionPanel className={classes.panel}>
+            <ExpansionPanel className={classes.panel} expanded={expanded === 'panel1'}
+                            onChange={handleChange('panel1')}>
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel1c-content"
