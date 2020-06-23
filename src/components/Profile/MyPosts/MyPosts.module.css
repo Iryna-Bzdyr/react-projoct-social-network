@@ -28,3 +28,28 @@
 .show__btn{
     float: right;
 }
+
+.share__btn{
+    color: #0018f4;
+}
+
+.comment__btn{
+    color: #59d600;
+}
+
+.add__comment__btn{
+      color: #8224e3;
+  }
+
+.comment__block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10%;
+}
+
+.comment__user__info,.comment__user__name{
+    display: flex;
+    flex-direction: row;
+ }

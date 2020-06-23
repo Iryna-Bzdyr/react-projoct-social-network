@@ -1,4 +1,4 @@
-import {checkFollowerAPI, followerAPI, userAPI, usersAPI} from "../../firebase";
+import {checkFollowerAPI, followerAPI, getUserAvatarAPI, userAPI, userAvatar, usersAPI} from "../../firebase";
 
 
 const setUsers = 'SET-USERS'
@@ -177,6 +177,16 @@ export const checkFollow = (currentID, followUserID) => (dispatch) => {
     return check
 }
 
+export const getUserAvatar = (id)=>{
+    let data = []
+    userAvatar(id).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+    })
 
+    let avatarUrl = data[3]
+    return avatarUrl
+}
 
 export default userReducer

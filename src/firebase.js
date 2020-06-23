@@ -101,6 +101,14 @@ export const userAvatar= (id) =>{
         database.ref(`database/users/${id}/avatar`)
     )
 }
+
+//Get User avatar
+export const getUserAvatarAPI = (id)=>{
+    return (
+        database.ref(`database/users/${id}/avatar/url`)
+    )
+}
+
 //Post Block
 //Current user post API
 export const profilePostBase= (id, postId) =>{
@@ -117,6 +125,20 @@ export const profilePostBaseLike=(id, photoId, likeID) =>{
 export const checkUserPostLike=(id, photoId) =>{
     return (
         database.ref(`database/profile/${id}/post/${photoId}/likeUsers`)
+    )
+}
+
+//Current user post comment API
+export const profilePostCommentBase= (id, postId) =>{
+    return (
+        database.ref(`database/profile/${id}/post/${postId}/comment`)
+    )
+}
+
+
+export const profileCurrentPostComment= (id, postId, commentID) =>{
+    return (
+        database.ref(`database/profile/${id}/post/${postId}/comment/${commentID}`)
     )
 }
 

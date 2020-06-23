@@ -28,6 +28,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import CommentsBlock from "./CommentsBlock";
 
 
 
@@ -45,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
+
 const MyPosts = (props) => {
     let paramsData = useParams();
     let [id, setUserID] = useState('')
@@ -54,10 +56,9 @@ const MyPosts = (props) => {
     const currentUserData = useSelector(state => state.usersPage.currentUserData)
     const [spinner, setSpinner] = useState(true);
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(-1);
 
     useEffect(() => {
-
         if (!paramsData.userID) {
             setUserID(authUserID)
         } else {
@@ -70,12 +71,11 @@ const MyPosts = (props) => {
         setTimeout(() => setSpinner(false), 1000)
     }, [id])
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+
+    const handleExpandClick = i => {
+        setExpanded(expanded === i ? -1 : i);
     };
-    // const handleChange = (panel) => (event, isExpanded) => {
-    //     setExpanded(isExpanded ? panel : false);
-    // };
+
     const deletePost = (authUserID, postID, url) => {
         dispatch(deleteCurrentUserPost(authUserID, postID, url))
         dispatch(setUserPostThunk(id))
@@ -117,77 +117,40 @@ const MyPosts = (props) => {
                             <PostLikeBtn className={s.like__block} id={id} postID={post.id} authUserID={authUserID}
                                          postLikes={post.likes}></PostLikeBtn>
                             <IconButton aria-label="share">
-                                <ShareIcon/>
+                                <ShareIcon className={s.share__btn}/>
                             </IconButton>
                             <IconButton
-                                onClick={handleExpandClick}
-                                aria-expanded={expanded}
+
+                                onClick={() => handleExpandClick(index)}
+                                aria-expanded={expanded === index}
                                 aria-label="show comment"
                             >
-                                <CommentIcon/>
+                                <CommentIcon className={s.comment__btn}/>
                             </IconButton>
                             {authUserID === id ?
                                 <IconButton
                                     onClick={() => deletePost(authUserID, post.id, post.url)}
                                     aria-label="delete post"
                                 >
-                                    <DeleteIcon/>
+                                    <DeleteIcon className={s.delete__btn}/>
                                 </IconButton>
                                 : <></>}
                             <IconButton
                                 className={clsx(classes.expand, {
                                     [classes.expandOpen]: expanded,
                                 })}
-                                onClick={handleExpandClick}
-                                aria-expanded={expanded}
+                                onClick={() => handleExpandClick(index)}
+                                aria-expanded={expanded === index}
                                 aria-label="show more"
                             >
                                 <ExpandMoreIcon />
                             </IconButton>
                         </CardActions>
-                        <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <Collapse in={expanded === index} timeout="auto" unmountOnExit>
                             <CardContent>
-                                <Typography paragraph>
-                                    <TextField
-                                        className={s.textArea}
-                                        multiline
-                                        rows={2}
-                                        placeholder='Write new comment'
-                                        variant="outlined"
-                                        // onChange={onPostChange}
-                                        // value={newPostText}
-                                    />
-                                </Typography>
-                                <Typography paragraph>
-                                    <IconButton
-                                        // onClick={() => deletePost(authUserID, post.id, post.url)}
-                                        aria-label="add comment"
-                                    >
-                                        <PostAddIcon/>
-                                    </IconButton>
-                                </Typography>
-                                <Typography paragraph>
-                                    Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                                    heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                                    browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-                                    chicken
-                                    and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-                                    pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-                                    saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                                </Typography>
-                                <Typography paragraph>
-                                    Add rice and stir very gently to distribute. Top with artichokes and peppers, and
-                                    cook
-                                    without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce
-                                    heat to
-                                    medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-                                    cook
-                                    again without stirring, until mussels have opened and rice is just tender, 5 to 7
-                                    minutes more. (Discard any mussels that don’t open.)
-                                </Typography>
-                                <Typography>
-                                    Set aside off of the heat to let rest for 10 minutes, and then serve.
-                                </Typography>
+
+                               <CommentsBlock id={id} postId={post.id} authUserID={authUserID}></CommentsBlock>
+
                             </CardContent>
                         </Collapse>
                     </Card>
