@@ -59,12 +59,11 @@ const CommentsBlock = (props)=>{
                     <PostAddIcon/>
                 </IconButton>
             </Typography>
-            <Typography>
+            <Typography className={s.comment__area}>
                 {postCommentData.map((comment,index)=>(
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        <Comment coment={comment.comment} commentUserId={comment.userID}></Comment>
-                        {/*{comment.comment}*/}
-                    </Typography>
+                        <Comment comment={comment.comment} commentUserId={comment.userID}
+                        date={comment.date}
+                        ></Comment>
                 ))}
             </Typography>
             </>

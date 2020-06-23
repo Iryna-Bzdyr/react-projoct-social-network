@@ -146,7 +146,7 @@ const MyPosts = (props) => {
                                 <ExpandMoreIcon />
                             </IconButton>
                         </CardActions>
-                        <Collapse in={expanded === index} timeout="auto" unmountOnExit>
+                        <Collapse in={expanded === index} timeout="auto" unmountOnExit className={s.collapse__block}>
                             <CardContent>
 
                                <CommentsBlock id={id} postId={post.id} authUserID={authUserID}></CommentsBlock>

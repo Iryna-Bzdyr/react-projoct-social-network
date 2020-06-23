@@ -108,7 +108,17 @@ export const getUserAvatarAPI = (id)=>{
         database.ref(`database/users/${id}/avatar/url`)
     )
 }
+export const getUserFirstNameAPI = (id)=>{
+    return (
+        database.ref(`database/users/${id}/fullName/firstName`)
+    )
+}
 
+export const getUserLastNameAPI = (id)=>{
+    return (
+        database.ref(`database/users/${id}/fullName/lastName`)
+    )
+}
 //Post Block
 //Current user post API
 export const profilePostBase= (id, postId) =>{
