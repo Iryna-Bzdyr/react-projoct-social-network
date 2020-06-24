@@ -16,7 +16,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
-import {setCurrentUserMainData} from "../../../Redux/Reducer/user-reducer";
+import {
+    getUserAvatar,
+    getUserFirstName,
+    getUserLastName,
+    setCurrentUserMainData
+} from "../../../Redux/Reducer/user-reducer";
 import ShareIcon from '@material-ui/icons/Share';
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -52,8 +57,6 @@ const MyPosts = (props) => {
     let [id, setUserID] = useState('')
     const authUserID = useSelector(state => state.usersPage.currentUserId)
     const dispatch = useDispatch();
-    const postData = useSelector(state => state.profilePage.postData)
-    const currentUserData = useSelector(state => state.usersPage.currentUserData)
     const [spinner, setSpinner] = useState(true);
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(-1);
@@ -66,11 +69,12 @@ const MyPosts = (props) => {
             setUserID(+paramsData.userID)
         }
         if (id) {
-            dispatch(setUserPostThunk(id))
-            dispatch(setCurrentUserMainData(id))
+            // dispatch(setUserPostThunk(id))
+            // dispatch(setCurrentUserMainData(id))
+
         }
         setTimeout(() => setSpinner(false), 1000)
-    }, [id, postData.length])
+    }, [props.postData.length])
 
 
     const handleExpandClick = i => {
@@ -85,19 +89,26 @@ const MyPosts = (props) => {
     return (
         spinner ? <PreLoader></PreLoader> :
         <div>
-            {authUserID === id ? <PostBlock label={`What's new ${currentUserData[0].fullName.firstName}`}
+            {authUserID === id&&props.showPostBlock ? <PostBlock label={`What's new ${getUserFirstName(props.postData.userID)}`}
                                             userID={authUserID}></PostBlock> : <></>}
 
             <div className={s.postBlock}>
-                {postData.map((post, index) => (
+                {props.postData.map((post, index) => (
                     <Card className={s.root}>
                         <CardHeader
                             avatar={
-                                <Avatar aria-label="recipe" className={s.avatar} src={currentUserData[0].avatar.url}>
+                                <Avatar aria-label="recipe" className={s.avatar}
+                                    src={getUserAvatar(post.userID)}
+                                >
                                 </Avatar>
                             }
                             title={<p>
-                                <span>{currentUserData[0].fullName.firstName}</span>{currentUserData[0].fullName.lastName}<span></span>
+                                <span>
+                                    {getUserFirstName(post.userID)}
+                                </span>
+                                <span>
+                                    {getUserLastName(post.userID)}
+                                </span>
                             </p>}
                             subheader={post.date}
                         />
@@ -115,7 +126,7 @@ const MyPosts = (props) => {
                         </CardContent>
                         <CardActions disableSpacing>
 
-                            <PostLikeBtn className={s.like__block} id={id} postID={post.id} authUserID={authUserID}
+                            <PostLikeBtn className={s.like__block} id={post.userID} postID={post.id} authUserID={authUserID}
                                          postLikes={post.likes}></PostLikeBtn>
                             <IconButton aria-label="share">
                                 <ShareIcon className={s.share__btn}/>
@@ -129,7 +140,7 @@ const MyPosts = (props) => {
                                 <CommentIcon className={s.comment__btn}/>
                             </IconButton>
                             <span>{post.commentsCount}</span>
-                            {authUserID === id ?
+                            {authUserID === post.userID ?
                                 <IconButton
                                     onClick={() => deletePost(authUserID, post.id, post.url)}
                                     aria-label="delete post"
@@ -151,7 +162,7 @@ const MyPosts = (props) => {
                         <Collapse in={expanded === index} timeout="auto" unmountOnExit className={s.collapse__block}>
                             <CardContent>
 
-                               <CommentsBlock id={id} postId={post.id} authUserID={authUserID}
+                               <CommentsBlock id={post.userID} postId={post.id} authUserID={authUserID}
                                               commentsCount={post.commentsCount}
                                ></CommentsBlock>
 

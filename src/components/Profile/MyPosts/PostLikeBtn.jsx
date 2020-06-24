@@ -37,7 +37,7 @@ const PostLikeBtn = (props) => {
             setCheckUserLike(1)
         }
         else{setCheckUserLike(0)}
-    }, [props.postLikes,checkUserLike])
+    }, [props.postLikes,checkUserLike ])
 
     const addLike = () => {
         dispatch(addLikePost(props.id, props.postID, props.postLikes, props.authUserID))

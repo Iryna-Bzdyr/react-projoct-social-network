@@ -33,7 +33,7 @@ const App = (props) => {
                     <Route path='/registration' render={()=> <Registration/>} />
                     <Route path='/dialogs' render={()=> <DialogsContainer/>} />
                     <Route path='/profile/:userID?' render={()=><Profile/>} />
-                    <Route path='/news' component={News} />
+                    <Route path='/news:userID?' render={()=><News/>} />
                     <Route path='/music' component={Music} />
                     <Route path='/settings' component={Settings} />
                     <Route path='/users' render={()=><Users/>}/>

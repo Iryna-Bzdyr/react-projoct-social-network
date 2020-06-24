@@ -11,7 +11,7 @@ import Photo from "./Photos/Photo";
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentUserMainData} from "../../Redux/Reducer/user-reducer";
-import {setCurrentUserProfileData} from "../../Redux/Reducer/profile-reducer";
+import {setCurrentUserProfileData, setUserPostThunk} from "../../Redux/Reducer/profile-reducer";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import PreLoader from "../../common/PreLoader/PreLoader";
@@ -23,6 +23,7 @@ const Profile = (props) => {
     let [id, setUserID] = useState('')
     const authUserID = useSelector(state => state.usersPage.currentUserId)
     const searchBar = useSelector(state => state.profilePage.searchBar)
+    const postData = useSelector(state => state.profilePage.postData)
     const [spinner, setSpinner] = useState(true);
 
     useEffect(() => {
@@ -33,8 +34,10 @@ const Profile = (props) => {
         }
         dispatch(setCurrentUserMainData(id))
         dispatch(setCurrentUserProfileData(id))
+        dispatch(setUserPostThunk(id))
+
         setTimeout(() => setSpinner(false), 1000)
-    }, [id])
+    }, [id, postData.length])
 
 
     let navigationElement = searchBar.map((pathName, index) => <SearchBarNavigation key={index}
@@ -53,7 +56,7 @@ const Profile = (props) => {
                     </div>
                     <div>
                         <Route path='/profile/:userID?/Activity' render={() => <Activity/>}/>
-                        <Route path={`/profile/:userID?/MyPost`} render={() => <MyPosts/>}/>
+                        <Route path={`/profile/:userID?/MyPost`} render={() => <MyPosts postData={postData} showPostBlock={true} />}/>
                         <Route path='/profile/:userID?/Friends' render={() => <Friends/>}/>
                         <Route path='/profile/:userID?/Groups' render={() => <Groups/>}/>
                         <Route path='/profile/:userID?/Photo' render={() => <Photo/>}/>

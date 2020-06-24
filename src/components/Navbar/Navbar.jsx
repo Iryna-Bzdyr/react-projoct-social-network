@@ -5,11 +5,12 @@ import {FaHome, FaRegNewspaper, FaUsers} from "react-icons/fa";
 import {MdMessage, MdSettings} from "react-icons/md";
 import {IoIosMusicalNotes} from "react-icons/io";
 import MyFriends from "./MyFriends/MyFriends";
+import {useSelector} from "react-redux";
 
 
 
 const Navbar = (props) => {
-
+    const authUserID = useSelector(state => state.usersPage.currentUserId)
     // let friendsElement = props.users.map((friend, index) => <MyFriends key={index} id={friend.id}
     //                                                                    imageUrl={friend.avatar.url}/>)
     return (
@@ -35,7 +36,7 @@ const Navbar = (props) => {
                 </NavLink>
 
 
-                <NavLink to="/news" activeClassName={s.active} className={s.nav__wrapper}>
+                <NavLink to={`/news/${authUserID}`} activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.news}>
                             <FaRegNewspaper/>
