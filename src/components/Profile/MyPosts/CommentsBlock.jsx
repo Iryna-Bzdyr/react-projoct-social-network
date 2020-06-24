@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import s from "./MyPosts.module.css";
@@ -6,37 +6,39 @@ import IconButton from "@material-ui/core/IconButton";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addPostComment,
+    addPostComment, deletePostComment,
     setNewPostCommentAC,
     setUserPostCommentThunk,
-    setUserPostThunk
+
 } from "../../../Redux/Reducer/profile-reducer";
 import Comment from "./Comment";
 
 
-
-const CommentsBlock = (props)=>{
+const CommentsBlock = (props) => {
     const dispatch = useDispatch();
     const comment = useSelector(state => state.profilePage.newPostComment)
     const postCommentData = useSelector(state => state.profilePage.postCommentData)
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(setUserPostCommentThunk(props.id, props.postId,))
-    },[props.postId])
 
-    const onCommentChange =(e)=>{
+    }, [props.commentsCount])
+
+    const onCommentChange = (e) => {
         dispatch(setNewPostCommentAC(e.target.value))
     }
 
-    const addComment = (id, postId,authUserID)=>{
-        dispatch(addPostComment(id, postId,comment,authUserID))
+    const addComment = (id, postId, commentsCount, authUserID) => {
+        dispatch(addPostComment(id, postId, commentsCount, comment, authUserID))
         dispatch(setNewPostCommentAC(''))
         dispatch(setUserPostCommentThunk(props.id, props.postId,))
-        dispatch(setUserPostThunk(props.id))
+    }
+    const deleteComment = (id, postId, commentId,commentsCount) => {
+        dispatch(deletePostComment(id, postId, commentId,commentsCount))
+        dispatch(setUserPostCommentThunk(props.id, props.postId,))
     }
 
-
-    return(
+    return (
         <>
             <Typography paragraph>
                 <TextField
@@ -54,19 +56,26 @@ const CommentsBlock = (props)=>{
                     aria-label="add comment"
                     disabled={!comment}
                     className={s.add__comment__btn}
-                    onClick={() => addComment(props.id, props.postId, props.authUserID)}
+                    onClick={() => addComment(props.id, props.postId,props.commentsCount, props.authUserID)}
                 >
                     <PostAddIcon/>
                 </IconButton>
             </Typography>
             <Typography className={s.comment__area}>
-                {postCommentData.map((comment,index)=>(
-                        <Comment comment={comment.comment} commentUserId={comment.userID}
+                {postCommentData.map((comment, index) => (
+                    <Comment
+                        profileUserID={props.id}
+                        comment={comment.comment} commentUserId={comment.userID}
                         date={comment.date}
-                        ></Comment>
+                        postId={props.postId}
+                        commentId={comment.id}
+                        commentsCount={props.commentsCount}
+                        likes={comment.likes}
+                        deleteComment={deleteComment}
+                    ></Comment>
                 ))}
             </Typography>
-            </>
+        </>
     )
 }
 

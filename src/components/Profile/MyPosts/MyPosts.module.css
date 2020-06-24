@@ -16,73 +16,81 @@
     height: 0;
     padding-top: 56.25%
 }
-.like__block{
+
+.like__block {
     width: 100px;
 
 }
-.textArea{
+
+.textArea {
     width: 100%;
     border-radius: 5px;
     box-shadow: 0 3px 5px 2px #bbc0c7
 }
-.show__btn{
+
+.show__btn {
     float: right;
 }
 
-.share__btn{
+.share__btn {
     color: #0018f4;
 }
 
-.comment__btn{
+.comment__btn {
     color: #59d600;
 }
 
-.add__comment__btn{
-      color: #8224e3;
-  }
+.add__comment__btn {
+    color: #8224e3;
+}
 
-/*.comment__area{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    flex-direction: column;*/
-/*    width: 100%;*/
-/*}*/
+.comment__area {
+    max-height: 400px;
+    overflow-y: scroll;
+}
 
-.comment__block{
+.comment__block {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
- margin: 1% 3%;
-    padding: 0 10%;
+    margin: 1% 5%;
+    padding: 0 5%;
 }
-.comment__content{
+
+.comment__content {
     width: 100%;
-   margin-bottom: 10px;
+    margin: 0;
+    padding: 0;
 }
-.comment__user__info{
+
+.comment__user__info {
     position: relative;
 }
-.comment__user__info,.comment__user__name{
+
+.comment__user__info, .comment__user__name {
     display: flex;
     flex-direction: row;
- }
-.comment__user__name{
+}
+
+.comment__user__name {
     margin-left: 20px;
 }
-.comment__date{
-   position: absolute;
+
+.comment__date {
+    position: absolute;
     right: 0;
     color: #6b6b6b;
 }
-.name{
+
+.name {
     padding: 0px 5px;
 }
-.comment{
+
+.comment {
     padding-left: 13%;
 }
-.collapse__block{
-    max-height: 800px;
-    overflow: hidden;
+.comment__btn__block{
+    display: flex;
+    flex-direction: row;
 }

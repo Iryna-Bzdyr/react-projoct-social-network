@@ -58,6 +58,7 @@ const MyPosts = (props) => {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(-1);
 
+
     useEffect(() => {
         if (!paramsData.userID) {
             setUserID(authUserID)
@@ -69,7 +70,7 @@ const MyPosts = (props) => {
             dispatch(setCurrentUserMainData(id))
         }
         setTimeout(() => setSpinner(false), 1000)
-    }, [id])
+    }, [id, postData.length])
 
 
     const handleExpandClick = i => {
@@ -127,6 +128,7 @@ const MyPosts = (props) => {
                             >
                                 <CommentIcon className={s.comment__btn}/>
                             </IconButton>
+                            <span>{post.commentsCount}</span>
                             {authUserID === id ?
                                 <IconButton
                                     onClick={() => deletePost(authUserID, post.id, post.url)}
@@ -149,7 +151,9 @@ const MyPosts = (props) => {
                         <Collapse in={expanded === index} timeout="auto" unmountOnExit className={s.collapse__block}>
                             <CardContent>
 
-                               <CommentsBlock id={id} postId={post.id} authUserID={authUserID}></CommentsBlock>
+                               <CommentsBlock id={id} postId={post.id} authUserID={authUserID}
+                                              commentsCount={post.commentsCount}
+                               ></CommentsBlock>
 
                             </CardContent>
                         </Collapse>

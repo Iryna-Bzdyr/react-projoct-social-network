@@ -14,18 +14,17 @@ import database, {
     profilePostBaseLike,
     checkUserPostLike,
     profilePostCommentBase,
-    profileCurrentPostComment,
+    profileCurrentPostComment, profilePostCommentBaseLike, checkUserPostCommentLike,
 } from "../../firebase";
 import {setFileRefAC, setOpenModalAC, setUpLoadFileAC} from "./photo-reducer";
 import {setDeleteModalAC} from "./process-reducer";
-
-
 
 
 const upDateNewPostText = 'UPDATE-NEW-POST-TEXT';
 const setProfileData = 'SET-PROFILE-DATA'
 const setPostData = 'SET-POST-DATA'
 const setPhotoData = 'SET-PHOTO-DATA'
+const setActivityData = 'SET-ACTIVITY-DATA'
 const sliderIsOpen = 'SLIDER-IS-OPEN'
 const setUserStatus = 'SET-USER-STATUS'
 const setNewPostComment = 'NEW-POST-COMMENT';
@@ -36,6 +35,7 @@ let initialState = {
     postCommentData: [],
     photoData: [],
     photoLikeUsers: [],
+    activityData: [],
     searchBar: [
         {id: 1, name: 'Activity'},
         {id: 2, name: 'MyPost'},
@@ -70,6 +70,13 @@ const profileReducer = (state = initialState, action) => {
                 photoData: [...action.photoData]
             }
         }
+        case setActivityData: {
+            return {
+                ...state,
+                activityData: [...action.activityData]
+            }
+        }
+
         case upDateNewPostText:
             return {
                 ...state,
@@ -93,7 +100,7 @@ const profileReducer = (state = initialState, action) => {
         case setPostCommentData:
             return {
                 ...state,
-                postCommentData: [ ...action.postCommentData]
+                postCommentData: [...action.postCommentData]
             }
         default:
             return state
@@ -105,6 +112,7 @@ export const setProfileDataAC = (profileData) => ({type: setProfileData, profile
 
 export const setPostDataAC = (postData) => ({type: setPostData, postData: postData})
 export const setPhotoDataAC = (photoData) => ({type: setPhotoData, photoData: photoData})
+export const setActivityDataAC = (activityData) => ({type: setActivityData, photoData: activityData})
 export const upDateNewPostTextActionCreator = (text) => (
     {type: upDateNewPostText, newText: text})
 export const sliderIsOpenAC = (status) => ({type: sliderIsOpen, sliderIsOpen: status})
@@ -273,13 +281,15 @@ export const photoLikesUserData = (id, photoId) => (dispatch) => {
 export const addNewPostThunk = (id, url, postText) => (dispatch) => {
     const postID = 'PS' + Date.now()
     const date = (new Date()).toString().split(' ').splice(1, 3).join(' ');
-
+    const fullDate = Date.now()
     let postData = {
         id: postID,
         url: url,
         likes: 0,
+        commentsCount: 0,
         date: date,
-        post: postText
+        post: postText,
+        fullDate:fullDate
     }
     profilePostBase(id, postID).set(postData)
 
@@ -311,11 +321,11 @@ export const deleteCurrentUserPost = (userId, photoId, url) => (dispatch) => {
 
 ///Post likes block
 
-export const addLikePost = (userID, photoID, likes, currentUserID) => (dispatch) => {
-    profilePostBase(userID, photoID).update(
+export const addLikePost = (userID, postID, likes, currentUserID) => (dispatch) => {
+    profilePostBase(userID, postID).update(
         {likes: likes + 1}
     )
-    profilePostBaseLike(userID, photoID, currentUserID).set({
+    profilePostBaseLike(userID, postID, currentUserID).set({
         userID: currentUserID
     })
     dispatch(setUserPostThunk(userID))
@@ -338,11 +348,11 @@ export const postLikesData = (id, postId, currentUserID) => (dispatch) => {
 }
 
 
-export const deleteLikePost = (userID, photoID, likes, currentUserID) => (dispatch) => {
-    profilePostBase(userID, photoID).update(
+export const deleteLikePost = (userID, postID, likes, currentUserID) => (dispatch) => {
+    profilePostBase(userID, postID).update(
         {likes: likes - 1}
     )
-    profilePostBaseLike(userID, photoID, currentUserID).remove()
+    profilePostBaseLike(userID, postID, currentUserID).remove()
     dispatch(setUserPostThunk(userID))
 }
 
@@ -364,7 +374,10 @@ export const postLikesUserData = (id, photoId) => (dispatch) => {
 }
 
 
-export const addPostComment = (id, postId, commentText, authUserID) => (dispatch) => {
+export const addPostComment = (id, postId, commentsCount, commentText, authUserID) => (dispatch) => {
+    profilePostBase(id, postId).update(
+        {commentsCount: commentsCount + 1}
+    )
     const postID = 'PSCM' + Date.now()
     const date = (new Date()).toString().split(' ').splice(1, 3).join(' ');
     profileCurrentPostComment(id, postId, postID).set({
@@ -374,20 +387,68 @@ export const addPostComment = (id, postId, commentText, authUserID) => (dispatch
         comment: commentText,
         userID: authUserID
     })
+
 }
+
+export const deletePostComment = (id, postId, commentID,commentsCount) => (dispatch) => {
+    profilePostBase(id, postId).update(
+        {commentsCount: commentsCount - 1}
+    )
+    profileCurrentPostComment(id, postId, commentID).remove()
+
+}
+
+
 
 export const setUserPostCommentThunk = (id, postId) => (dispatch) => {
     let data = []
-    profilePostCommentBase(id,postId).on('value', (snap) => {
+    profilePostCommentBase(id, postId).on('value', (snap) => {
         snap.forEach(u => {
             data.push(u.val())
         })
-        const orderPhotoData = data.map((v, indexV) => ({...v, order: indexV}))
-        const sortPhotoData = orderPhotoData.sort((a, b) => b.order - a.order)
-        dispatch(setPostCommentDataAC(sortPhotoData))
+        // const orderPhotoData = data.map((v, indexV) => ({...v, order: indexV}))
+        // const sortPhotoData = orderPhotoData.sort((a, b) => b.order - a.order)
+        dispatch(setPostCommentDataAC(data))
     })
 }
 
+
+///post comment like
+export const addLikePostComment = (userID, postID, commentId, likes, currentUserID) => (dispatch) => {
+    profileCurrentPostComment(userID, postID,commentId).update(
+        {likes: likes + 1}
+    )
+
+    profilePostCommentBaseLike(userID, postID, commentId, currentUserID).set({
+        userID: currentUserID
+    })
+    dispatch(setUserPostCommentThunk(userID,postID))
+}
+
+export const postCommentLikesData = (id, postId, commentID, currentUserID) => (dispatch) => {
+    let data = []
+    checkUserPostCommentLike(id, postId, commentID).orderByChild('userID').equalTo(currentUserID).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+    })
+    let check = 0
+    if (data.length > 0) {
+        check = data[0].userID
+    } else {
+        check = 0
+    }
+    return check
+}
+
+export const deleteLikePostComment = (userID, postID, commentId, likes, currentUserID) => (dispatch) => {
+    profileCurrentPostComment(userID, postID,commentId).update(
+        {likes: likes -1}
+    )
+
+    profilePostCommentBaseLike(userID, postID, commentId, currentUserID).remove()
+    dispatch(setUserPostCommentThunk(userID,postID))
+}
 
 
 

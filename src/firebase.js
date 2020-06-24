@@ -127,14 +127,14 @@ export const profilePostBase= (id, postId) =>{
     )
 }
 
-export const profilePostBaseLike=(id, photoId, likeID) =>{
+export const profilePostBaseLike=(id, postId, likeID) =>{
     return (
-        database.ref(`database/profile/${id}/post/${photoId}/likeUsers/${likeID}`)
+        database.ref(`database/profile/${id}/post/${postId}/likeUsers/${likeID}`)
     )
 }
-export const checkUserPostLike=(id, photoId) =>{
+export const checkUserPostLike=(id, postId) =>{
     return (
-        database.ref(`database/profile/${id}/post/${photoId}/likeUsers`)
+        database.ref(`database/profile/${id}/post/${postId}/likeUsers`)
     )
 }
 
@@ -152,6 +152,18 @@ export const profileCurrentPostComment= (id, postId, commentID) =>{
     )
 }
 
+
+export const profilePostCommentBaseLike=(id, postId, commentID, userId) =>{
+    return (
+        database.ref(`database/profile/${id}/post/${postId}/comment/${commentID}/likeUsers/${userId}`)
+    )
+}
+
+export const checkUserPostCommentLike=(id, postId,commentID) =>{
+    return (
+        database.ref(`database/profile/${id}/post/${postId}/comment/${commentID}/likeUsers/`)
+    )
+}
 
 //friends datadase API
 export const followerAPI = (id, followUserID)=>{
