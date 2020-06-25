@@ -1,11 +1,20 @@
 
+body{
+    margin: 0;
+    padding: 0;
+}
 .postBlock {
     padding: 20px 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .root {
     width: 100%;
     margin-bottom: 10px;
+    max-width: 900px;
 }
 
 .avatar {
@@ -56,6 +65,7 @@
     align-items: center;
     margin: 1% 5%;
     padding: 0 5%;
+    /*max-width: 750px;*/
 }
 
 .comment__content {
@@ -84,7 +94,7 @@
 }
 
 .name {
-    padding: 0px 5px;
+    padding: 0px 3px;
 }
 
 .comment {
@@ -93,4 +103,19 @@
 .comment__btn__block{
     display: flex;
     flex-direction: row;
+}
+
+.post__text__block{
+    margin: 0;
+    padding: 0 90px;
+}
+
+.post__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px 0px 5px;
+}
+.card__content{
+    padding: 0px 0px 10px;
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import s from './Header.module.css'
 import {IoIosMenu, IoIosSearch} from "react-icons/io";
-import AuthBlockContainer from "./AuthBlock/AuthContainer";
+import AuthBlock from "./AuthBlock/AuthBlock";
+
 
 
 const Header = (props) => {
@@ -18,7 +19,7 @@ const Header = (props) => {
                     <input/>
                     <i><IoIosSearch/></i>
                 </div>
-               {/*<AuthBlockContainer/>*/}
+               <AuthBlock/>
 
             </div>
         </header>

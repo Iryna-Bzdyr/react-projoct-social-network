@@ -19,20 +19,16 @@ import Collapse from "@material-ui/core/Collapse";
 import {
     getUserAvatar,
     getUserFirstName,
-    getUserLastName,
-    setCurrentUserMainData
+    getUserLastName, setCurrentUserMainData,
 } from "../../../Redux/Reducer/user-reducer";
 import ShareIcon from '@material-ui/icons/Share';
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PostLikeBtn from "./PostLikeBtn";
 import PreLoader from "../../../common/PreLoader/PreLoader";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import PostAddIcon from '@material-ui/icons/PostAdd';
 import CommentsBlock from "./CommentsBlock";
 
 
@@ -69,8 +65,8 @@ const MyPosts = (props) => {
             setUserID(+paramsData.userID)
         }
         if (id) {
-            // dispatch(setUserPostThunk(id))
-            // dispatch(setCurrentUserMainData(id))
+
+            dispatch(setCurrentUserMainData(id))
 
         }
         setTimeout(() => setSpinner(false), 1000)
@@ -89,7 +85,7 @@ const MyPosts = (props) => {
     return (
         spinner ? <PreLoader></PreLoader> :
         <div>
-            {authUserID === id&&props.showPostBlock ? <PostBlock label={`What's new ${getUserFirstName(props.postData.userID)}`}
+            {authUserID === id&&props.showPostBlock ? <PostBlock label={`What's new ${getUserFirstName(authUserID)}`}
                                             userID={authUserID}></PostBlock> : <></>}
 
             <div className={s.postBlock}>
@@ -102,28 +98,33 @@ const MyPosts = (props) => {
                                 >
                                 </Avatar>
                             }
-                            title={<p>
-                                <span>
+
+                            title={<div className={s.post__header}>
+                                <p>
+                                <span className={s.name}>
                                     {getUserFirstName(post.userID)}
                                 </span>
-                                <span>
+                                    <span className={s.name}>
                                     {getUserLastName(post.userID)}
                                 </span>
-                            </p>}
-                            subheader={post.date}
+                                </p>
+                               <p>{post.date}</p>
+                            </div>}
                         />
+
+
+                        <div className={s.card__content}>
+                            <Typography variant="body2" color="textSecondary" component="p" className={s.post__text__block}>
+                                {post.post}
+                            </Typography>
+                        </div>
+
                         {post.url ? <CardMedia
                                 className={s.media}
                                 image={post.url}
                             /> :
                             <></>
                         }
-
-                        <CardContent>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {post.post}
-                            </Typography>
-                        </CardContent>
                         <CardActions disableSpacing>
 
                             <PostLikeBtn className={s.like__block} id={post.userID} postID={post.id} authUserID={authUserID}

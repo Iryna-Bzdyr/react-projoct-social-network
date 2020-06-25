@@ -14,6 +14,7 @@ const News = (props) => {
         if(activityData.length>0){
             setSpinner(false)
         }
+        else (setSpinner(true))
     },[activityData.length])
 
     return (

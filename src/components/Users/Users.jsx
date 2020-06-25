@@ -28,10 +28,11 @@ const Users = (props) => {
     const [spinner, setSpinner] = useState(true);
 
     useEffect(() => {
-        dispatch(changeUserPage(currentPage, pageSize))
+
         dispatch(setTotalUserCount())
         if (totalUserCount) {
             setPagesCount(Math.ceil(totalUserCount / pageSize))
+            dispatch(changeUserPage(currentPage, pageSize))
         }
         setTimeout(() => setSpinner(false), 1000)
         AOS.init();
@@ -63,7 +64,7 @@ const Users = (props) => {
                                                         <img src={u.avatar.url}/>
                                                     </NavLink>
                                                     <div>
-                                                        <FollowBtn id={u.id}></FollowBtn>
+                                                        <FollowBtn id={u.id} currentPage={currentPage} pageSize={pageSize} usersData={usersData}></FollowBtn>
                                                     </div>
                                                 </div>
                                             </Grid>

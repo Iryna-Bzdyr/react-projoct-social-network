@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from "react";
 import s from "./Users.module.css";
-import {checkFollow, followThunk, unFollowThunk} from "../../Redux/Reducer/user-reducer";
+import {
+    changeUserPage,
+    checkFollow,
+    followThunk,
+    setTotalUserCount,
+    unFollowThunk
+} from "../../Redux/Reducer/user-reducer";
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -8,7 +14,7 @@ import {useDispatch, useSelector} from "react-redux";
 const FollowBtn = (props) => {
     const dispatch = useDispatch();
     const authUserID = useSelector(state => state.usersPage.currentUserId)
-    let [followStatus, setFollowStatus] = useState(false)
+    let [followStatus, setFollowStatus] = useState('')
 
 
     useEffect(() => {
@@ -20,9 +26,13 @@ const FollowBtn = (props) => {
 
     let follow = (id, followUserId) => {
         dispatch(followThunk(id, followUserId))
+        dispatch(changeUserPage(props.currentPage, props.pageSize))
+        dispatch(setTotalUserCount())
     }
     let unFollow = (id, followUserId) => {
         dispatch(unFollowThunk(id, followUserId))
+        dispatch(changeUserPage(props.currentPage, props.pageSize))
+        dispatch(setTotalUserCount())
     }
     return (
         <div>

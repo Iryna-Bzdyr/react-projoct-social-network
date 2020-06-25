@@ -29,8 +29,9 @@ const useStyles = makeStyles((theme) => (
             width: '75%'
         },
         gridListTileBar: {
-            backgroundColor: '#bdbfbd',
-            opacity: 0.8,
+            backgroundColor: '#a1a3a1',
+            maxHeight:'55px',
+            opacity: 0.7,
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',

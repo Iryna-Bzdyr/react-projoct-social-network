@@ -2,8 +2,9 @@
     display: flex;
     align-items: center;
 }
-.button button{
+.button button, .auth__user__block button{
     color: #fff;
+    font-weight: bold;
     padding: 0% 3%;
     border: 0 none;
     border-radius: 5px;
@@ -27,8 +28,14 @@
     zoom: 150%;
 }
 
-.user__block img{
-    height: 60px;
-    width: 60px;
-    border-radius: 90%;
+
+.auth__user__block{
+   display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.avatar{
+    margin: 0 2%;
+    zoom: 120%
 }

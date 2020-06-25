@@ -331,6 +331,7 @@ export const addLikePost = (userID, postID, likes, currentUserID) => (dispatch) 
         userID: currentUserID
     })
     dispatch(setUserPostThunk(userID))
+    dispatch(getAllPosts())
 }
 
 export const postLikesData = (id, postId, currentUserID) => (dispatch) => {
@@ -356,6 +357,8 @@ export const deleteLikePost = (userID, postID, likes, currentUserID) => (dispatc
     )
     profilePostBaseLike(userID, postID, currentUserID).remove()
     dispatch(setUserPostThunk(userID))
+    dispatch(getAllPosts())
+
 }
 
 
@@ -390,7 +393,7 @@ export const addPostComment = (id, postId, commentsCount, commentText, authUserI
         comment: commentText,
         userID: authUserID
     })
-
+    dispatch(getAllPosts())
 }
 
 export const deletePostComment = (id, postId, commentID, commentsCount) => (dispatch) => {
@@ -398,7 +401,7 @@ export const deletePostComment = (id, postId, commentID, commentsCount) => (disp
         {commentsCount: commentsCount - 1}
     )
     profileCurrentPostComment(id, postId, commentID).remove()
-
+    dispatch(getAllPosts())
 }
 
 
