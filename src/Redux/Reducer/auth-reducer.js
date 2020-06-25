@@ -1,6 +1,6 @@
 import {userLoginAPI} from "../../firebase";
 import {reset, stopSubmit} from 'redux-form';
-import {setCurrentUserIdAC, setCurrentUserMainData} from "./user-reducer";
+import {getFollowers, setCurrentUserIdAC, setCurrentUserMainData} from "./user-reducer";
 import {setCurrentUserProfileData} from "./profile-reducer";
 
 const setResultCode = 'SET-RESULT-CODE'
@@ -60,6 +60,7 @@ else if (currentUserLoginData.password == password){
     dispatch(setCurrentUserIdAC(currentUserLoginData.id))
     dispatch(setCurrentUserMainData(currentUserLoginData.id))
     dispatch(setCurrentUserProfileData(currentUserLoginData.id))
+    dispatch(getFollowers(currentUserLoginData.id))
     dispatch(setResultCodeAC(1))
     dispatch(reset(formName))
 }

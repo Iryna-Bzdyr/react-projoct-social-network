@@ -8,7 +8,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import PreLoader from "../../common/PreLoader/PreLoader";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    changeUserPage,
+    changeUserPage, getFollowers, getUserAvatar,
     setTotalUserCount
 } from "../../Redux/Reducer/user-reducer";
 import {compose} from "redux";
@@ -16,11 +16,24 @@ import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 import FollowBtn from "./FollowBtn";
 import *as AOS from "aos";
 import "aos/dist/aos.css";
+import Avatar from "@material-ui/core/Avatar";
+import {makeStyles} from '@material-ui/core/styles';
 
+const useStyles = makeStyles({
+
+    bigAvatar: {
+        margin: 10,
+        width: 80,
+        height: 80,
+    },
+});
 
 const Users = (props) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
+    const authUserID = useSelector(state => state.usersPage.currentUserId)
     const usersData = useSelector(state => state.usersPage.users)
+    // const followUsers = useSelector(state => state.usersPage.followUsers)
     const totalUserCount = useSelector(state => state.usersPage.totalUsersCount)
     let [currentPage, setCurrentPage] = useState(1)
     let [pageSize] = useState(2)
@@ -30,9 +43,11 @@ const Users = (props) => {
     useEffect(() => {
 
         dispatch(setTotalUserCount())
+
         if (totalUserCount) {
             setPagesCount(Math.ceil(totalUserCount / pageSize))
             dispatch(changeUserPage(currentPage, pageSize))
+            // dispatch(getFollowers(authUserID))
         }
         setTimeout(() => setSpinner(false), 1000)
         AOS.init();
@@ -54,6 +69,7 @@ const Users = (props) => {
                 <Container maxWidth="md" className={s.card__wrapper}>
                     {
                         usersData.map(u =>
+                            u.id===authUserID?<></>:
                             <Grid container spacing={5} data-aos="fade-up" data-aos-duration="2000">
                                 <Grid item xs={12}>
                                     <Paper elevation={3} className={s.user__card}>
@@ -61,10 +77,23 @@ const Users = (props) => {
                                             <Grid item xs={3}>
                                                 <div className={s.user__avatar}>
                                                     <NavLink to={`/profile/${u.id}/Photo`}>
-                                                        <img src={u.avatar.url}/>
+                                                        <Grid container justify="center" alignItems="center">
+                                                            <Avatar aria-label="recipe"
+                                                                    src={u.avatar.url}
+                                                                    className={classes.bigAvatar}
+                                                            >
+                                                            </Avatar>
+                                                        </Grid>
+
                                                     </NavLink>
                                                     <div>
-                                                        <FollowBtn id={u.id} currentPage={currentPage} pageSize={pageSize} usersData={usersData}></FollowBtn>
+                                                        <FollowBtn id={u.id}
+                                                            // followUsers={followUsers}
+                                                                   authUserID={authUserID}
+                                                        >
+
+
+                                                        </FollowBtn>
                                                     </div>
                                                 </div>
                                             </Grid>

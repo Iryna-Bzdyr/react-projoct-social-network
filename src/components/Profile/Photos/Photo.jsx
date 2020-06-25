@@ -82,7 +82,7 @@ let Photo = (props) => {
         AOS.init();
         AOS.refresh();
         setTimeout(() => setSpinner(false), 1000)
-    }, [id])
+    }, [photoData.length])
 
 
     const openSlider = () => {

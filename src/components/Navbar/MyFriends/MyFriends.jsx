@@ -1,32 +1,29 @@
 import React, {useEffect, useState} from "react";
 import s from './MyFriends.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {getUsersThunkCreator} from "../../../Redux/Reducer/user-reducer";
+import {getFollowerUsersData, getUsersThunkCreator} from "../../../Redux/Reducer/user-reducer";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import Avatar from "@material-ui/core/Avatar";
 
 let MyFriends = (props) => {
-    const usersData = useSelector(state => state.usersPage.users)
-    const totalUserCount = useSelector(state => state.usersPage.totalUsersCount)
-    // let [pagesSize, setPagesSize] = useState(4)
-    // let [pagesCount, setPagesCount] = useState(Math.ceil(totalUserCount / pagesSize))
+    const friendsData = useSelector(state => state.usersPage.followerUserData)
+    const followUsers = useSelector(state => state.usersPage.followUsers)
 
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getUsersThunkCreator(4, 1))
-        // setPagesSize(4)
-    }, [...usersData])
 
-    // onPageChange = (page) => {
-    //     this.props.changeUserPage(page, this.props.pageSize)
-    // }
-    let avatarUnit = usersData.map(u => (
-       <Avatar src={u.avatar.url}></Avatar>
+    useEffect(() => {
+        dispatch(getFollowerUsersData(followUsers))
+    }, [followUsers.length])
+
+
+    let avatarUnit = friendsData.map(u => (
+        <Avatar src={u.avatar.url}></Avatar>
     ))
+
     return (
-        <AvatarGroup max={4}>
+        friendsData.length ? <AvatarGroup max={4}>
             {avatarUnit}
-        </AvatarGroup>
+        </AvatarGroup> : <></>
     )
 }
 export default MyFriends

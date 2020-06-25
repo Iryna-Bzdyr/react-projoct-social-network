@@ -1,5 +1,5 @@
 import {
-    checkFollowerAPI,
+    checkFollowerAPI, currentUserAPI,
     followerAPI,
     getUserAvatarAPI,
     getUserFirstNameAPI, getUserLastNameAPI,
@@ -17,9 +17,11 @@ const toggleIsFetching = 'TOGGLE-IS-FETCHING'
 const setCurrentUserId = 'SET-CURRENT-USER-ID'
 const setCurrentUserData = 'SET-CURRENT-USER-DATA'
 const setFollowUsers = 'SET-FOLLOW-USERS'
+const setFollowerUsersData = 'SET-FOLLOWER-USERS'
 
 let initialState = {
     users: [],
+    followerUserData: [],
     currentUserData: [],
     followUsers: [],
     currentUserId: 0,
@@ -35,6 +37,11 @@ let userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: [...action.users]
+            }
+        case setFollowerUsersData:
+            return {
+                ...state,
+                followerUserData: [...action.followerUserData]
             }
         case setCurrentUserData:
             return {
@@ -62,12 +69,13 @@ let userReducer = (state = initialState, action) => {
 }
 
 export const setUsersAC = (users) => ({type: setUsers, users})
+export const setFollowerUsersDataAC = (followerUserData) => ({type: setFollowerUsersData, followerUserData})
 export const setCurrentPageAC = (currentPage) => ({type: setCurrentPage, page: currentPage})
 export const setTotalUsersCountAC = (totalUsers) => ({type: setTotalUsersCount, totalUsersCount: totalUsers})
 export const toggleIsFetchingAC = (status) => ({type: toggleIsFetching, isFetching: status})
 export const setCurrentUserIdAC = (userID) => ({type: setCurrentUserId, currentUserId: userID})
 export const setCurrentUserDataAC = (currentUserData) => ({type: setCurrentUserData, currentUserData: currentUserData})
-
+export const setFollowersAC = (followUsers) => ({type: setFollowUsers, followUsers:followUsers})
 
 export const setCurrentUserMainData = (id) => (dispath) => {
     userAPI(`${id}`).on('value', (snap) => {
@@ -159,51 +167,78 @@ export const followThunk = (currentID, followUserID) => (dispatch) => {
     followerAPI(currentID, followUserID).set({
         userID: followUserID
     })
-    dispatch(checkFollow(currentID, followUserID))
+    dispatch(getFollowers(currentID))
 }
+
 export const unFollowThunk = (currentID, followUserID) => (dispatch) => {
     followerAPI(currentID, followUserID).remove()
-    dispatch(checkFollow(currentID, followUserID))
+    dispatch(getFollowers(currentID))
+}
+
+export const getFollowers = (currentID) => (dispatch) => {
+    let data = []
+    checkFollowerAPI(currentID).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+        dispatch(setFollowersAC(data))
+    })
 }
 
 export const checkFollow = (currentID, followUserID) => (dispatch) => {
+    let check = 0
     let data = []
     checkFollowerAPI(currentID).orderByChild('userID').equalTo(followUserID).on('value', (snap) => {
 
         snap.forEach(u => {
             data.push(u.val())
-            console.log(u.val())
         })
+        if(data.length>0){
+            check = data[0].userID
+        }
+        else {
+            check = 0
+        }
     })
-    let check = 0
-    if(data.length>0){
-        check = data[0].userID
-    }
-    else {
-        check = 0
-    }
     return check
 }
 
-export const getUserAvatar = (id)=>{
+
+export const getFollowerUsersData = (data)=>(dispatch)=>{
+    let userData = []
+    data.forEach(u=>{
+        currentUserAPI(u.userID).on('value', (snap) => {
+            userData.push(snap.exportVal())
+        })
+    })
+    dispatch(setFollowerUsersDataAC(userData))
+}
+
+
+
+
+
+
+///
+export const getUserAvatar = (id) => {
     let avatarUrl = ''
     getUserAvatarAPI(id).on('value', (snap) => {
-        avatarUrl= snap.exportVal()
+        avatarUrl = snap.exportVal()
     })
     return avatarUrl
 }
 
-export const getUserFirstName = (id)=>{
+export const getUserFirstName = (id) => {
     let firstName = ''
     getUserFirstNameAPI(id).on('value', (snap) => {
-        firstName= snap.exportVal()
+        firstName = snap.exportVal()
     })
     return firstName
 }
-export const getUserLastName = (id)=>{
+export const getUserLastName = (id) => {
     let lastName = ''
     getUserLastNameAPI(id).on('value', (snap) => {
-        lastName= snap.exportVal()
+        lastName = snap.exportVal()
     })
     return lastName
 }

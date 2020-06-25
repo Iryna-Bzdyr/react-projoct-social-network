@@ -4,6 +4,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+
 }
 .user__avatar img{
     height: 80px;
@@ -49,4 +50,17 @@
     color: white;
     font-size: 0px;
     z-index: 1000;
+}
+
+.avatar{
+/*height: 100%;*/
+/*    width: 100%;*/
+/*    zoom: 200%;*/
+    height: 80px;
+    width: 80px;
+}
+.avatar__img{
+height: 100%;
+    width: 100%;
+    zoom: 150%;
 }
