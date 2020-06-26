@@ -5,14 +5,13 @@ import { Route } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import Registration from "./components/Registration/Registration";
 import Login from "./components/Login/Login";
 import Users from "./components/Users/Users";
 import Profile from "./components/Profile/Profile";
 import PreLoader from "./common/PreLoader/PreLoader";
+import Dialogs from "./components/Dialogs/Dialogs";
 
 
 
@@ -31,7 +30,7 @@ const App = (props) => {
                 <div className='app-wrapper-content'>
                     <Route path='/login' render={()=> <Login/>} />
                     <Route path='/registration' render={()=> <Registration/>} />
-                    <Route path='/dialogs' render={()=> <DialogsContainer/>} />
+                    <Route path='/dialogs' render={()=> <Dialogs/>} />
                     <Route path='/profile/:userID?' render={()=><Profile/>} />
                     <Route path='/news:userID?' render={()=><News/>} />
                     <Route path='/music' component={Music} />

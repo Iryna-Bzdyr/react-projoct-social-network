@@ -36,7 +36,7 @@ const Users = (props) => {
     // const followUsers = useSelector(state => state.usersPage.followUsers)
     const totalUserCount = useSelector(state => state.usersPage.totalUsersCount)
     let [currentPage, setCurrentPage] = useState(1)
-    let [pageSize] = useState(2)
+    let [pageSize] = useState(4)
     let [pagesCount, setPagesCount] = useState(0)
     const [spinner, setSpinner] = useState(true);
 
@@ -58,6 +58,7 @@ const Users = (props) => {
         setCurrentPage(page)
     }
 
+
     return (
         spinner ? <PreLoader></PreLoader> :
             <Container maxWidth="lg">
@@ -69,7 +70,6 @@ const Users = (props) => {
                 <Container maxWidth="md" className={s.card__wrapper}>
                     {
                         usersData.map(u =>
-                            u.id===authUserID?<></>:
                             <Grid container spacing={5} data-aos="fade-up" data-aos-duration="2000">
                                 <Grid item xs={12}>
                                     <Paper elevation={3} className={s.user__card}>

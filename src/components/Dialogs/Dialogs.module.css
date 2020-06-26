@@ -1,37 +1,5 @@
 
-.dialogs {
-    display: grid;
-    grid-template-columns: 2fr 5fr;
-    padding: 3%;
-}
 
-.dialogs__items {
-
-}
-.dialogs__items .active{
-    color: darkred;
-}
-.item {
-
-}
-
-.messages {
-
-}
-
-.messages__items {
-
-}
-
-.messages {
-
-}
-
-.message__area{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.message__area textarea {
-    margin-right: 2%;
+.list__items{
+    padding: 0px 0px 0px 100px;
 }
