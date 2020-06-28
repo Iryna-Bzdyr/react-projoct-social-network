@@ -1,0 +1,17 @@
+.emojiIcon{
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.wrapper{
+    width: 400px;
+}
+.button__block{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+}
+.button__block button{
+    font-size: 18px;
+
+}

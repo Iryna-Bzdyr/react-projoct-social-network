@@ -17,7 +17,7 @@ const Navbar = (props) => {
         <div className={s.nav}>
             <div>
 
-                <NavLink to={`/profile`} activeClassName={s.active} className={s.nav__wrapper}>
+                <NavLink to={`/profile/${authUserID}/Photo`} activeClassName={s.active} className={s.nav__wrapper}>
                     <div className={`${s.item}`}>
                         <i className={s.home}>
                             <FaHome/>

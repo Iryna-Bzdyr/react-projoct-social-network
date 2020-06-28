@@ -20,6 +20,7 @@ export const storage = fire.storage()
 export const usersAPI =  database.ref('database/users/')
 export const profileAPI =  database.ref('database/profile/')
 export const userLoginAPI = database.ref('database/loginData/')
+export const dialogsAPI = database.ref('database/dialogs/')
 export const countryAPI =  database.ref('citiesData/')
 
 
@@ -185,6 +186,25 @@ export const citiesAPI = (country) => {
     )
 }
 
+//dialogs access
+export const userDialogsAPI = (authUserID)=>{
+    return (
+        database.ref(`database/dialogs/${authUserID}`)
+    )
+}
+
+
+export const currentDialogAPI = (authUserID,dialogUserID)=>{
+    return(
+        database.ref(`database/dialogs/${authUserID}/${dialogUserID}`)
+    )
+}
+
+export const currentMessageAPI = (authUserID, dialogUserID, messageID)=>{
+    return(
+        database.ref(`database/dialogs/${authUserID}/${dialogUserID}/${messageID}`)
+    )
+}
 //storage API
 export const photoStorageRef=(name)=> storage.ref('/photo/'+name)
 

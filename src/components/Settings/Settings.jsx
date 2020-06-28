@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setOpenModalAC} from "../../Redux/Reducer/photo-reducer";
 import {addNewPhotoThunk, changeUserAvatar} from "../../Redux/Reducer/profile-reducer";
 import PostBlock from "../../common/PostBlock/PostBlock";
+import EmojiWindow from "../../common/EmojiWindow/EmojiWindow";
 
 const Settings = (props) => {
     const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Settings = (props) => {
 return (
     <div className={s.block}>
         Settings
+        <EmojiWindow></EmojiWindow>
         {/*<UploadPhoto display={true} backgroundColor="red" label='Add photo' changePhoto={addPhoto}/>*/}
         {/*<UploadPhoto display={true} backgroundColor="purple" label='Change avatar' changePhoto={changeAvatar}/>*/}
         <PostBlock></PostBlock>

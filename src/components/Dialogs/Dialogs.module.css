@@ -1,5 +1,69 @@
-
+.wrapper{
+    max-height: 350px;
+}
 
 .list__items{
     padding: 0px 0px 0px 100px;
+}
+.dialog__header{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    align-items: center;
+    height: 60px;
+    padding: 1%;
+    background-color:#0018f4;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+}
+.outgoing, .incoming{
+    display: flex;
+    flex-direction: row;
+    /*align-items: center;*/
+}
+
+.outgoing{
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.incoming{
+    justify-content: left;
+    width: 800px;
+}
+.message__text__wrapper{
+    display: flex;
+    position: relative;
+    border-radius: 10px;
+    padding: 5px 25px 5px 10px;
+    height: 100%;
+    background-color: #cfe6e6;
+    margin: 5px;
+}
+.message__text{
+    height: 100%;
+    max-width: 350px;
+    word-wrap: break-word;
+}
+.dialog__wrapper{
+    margin-top: 60px;
+    padding: 65px 15% 2% 10px;
+    overflow-y: hidden;
+}
+
+.message__data{
+    display: flex;
+    align-items: flex-end;
+    font-size: 12px;
+    color: gray;
+}
+.message__data span {
+    padding: 5px;
+}
+.message__detete__btn{
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }

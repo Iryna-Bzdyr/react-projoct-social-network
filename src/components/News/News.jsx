@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {getAllPosts} from "../../Redux/Reducer/profile-reducer";
 import MyPosts from "../Profile/MyPosts/MyPosts";
 import PreLoader from "../../common/PreLoader/PreLoader";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 const News = (props) => {
     const dispatch = useDispatch();
@@ -20,4 +22,6 @@ const News = (props) => {
     )
 }
 
-export default News
+export default compose(
+    withAuthRedirect
+)(News)

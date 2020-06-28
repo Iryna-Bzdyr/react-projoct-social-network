@@ -8,10 +8,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     addPostComment, deletePostComment,
     setNewPostCommentAC,
-    setUserPostCommentThunk,
+    setUserPostCommentThunk, upDateNewPostTextActionCreator,
 
 } from "../../../Redux/Reducer/profile-reducer";
 import Comment from "./Comment";
+import EmojiWindow from "../../../common/EmojiWindow/EmojiWindow";
 
 
 const CommentsBlock = (props) => {
@@ -40,7 +41,7 @@ const CommentsBlock = (props) => {
 
     return (
         <>
-            <Typography paragraph>
+            <Typography paragraph className={s.comment__input}>
                 <TextField
                     className={s.textArea}
                     multiline
@@ -50,6 +51,8 @@ const CommentsBlock = (props) => {
                     onChange={onCommentChange}
                     value={comment}
                 />
+                <EmojiWindow className={s.emoji} action={setNewPostCommentAC}
+                             value={comment}></EmojiWindow>
             </Typography>
             <Typography paragraph>
                 <IconButton

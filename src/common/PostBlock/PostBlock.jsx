@@ -28,73 +28,84 @@ import {PhotoCamera} from "@material-ui/icons";
 import SaveIcon from '@material-ui/icons/Save';
 import {addNewPostThunk, upDateNewPostTextActionCreator} from "../../Redux/Reducer/profile-reducer";
 import TextField from "@material-ui/core/TextField";
+import EmojiWindow from "../EmojiWindow/EmojiWindow";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        padding: '2% 15%'
-    },
-    paper: {
-        padding: '1% 3%',
-        color: theme.palette.text.secondary,
-    },
-    button: {
-        margin: '5px 20px'
+        root: {
+            flexGrow: 1,
+            padding: '2% 15%'
+        },
+        paper: {
+            padding: '1% 3%',
+            color: theme.palette.text.secondary,
+        },
+        button: {
+            margin: '5px 20px'
 
-    },
-    textArea: {
-        width: '100%',
-        borderRadius: 5,
-        boxShadow: '0 3px 5px 2px #bbc0c7',
-    },
-    panel: {
-        backgroundColor: 'white'
-    },
-    panelSummary: {
-        backgroundColor: '#f9fbfe'
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-    },
-    secondaryHeading: {
-        fontSize: theme.typography.pxToRem(15),
-        color: theme.palette.text.secondary,
-        padding: '4% 3%',
-    },
-    column: {
-        flexBasis: '30%',
-    },
-    icon: {
-        verticalAlign: 'bottom',
-        height: 20,
-        width: 20,
-    },
-    details: {
-        width: '100%',
-    },
-    inputArea: {
-        display: 'none'
-    },
-    imageBlock: {
-        height: 180,
-        width: '100%',
-        padding: '0px 60px'
-    },
+        },
+        textArea: {
+            width: '100%',
+            borderRadius: 5,
+            boxShadow: '0 3px 5px 2px #bbc0c7',
+        },
+        panel: {
+            backgroundColor: 'white'
+        },
+        panelSummary: {
+            backgroundColor: '#f9fbfe'
+        },
+        heading: {
+            fontSize: theme.typography.pxToRem(15),
+        },
+        secondaryHeading: {
+            fontSize: theme.typography.pxToRem(15),
+            color: theme.palette.text.secondary,
+            padding: '4% 3%',
+        },
+        column: {
+            flexBasis: '30%',
+        },
+        icon: {
+            verticalAlign: 'bottom',
+            height: 20,
+            width: 20,
+        },
+        details: {
+            width: '100%',
+        },
+        inputArea: {
+            display: 'none'
+        },
+        imageBlock: {
+            height: 180,
+            width: '100%',
+            padding: '0px 60px'
+        },
 
-    img: {
-        width: 180,
-        height: 150,
-        border: 0,
-        borderRadius: 5,
-        margin: '10px 50px',
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    },
-    progress: {
-        height: 6,
-        borderRadius: 5,
-        margin: '10px 0px'
-    }
-}));
+        img: {
+            width: 180,
+            height: 150,
+            border: 0,
+            borderRadius: 5,
+            margin: '10px 50px',
+            boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        },
+        progress: {
+            height: 6,
+            borderRadius: 5,
+            margin: '10px 0px'
+        },
+        inputBlock: {
+            display: 'flex',
+            position: 'relative',
+        },
+        emoji: {
+            position: 'absolute',
+            // right: 0,
+        }
+
+    }))
+;
 
 const PostBlock = (props) => {
     const classes = useStyles();
@@ -153,15 +164,19 @@ const PostBlock = (props) => {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
-                        <TextField
-                            className={classes.textArea}
-                            multiline
-                            rows={2}
-                            placeholder={props.label}
-                            variant="outlined"
-                            onChange={onPostChange}
-                            value={newPostText}
-                        />
+                        <div className={classes.inputBlock}>
+                            <TextField
+                                className={classes.textArea}
+                                multiline
+                                rows={2}
+                                placeholder={props.label}
+                                variant="outlined"
+                                onChange={onPostChange}
+                                value={newPostText}
+                            />
+                            <EmojiWindow className={classes.emoji} action={upDateNewPostTextActionCreator}
+                                         value={newPostText}></EmojiWindow>
+                        </div>
                         <Button
                             variant="contained"
                             color="primary"

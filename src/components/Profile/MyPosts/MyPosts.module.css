@@ -119,3 +119,12 @@ body{
 .card__content{
     padding: 0px 0px 10px;
 }
+
+.comment__input{
+    display: flex;
+    position: relative;
+}
+.emoji{
+    position: absolute;
+    right: 0;
+}

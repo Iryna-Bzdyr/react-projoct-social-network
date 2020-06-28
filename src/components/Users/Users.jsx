@@ -47,7 +47,6 @@ const Users = (props) => {
         if (totalUserCount) {
             setPagesCount(Math.ceil(totalUserCount / pageSize))
             dispatch(changeUserPage(currentPage, pageSize))
-            // dispatch(getFollowers(authUserID))
         }
         setTimeout(() => setSpinner(false), 1000)
         AOS.init();

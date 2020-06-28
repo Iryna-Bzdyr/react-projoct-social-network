@@ -114,7 +114,7 @@ const MyPosts = (props) => {
 
 
                         <div className={s.card__content}>
-                            <Typography variant="body2" color="textSecondary" component="p" className={s.post__text__block}>
+                            <Typography variant="body2"  component="p" className={s.post__text__block}>
                                 {post.post}
                             </Typography>
                         </div>

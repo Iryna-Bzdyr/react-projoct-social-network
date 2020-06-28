@@ -13,6 +13,7 @@
     "aos": "^2.3.4",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "emoji.json": "^12.1.1",
     "firebase": "^7.14.1",
     "material-auto-rotating-carousel": "^3.0.2",
     "material-ui-search-bar": "^0.4.2",
