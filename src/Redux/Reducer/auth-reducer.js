@@ -2,7 +2,7 @@ import {userLoginAPI} from "../../firebase";
 import {reset, stopSubmit} from 'redux-form';
 import {getFollowers, setCurrentUserIdAC, setCurrentUserMainData} from "./user-reducer";
 import {getAllPosts, setCurrentUserProfileData} from "./profile-reducer";
-import {getDialogsData} from "./dialogs-reducer";
+import {getDialogsData, getDialogsUserData} from "./dialogs-reducer";
 
 const setResultCode = 'SET-RESULT-CODE'
 const setUserID = 'SET-USER-ID'
@@ -63,7 +63,7 @@ else if (currentUserLoginData.password == password){
     dispatch(setCurrentUserMainData(currentUserLoginData.id))
     dispatch(setCurrentUserProfileData(currentUserLoginData.id))
     dispatch(getFollowers(currentUserLoginData.id))
-    dispatch(getDialogsData(currentUserLoginData.id))
+    dispatch(getDialogsUserData(currentUserLoginData.id))
     dispatch(setResultCodeAC(1))
     dispatch(reset(formName))
 }

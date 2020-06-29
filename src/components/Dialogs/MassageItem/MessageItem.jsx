@@ -14,7 +14,7 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from '@material-ui/icons/Send';
 import Avatar from "@material-ui/core/Avatar";
-import {getUserAvatar, getUserFirstName, getUserLastName} from "../../../Redux/Reducer/user-reducer";
+import {getUserAvatar} from "../../../Redux/Reducer/user-reducer";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,11 @@ const useStyles = makeStyles((theme) => ({
 
     inputBlock: {
         display: 'flex',
-        position: 'relative',
+        position: 'fixed',
+        width: '85%',
+        bottom:'0%',
+        backgroundColor: 'white',
+        zIndex: 100,
     },
     emoji: {
         position: 'absolute',
@@ -64,7 +68,7 @@ const MessageItem = (props) => {
                                     <Grid item xs={12}>
                                         <div className={s.outgoing}>
                                             <div className={s.message__data}>
-                                                <span>{data.time}</span><span>{data.date}</span></div>
+                                                <span>{data.date}</span><span>{data.time}</span></div>
                                             <div className={s.message__text__wrapper}>
                                                 <div className={s.message__text}>{data.messageText}</div>
                                                 {!data.delete?<div className={s.message__detete__btn}>
@@ -102,7 +106,7 @@ const MessageItem = (props) => {
                             )
                         }
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} >
                         <div className={classes.inputBlock}>
                             <TextField
                                 className={classes.textArea}

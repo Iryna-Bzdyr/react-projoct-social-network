@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import s from "./Dialogs.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {getFollowerUsersData} from "../../Redux/Reducer/user-reducer";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Popover from "@material-ui/core/Popover";
@@ -11,10 +11,11 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import {setDialogUserIDAC} from "../../Redux/Reducer/dialogs-reducer";
+import {getDialogsData, getDialogsUserData, setDialogUserIDAC} from "../../Redux/Reducer/dialogs-reducer";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import DialogWindow from "./DialogItem/DialogWindow";
+import DialogItem from "./DialogItem/DialogItem";
+import PreLoader from "../../common/PreLoader/PreLoader";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,18 +25,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-const Dialogs = (props) =>{
+const Dialogs = (props) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const followUsers = useSelector(state => state.usersPage.followUsers)
     const friendsData = useSelector(state => state.usersPage.followerUserData)
     const dialogUserID = useSelector(state => state.messagesPage.dialogUserID)
+    const DialogsUserData = useSelector(state => state.messagesPage.DialogsUserData)
+    const authUserID = useSelector(state => state.usersPage.currentUserId)
+    const messagesData = useSelector(state => state.messagesPage.MassagesData)
+    const [spinner, setSpinner] = useState(true);
 
     useEffect(() => {
         dispatch(getFollowerUsersData(followUsers))
-    }, [followUsers.length, dialogUserID])
+        dispatch(getDialogsUserData(authUserID))
+        setTimeout(() => setSpinner(false), 1000)
+    }, [followUsers.length, dialogUserID, DialogsUserData.length, messagesData.length])
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -47,52 +53,60 @@ const Dialogs = (props) =>{
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    const setDialogUserId = (id)=>{
+    const setDialogUserId = (id) => {
         dispatch(setDialogUserIDAC(id))
+        handleClose()
     }
     return (
+        spinner ? <PreLoader></PreLoader> :
         <Grid container spacing={0}>
             <Grid item xs={3}>
 
-                        <div className={s.dialog__header}>
-                            <IconButton aria-describedby={id}  onClick={handleClick}>
-                                <PeopleAltIcon></PeopleAltIcon>
-                            </IconButton>
-                            <Popover
-                                id={id}
-                                open={open}
-                                anchorEl={anchorEl}
-                                onClose={handleClose}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'center',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'center',
-                                }}
-                            >
-                                <Typography className={classes.typography}>
-                                    <div className={s.wrapper}>
-                                        {
-                                            friendsData.map(data=>(
-                                                <ListItem button
-                                                          onClick={() => setDialogUserId(data.id)}
-                                                >
-                                                    <ListItemAvatar>
-                                                        <Avatar src={data.avatar.url}></Avatar>
-                                                    </ListItemAvatar>
-                                                    <ListItemText primary={`${data.fullName.firstName}   ${data.fullName.lastName}`}/>
-                                                </ListItem>
-                                            ))
-                                        }
-                                    </div>
-                                </Typography>
-                            </Popover>
-                        </div>
+                <div className={s.dialog__header}>
+                    <IconButton aria-describedby={id} onClick={handleClick}>
+                        <PeopleAltIcon></PeopleAltIcon>
+                    </IconButton>
+                    <Popover
+                        id={id}
+                        open={open}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <Typography className={classes.typography}>
+                            <div className={s.wrapper}>
+                                {
+                                    friendsData.map(data => (
+                                        <ListItem button
+                                                  onClick={() => setDialogUserId(data.id)}
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar src={data.avatar.url}></Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={`${data.fullName.firstName}   ${data.fullName.lastName}`}/>
+                                        </ListItem>
+                                    ))
+                                }
+                            </div>
+                        </Typography>
+                    </Popover>
+                </div>
+                <div className={s.dialog__users__wrapper}>
+                    {DialogsUserData.map(d=>(<DialogItem dialogUserID={d.userID}>
+
+                    </DialogItem>))}
+                </div>
             </Grid>
             <Grid item xs={9}>
-                    <DialogWindow></DialogWindow>
+                <DialogWindow></DialogWindow>
             </Grid>
         </Grid>
 

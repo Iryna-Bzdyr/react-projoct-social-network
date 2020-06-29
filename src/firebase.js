@@ -205,6 +205,20 @@ export const currentMessageAPI = (authUserID, dialogUserID, messageID)=>{
         database.ref(`database/dialogs/${authUserID}/${dialogUserID}/${messageID}`)
     )
 }
+
+export const dialogsUserAPI = (authUserID, dialogUserID)=>{
+    return (
+        database.ref(`database/dialogsUsers/${authUserID}/${dialogUserID}`)
+    )
+}
+
+export const currentDialogsUserAPI = (authUserID)=>{
+    return (
+        database.ref(`database/dialogsUsers/${authUserID}`)
+    )
+}
+
+
 //storage API
 export const photoStorageRef=(name)=> storage.ref('/photo/'+name)
 

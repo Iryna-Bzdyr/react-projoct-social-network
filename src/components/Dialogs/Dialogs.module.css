@@ -12,7 +12,7 @@
     align-items: center;
     height: 60px;
     padding: 1%;
-    background-color:#0018f4;
+    background-color: #cfe6e6;
     position: fixed;
     width: 100%;
     z-index: 10;
@@ -39,7 +39,7 @@
     padding: 5px 25px 5px 10px;
     height: 100%;
     background-color: #cfe6e6;
-    margin: 5px;
+    margin: 10px;
 }
 .message__text{
     height: 100%;
@@ -47,9 +47,11 @@
     word-wrap: break-word;
 }
 .dialog__wrapper{
-    margin-top: 60px;
-    padding: 65px 15% 2% 10px;
+    margin-top: 80px;
+    /*max-height: 80vh;*/
+    padding: 80px 15% 20% 20px;
     overflow-y: hidden;
+
 }
 
 .message__data{
@@ -66,4 +68,36 @@
     position: absolute;
     right: 0;
     bottom: 0;
+
 }
+
+.dialog__users__wrapper{
+    margin-top: 60px;
+ min-height: 100vh;
+    background-color: #e9e6e1;
+    overflow-y: hidden;
+}
+.dialogs__data__message__text{
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 2%;
+}
+.dialogs__data__box{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+}
+.dialogs__data{
+    padding: 2%;
+    margin: 2%;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px grey;
+}
+.dialogs__data__active{
+    background-color: #cfe6e6;
+}
+/*.dialogs__wrapper{*/
+/*    background-color: mintcream;*/
+/*}*/

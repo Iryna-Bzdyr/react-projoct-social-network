@@ -1,7 +1,7 @@
 import React from "react";
 import s from './../Dialogs.module.css'
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+
 import Avatar from "@material-ui/core/Avatar";
 import {getUserAvatar, getUserFirstName, getUserLastName} from "../../../Redux/Reducer/user-reducer";
 import {useSelector} from "react-redux";
@@ -9,6 +9,7 @@ import MessageItem from "../MassageItem/MessageItem";
 
 const DialogWindow = (props) => {
     const dialogUserID = useSelector(state => state.messagesPage.dialogUserID)
+
     return (
         <Grid container spacing={0}>
             <Grid item xs={12}>
