@@ -59,8 +59,8 @@ const Dialogs = (props) => {
     }
     return (
         spinner ? <PreLoader></PreLoader> :
-        <Grid container spacing={0}>
-            <Grid item xs={3}>
+        <div className={s.container}>
+            <div  className={s.dialog__left__pane}>
 
                 <div className={s.dialog__header}>
                     <IconButton aria-describedby={id} onClick={handleClick}>
@@ -101,14 +101,13 @@ const Dialogs = (props) => {
                 </div>
                 <div className={s.dialog__users__wrapper}>
                     {DialogsUserData.map(d=>(<DialogItem dialogUserID={d.userID}>
-
                     </DialogItem>))}
                 </div>
-            </Grid>
-            <Grid item xs={9}>
+            </div>
+            <div  className={s.dialog__right__pane}>
                 <DialogWindow></DialogWindow>
-            </Grid>
-        </Grid>
+            </div>
+        </div>
 
     );
 }

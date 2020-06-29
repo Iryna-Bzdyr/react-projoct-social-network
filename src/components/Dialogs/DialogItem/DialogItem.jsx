@@ -23,7 +23,7 @@ const DialogItem = (props) => {
         dispatch(setDialogUserIDAC(id))
     }
     return (
-        <div onClick={()=>onClick(props.dialogUserID)}className={s.dialogs__wrapper}>
+        <div onClick={()=>onClick(props.dialogUserID)}className={s.dialogs__block}>
             <Paper elevation={3} variant="outlined" className={s.dialogs__data}>
             <div className={s.dialogs__data__box}>
                 <Avatar aria-label="recipe" className={s.avatar}

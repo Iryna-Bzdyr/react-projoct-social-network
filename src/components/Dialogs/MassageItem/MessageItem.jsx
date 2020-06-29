@@ -19,16 +19,16 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
     textArea: {
-        width: '70%',
-        height: '70%',
+        width: '65%',
+        height: '65%',
         boxShadow: '0 3px 5px 2px #bbc0c7',
     },
 
     inputBlock: {
         display: 'flex',
         position: 'fixed',
-        width: '85%',
-        bottom:'0%',
+        width: '65%',
+        bottom: '0%',
         backgroundColor: 'white',
         zIndex: 100,
     },
@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
     }
 }))
+
 const MessageItem = (props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -60,72 +61,67 @@ const MessageItem = (props) => {
     return (
         !dialogUserID ? <></> :
             <div>
-                <Grid container spacing={0}>
-                    <Grid item xs={12} className={s.dialog__wrapper}>
-                        {
-                            messagesData.map(data =>
-                                data.userID === authUserID ?
-                                    <Grid item xs={12}>
-                                        <div className={s.outgoing}>
-                                            <div className={s.message__data}>
-                                                <span>{data.date}</span><span>{data.time}</span></div>
-                                            <div className={s.message__text__wrapper}>
-                                                <div className={s.message__text}>{data.messageText}</div>
-                                                {!data.delete?<div className={s.message__detete__btn}>
-                                                    <IconButton className={s.message__detete__btn} size="small"
-                                                                onClick={() => onClickDeleteMessage(authUserID, dialogUserID, data.messageID)}
-                                                                aria-label="delete post"
-                                                    >
-                                                        <DeleteIcon fontSize="small"/>
-                                                    </IconButton>
-                                                </div>:<></>}
-                                            </div>
-                                            <Avatar aria-label="recipe" className={s.avatar}
-                                                    src={getUserAvatar(data.userID)}
+
+                <div className={s.dialog__wrapper}>
+                    {
+                        messagesData.map(data =>
+                            data.userID === authUserID ?
+                                <div className={s.outgoing}>
+                                    <div className={s.message__data}>
+                                        <span>{data.date}</span><span>{data.time}</span></div>
+                                    <div className={s.message__text__wrapper}>
+                                        <div className={s.message__text}>{data.messageText}</div>
+                                        {!data.delete ? <div className={s.message__detete__btn}>
+                                            <IconButton className={s.message__detete__btn} size="small"
+                                                        onClick={() => onClickDeleteMessage(authUserID, dialogUserID, data.messageID)}
+                                                        aria-label="delete post"
                                             >
-                                            </Avatar>
-                                        </div>
-                                    </Grid> :
-                                    <Grid item xs={12}>
+                                                <DeleteIcon fontSize="small"/>
+                                            </IconButton>
+                                        </div> : <></>}
+                                    </div>
+                                    <Avatar aria-label="recipe" className={s.avatar}
+                                            src={getUserAvatar(data.userID)}
+                                    >
+                                    </Avatar>
+                                </div>
+                                :
+                                <div className={s.incoming}>
 
-                                        <div className={s.incoming}>
+                                    <Avatar aria-label="recipe" className={s.avatar}
+                                            src={getUserAvatar(data.userID)}
+                                    >
+                                    </Avatar>
+                                    <div className={s.message__text__wrapper}>
 
-                                            <Avatar aria-label="recipe" className={s.avatar}
-                                                    src={getUserAvatar(data.userID)}
-                                            >
-                                            </Avatar>
-                                            <div className={s.message__text__wrapper}>
+                                        <div className={s.message__text}>{data.messageText}</div>
+                                    </div>
 
-                                                <div className={s.message__text}>{data.messageText}</div>
-                                            </div>
+                                    <div className={s.message__data}>
+                                        <span>{data.time}</span><span>{data.date}</span></div>
+                                </div>
+                        )
+                    }
+                </div>
 
-                                            <div className={s.message__data}>
-                                                <span>{data.time}</span><span>{data.date}</span></div>
-                                        </div>
-                                    </Grid>
-                            )
-                        }
-                    </Grid>
-                    <Grid item xs={12} >
-                        <div className={classes.inputBlock}>
-                            <TextField
-                                className={classes.textArea}
-                                multiline
-                                rows={1}
-                                placeholder={props.label}
-                                variant="outlined"
-                                onChange={onMessageChange}
-                                value={newMessageText}
-                            />
-                            <EmojiWindow className={classes.emoji} action={updateNewMessageTextAC}
-                                         value={newMessageText}></EmojiWindow>
-                            <IconButton color="primary" onClick={() => sendMessage()}>
-                                <SendIcon/>
-                            </IconButton>
-                        </div>
-                    </Grid>
-                </Grid>
+                <div className={classes.inputBlock}>
+                    <TextField
+                        className={classes.textArea}
+                        multiline
+                        rows={1}
+                        placeholder={props.label}
+                        variant="outlined"
+                        onChange={onMessageChange}
+                        value={newMessageText}
+                    />
+                    <EmojiWindow className={classes.emoji} action={updateNewMessageTextAC}
+                                 value={newMessageText}></EmojiWindow>
+                    <IconButton color="primary" onClick={() => sendMessage()}>
+                        <SendIcon/>
+                    </IconButton>
+                </div>
             </div>
     )
 }
+
 export default MessageItem

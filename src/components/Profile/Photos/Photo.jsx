@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => (
         },
         gridListTileBar: {
             backgroundColor: '#a1a3a1',
-            maxHeight:'55px',
+            maxHeight: '55px',
             opacity: 0.7,
             display: 'flex',
             flexDirection: 'row',
@@ -61,10 +61,15 @@ let Photo = (props) => {
     const [changePhotoBlock, setChangePhotoBlock] = useState(false)
     const uploadFile = useSelector(state => state.uploadPhotoReducer.upLoadFile)
     const [spinner, setSpinner] = useState(true);
-
+    const [photoWidth, setPhotoWidth] = useState(window.innerHeight)
 
 
     useEffect(() => {
+        function handleResize() {
+            setPhotoWidth(window.innerHeight)
+            window.addEventListener('resize', handleResize)
+        }
+        console.log(photoWidth)
         if (!paramsData.userID) {
             setUserID(authUserID)
 
@@ -82,7 +87,7 @@ let Photo = (props) => {
         AOS.init();
         AOS.refresh();
         setTimeout(() => setSpinner(false), 1000)
-    }, [id])
+    }, [photoWidth,id])
 
 
     const openSlider = () => {
@@ -127,7 +132,7 @@ let Photo = (props) => {
                 </AutoRotatingCarousel>
 
                 <div className={s.root}>
-                    <GridList cols={4} cellHeight={320} className={classes.gridList}>
+                    <GridList cols={4} cellHeight={photoWidth*0.45} className={classes.gridList}>
                         {photoData.map((photo, index) => (
                             <GridListTile key={photo.id} cols={photo.rows || 2}>
                                 <img className={classes.gridPhoto} src={photo.url} onClick={openSlider}
@@ -146,11 +151,11 @@ let Photo = (props) => {
                                                      authUserID === id ?
                                                          <IconButton color='#de2694'
                                                                      aria-label="delete"
-                                                                     onClick={()=>deletePhoto(authUserID,photo.id,photo.url)}
+                                                                     onClick={() => deletePhoto(authUserID, photo.id, photo.url)}
                                                          >
                                                              <DeleteIcon/>
                                                          </IconButton>
-                                                     : <></>
+                                                         : <></>
 
                                                  }
                                 />
