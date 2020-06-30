@@ -37,7 +37,7 @@ const Profile = (props) => {
         dispatch(setUserPostThunk(id))
 
         setTimeout(() => setSpinner(false), 1000)
-    }, [id, postData.length])
+    }, [id, postData.length,paramsData.userID])
 
 
     let navigationElement = searchBar.map((pathName, index) => <SearchBarNavigation key={index}

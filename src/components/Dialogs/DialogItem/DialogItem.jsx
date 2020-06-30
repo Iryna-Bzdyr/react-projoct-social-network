@@ -10,18 +10,14 @@ import * as AOS from "aos";
 const DialogItem = (props) => {
     const dispatch = useDispatch();
     const authUserID = useSelector(state => state.usersPage.currentUserId)
-    const [dialogsData, setDialogsData] = useState({})
-    const messagesData = useSelector(state => state.messagesPage.MassagesData)
     const dialogUserID = useSelector(state => state.messagesPage.dialogUserID)
     const DialogsUserData = useSelector(state => state.messagesPage.DialogsUserData)
-    const DialogsData = useSelector(state => state.messagesPage.DialogsData)
+
 
 console.log(props)
     useEffect(() => {
-        // setDialogsData(dispatch(getDialogsData(authUserID,props.dialogUserID)))
           if(!dialogUserID){
-              dispatch(setDialogUserIDAC(DialogsUserData[0].userID))
-              // setTimeout(()=>{setDialogsData(dispatch(getDialogsData(authUserID,props.dialogUserID,DialogsData)))},1000)
+              setTimeout(()=>{ dispatch(setDialogUserIDAC(DialogsUserData[0].userID))},1000)
           }
         AOS.init();
         AOS.refresh();
@@ -31,7 +27,7 @@ console.log(props)
         dispatch(setDialogUserIDAC(id))
     }
     return (
-        <div onClick={() => onClick(props.dialogUserID)} className={s.dialogs__block} data-aos="fade-right">
+        <div onClick={() => onClick(props.dialogUserID)} className={s.dialogs__block} >
 
             <Paper elevation={3} variant="outlined" className={s.dialogs__data}>
                 <div className={s.dialogs__data__box}>

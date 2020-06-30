@@ -87,7 +87,7 @@ let Photo = (props) => {
         AOS.init();
         AOS.refresh();
         setTimeout(() => setSpinner(false), 1000)
-    }, [photoWidth,id])
+    }, [photoWidth,id,paramsData.userID])
 
 
     const openSlider = () => {

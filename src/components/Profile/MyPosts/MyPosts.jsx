@@ -70,7 +70,7 @@ const MyPosts = (props) => {
 
         }
         setTimeout(() => setSpinner(false), 1000)
-    }, [props.postData.length])
+    }, [props.postData.length,paramsData.userID])
 
 
     const handleExpandClick = i => {

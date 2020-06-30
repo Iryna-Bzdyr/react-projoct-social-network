@@ -1,15 +1,25 @@
 import React from "react";
 import s from './AuthBlock.module.css'
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {FiUserCheck, FiLogOut} from "react-icons/fi";
-import {useSelector} from "react-redux";
-import {getUserAvatar} from "../../../Redux/Reducer/user-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserAvatar, setCurrentUserIdAC} from "../../../Redux/Reducer/user-reducer";
 import Avatar from "@material-ui/core/Avatar";
+import {setResultCodeAC} from "../../../Redux/Reducer/auth-reducer";
+import {setDialogUserIDAC} from "../../../Redux/Reducer/dialogs-reducer";
 
 
 const AuthBlock =(props)=>{
     const authUserID = useSelector(state => state.usersPage.currentUserId)
+    let history = useHistory();
+    const dispatch = useDispatch();
+    let onLogOut = (id)=>{
+        dispatch(setCurrentUserIdAC(id))
+        dispatch(setResultCodeAC(0))
+        dispatch(setDialogUserIDAC(''))
+        history.push(`/login`);
 
+    }
     if (!authUserID){
         return (
             <div className={s.button}>
@@ -37,8 +47,8 @@ const AuthBlock =(props)=>{
                         src={getUserAvatar(authUserID)}
                 >
                 </Avatar>
-                <button className={s.login__btn}><i><FiLogOut/> </i>
-                    <NavLink to='/login'>
+                <button className={s.login__btn} onClick={()=>onLogOut(0)}><i><FiLogOut/> </i>
+                    <NavLink to='/login' >
                         Log out
                     </NavLink>
                 </button>

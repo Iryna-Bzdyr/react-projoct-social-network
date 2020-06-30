@@ -94,6 +94,7 @@ LoginForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 const Login = (props) => {
     const dispatch = useDispatch();
     const resultCode = useSelector(state => state.auth.resultCode)
+    const authUserID = useSelector(state => state.usersPage.currentUserId)
     const currentUserLoginData = useSelector(state => state.auth.currentUserLoginData)
 
     useEffect(() => {
@@ -106,7 +107,7 @@ const Login = (props) => {
     if (resultCode == 1) {
         return (
             // <Redirect to={`/profile/${userID}/Photo`}  />
-            <Redirect to={`/settings`}/>
+            <Redirect to={`/profile/${authUserID}/Photo`}/>
         )
     }
     return (

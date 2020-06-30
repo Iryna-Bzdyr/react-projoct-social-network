@@ -69,7 +69,7 @@ const MessageItem = (props) => {
                     {
                         messagesData.map(data =>
                             data.userID === authUserID ?
-                                <div className={s.outgoing} data-aos="fade-left">
+                                <div className={s.outgoing} >
                                     <div className={s.message__data}>
                                         <span>{data.date}</span><span>{data.time}</span></div>
                                     <div className={s.message__text__wrapper}>

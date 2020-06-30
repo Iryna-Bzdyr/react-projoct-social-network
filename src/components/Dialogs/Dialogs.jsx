@@ -16,6 +16,8 @@ import Grid from "@material-ui/core/Grid";
 import DialogWindow from "./DialogItem/DialogWindow";
 import DialogItem from "./DialogItem/DialogItem";
 import PreLoader from "../../common/PreLoader/PreLoader";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -117,4 +119,6 @@ const Dialogs = (props) => {
 }
 
 
-export default Dialogs
+export default compose(
+    withAuthRedirect
+)(Dialogs)
