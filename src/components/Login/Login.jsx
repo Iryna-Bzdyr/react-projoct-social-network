@@ -15,7 +15,6 @@ import {checkLogin, setLoginData} from "../../Redux/Reducer/auth-reducer";
 import {checkRegistrationAC} from "../../Redux/Reducer/registration-reducer";
 
 
-
 let LoginForm = (props) => {
     const [values, setValues] = React.useState({
         amount: '',
@@ -34,8 +33,8 @@ let LoginForm = (props) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    const onLoginChange =(e)=>{
-props.dispatch(setLoginData(e.target.value))
+    const onLoginChange = (e) => {
+        props.dispatch(setLoginData(e.target.value))
     }
     const {handleSubmit, pristine, reset, submitting, valid} = props
     return (
@@ -83,13 +82,13 @@ props.dispatch(setLoginData(e.target.value))
                 </Button>
             </div>
             <div className={s.error__block}>
-                {props.error&&<div>{props.error}</div>}
+                {props.error && <div>{props.error}</div>}
             </div>
         </form>
     )
 }
 
-  LoginForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
+LoginForm = reduxForm({form: 'LoginForm', validate})(LoginForm)
 
 
 const Login = (props) => {
@@ -97,19 +96,19 @@ const Login = (props) => {
     const resultCode = useSelector(state => state.auth.resultCode)
     const currentUserLoginData = useSelector(state => state.auth.currentUserLoginData)
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(checkRegistrationAC(false))
     })
     const onSubmit = (submitData) => {
-        dispatch(checkLogin(submitData.login, submitData.password, 'LoginForm',currentUserLoginData))
-}
+        dispatch(checkLogin(submitData.login, submitData.password, 'LoginForm', currentUserLoginData))
+    }
 
-if (resultCode==1){
-    return (
-        // <Redirect to={`/profile/${userID}/Photo`}  />
-        <Redirect to={`/settings`}  />
-    )
-}
+    if (resultCode == 1) {
+        return (
+            // <Redirect to={`/profile/${userID}/Photo`}  />
+            <Redirect to={`/settings`}/>
+        )
+    }
     return (
         <div className={s.wrapper}>
             <Container maxWidth="sm">

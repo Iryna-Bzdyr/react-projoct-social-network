@@ -16,6 +16,7 @@ import SendIcon from '@material-ui/icons/Send';
 import Avatar from "@material-ui/core/Avatar";
 import {getUserAvatar} from "../../../Redux/Reducer/user-reducer";
 import DeleteIcon from "@material-ui/icons/Delete";
+import * as AOS from "aos";
 
 const useStyles = makeStyles((theme) => ({
     textArea: {
@@ -47,6 +48,8 @@ const MessageItem = (props) => {
 
     useEffect(() => {
         dispatch(getMessagesData(authUserID, dialogUserID))
+        AOS.init();
+        AOS.refresh();
     }, [dialogUserID, messagesData.length])
     const onMessageChange = (e) => {
         dispatch(updateNewMessageTextAC(e.target.value))
@@ -66,7 +69,7 @@ const MessageItem = (props) => {
                     {
                         messagesData.map(data =>
                             data.userID === authUserID ?
-                                <div className={s.outgoing}>
+                                <div className={s.outgoing} data-aos="fade-left">
                                     <div className={s.message__data}>
                                         <span>{data.date}</span><span>{data.time}</span></div>
                                     <div className={s.message__text__wrapper}>
@@ -86,7 +89,7 @@ const MessageItem = (props) => {
                                     </Avatar>
                                 </div>
                                 :
-                                <div className={s.incoming}>
+                                <div className={s.incoming} data-aos="fade-right">
 
                                     <Avatar aria-label="recipe" className={s.avatar}
                                             src={getUserAvatar(data.userID)}

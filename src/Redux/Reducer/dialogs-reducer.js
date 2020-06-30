@@ -70,6 +70,7 @@ export const sendNewMessage = (authUserID, dialogUserID, messageText) => (dispat
     currentMessageAPI(authUserID, dialogUserID, messageID).set({
         messageID: messageID,
         userID: authUserID,
+        dialogUserID:dialogUserID,
         fullDate: fullDate,
         date: date,
         time: time,
@@ -127,7 +128,7 @@ export const getDialogsUserData = (authUserID) => (dispatch) => {
 }
 
 
-export const getDialogsData = (authUserID, dialogUserID) => (dispatch) => {
+export const getDialogsData = (authUserID, dialogUserID) => {
     let dialogData = []
     let resultData = []
     let incomingData = []
@@ -147,6 +148,7 @@ export const getDialogsData = (authUserID, dialogUserID) => (dispatch) => {
     })
     return dialogData
 }
+
 
 
 export default dialogsReducer

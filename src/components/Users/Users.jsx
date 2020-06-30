@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import s from './Users.module.css'
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect, useHistory} from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -18,6 +18,9 @@ import *as AOS from "aos";
 import "aos/dist/aos.css";
 import Avatar from "@material-ui/core/Avatar";
 import {makeStyles} from '@material-ui/core/styles';
+import IconButton from "@material-ui/core/IconButton";
+import EmailIcon from '@material-ui/icons/Email';
+import {setDialogUserIDAC} from "../../Redux/Reducer/dialogs-reducer";
 
 const useStyles = makeStyles({
 
@@ -39,7 +42,8 @@ const Users = (props) => {
     let [pageSize] = useState(4)
     let [pagesCount, setPagesCount] = useState(0)
     const [spinner, setSpinner] = useState(true);
-
+    const DialogsUserData = useSelector(state => state.messagesPage.DialogsUserData)
+    let history = useHistory();
     useEffect(() => {
 
         dispatch(setTotalUserCount())
@@ -57,6 +61,10 @@ const Users = (props) => {
         setCurrentPage(page)
     }
 
+    let onMessageClick = (id)=>{
+        dispatch(setDialogUserIDAC(id))
+        history.push("/dialogs");
+    }
 
     return (
         spinner ? <PreLoader></PreLoader> :
@@ -69,7 +77,7 @@ const Users = (props) => {
                 <Container maxWidth="md" className={s.card__wrapper}>
                     {
                         usersData.map(u =>
-                            <Grid container spacing={5} data-aos="fade-up" data-aos-duration="2000">
+                            <Grid container spacing={5}>
                                 <Grid item xs={12}>
                                     <Paper elevation={3} className={s.user__card}>
                                         <Grid container>
@@ -105,6 +113,11 @@ const Users = (props) => {
                                                 </div>
                                                 <div className={s.status}>
                                                     <p>{u.status}</p>
+                                                </div>
+                                                <div className={s.message__btn}>
+                                                    <IconButton color="primary" onClick={()=>onMessageClick(u.id)}>
+                                                        <EmailIcon />
+                                                    </IconButton>
                                                 </div>
                                             </Grid>
                                         </Grid>

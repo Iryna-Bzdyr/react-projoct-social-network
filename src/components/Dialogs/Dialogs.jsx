@@ -36,10 +36,14 @@ const Dialogs = (props) => {
     const authUserID = useSelector(state => state.usersPage.currentUserId)
     const messagesData = useSelector(state => state.messagesPage.MassagesData)
     const [spinner, setSpinner] = useState(true);
+    const DialogsData = useSelector(state => state.messagesPage.DialogsData)
 
     useEffect(() => {
         dispatch(getFollowerUsersData(followUsers))
         dispatch(getDialogsUserData(authUserID))
+      // if(DialogsUserData.length>0){
+      //     DialogsUserData.forEach(d=>dispatch(getDialogsData(authUserID,d.dialogUserID,DialogsData)))
+      // }
         setTimeout(() => setSpinner(false), 1000)
     }, [followUsers.length, dialogUserID, DialogsUserData.length, messagesData.length])
 
@@ -100,7 +104,7 @@ const Dialogs = (props) => {
                     </Popover>
                 </div>
                 <div className={s.dialog__users__wrapper}>
-                    {DialogsUserData.map(d=>(<DialogItem dialogUserID={d.userID}>
+                    {DialogsUserData.map(d=>(<DialogItem dialogUserID={d.userID} >
                     </DialogItem>))}
                 </div>
             </div>

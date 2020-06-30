@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './Navbar.module.css'
-import {NavLink} from 'react-router-dom'
+import {NavLink, useHistory} from 'react-router-dom'
 import {FaHome, FaRegNewspaper, FaUsers} from "react-icons/fa";
 import {MdMessage, MdSettings} from "react-icons/md";
 import {IoIosMusicalNotes} from "react-icons/io";
@@ -9,16 +9,22 @@ import {useSelector} from "react-redux";
 
 
 
+
 const Navbar = (props) => {
     const authUserID = useSelector(state => state.usersPage.currentUserId)
-    // let friendsElement = props.users.map((friend, index) => <MyFriends key={index} id={friend.id}
-    //                                                                    imageUrl={friend.avatar.url}/>)
+    let history = useHistory();
+
+    let onProfileClick = ()=>{
+        history.push(`/profile/${authUserID}/Photo`);
+    }
+
     return (
         <div className={s.nav}>
             <div>
 
-                <NavLink to={`/profile/${authUserID}/Photo`} activeClassName={s.active} className={s.nav__wrapper}>
-                    <div className={`${s.item}`}>
+                <NavLink to={`/profile/${authUserID}/Photo`} activeClassName={s.active} className={s.nav__wrapper}
+                >
+                    <div className={`${s.item}`} onClick={()=>onProfileClick()}>
                         <i className={s.home}>
                             <FaHome/>
                         </i>
