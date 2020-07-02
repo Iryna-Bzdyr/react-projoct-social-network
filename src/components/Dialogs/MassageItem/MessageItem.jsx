@@ -17,6 +17,7 @@ import Avatar from "@material-ui/core/Avatar";
 import {getUserAvatar} from "../../../Redux/Reducer/user-reducer";
 import DeleteIcon from "@material-ui/icons/Delete";
 import * as AOS from "aos";
+import { useConfirm } from "material-ui-confirm";
 
 const useStyles = makeStyles((theme) => ({
     textArea: {
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MessageItem = (props) => {
     const classes = useStyles();
+    const confirm = useConfirm();
     const dispatch = useDispatch();
     const newMessageText = useSelector(state => state.messagesPage.newMessageText)
     const messagesData = useSelector(state => state.messagesPage.MassagesData)
@@ -58,9 +60,13 @@ const MessageItem = (props) => {
         dispatch(sendNewMessage(authUserID, dialogUserID, newMessageText))
         dispatch(updateNewMessageTextAC(''))
     }
-    const onClickDeleteMessage = (authUserID, dialogUserID, messageID) => {
-        dispatch(deleteMessage(authUserID, dialogUserID, messageID))
-    }
+
+
+    const handleDelete = (authUserID, dialogUserID, messageID) => {
+        confirm({ description: `This will permanently delete this massage.` })
+            .then(() =>  dispatch(deleteMessage(authUserID, dialogUserID, messageID)))
+            .catch(() => console.log("Deletion cancelled."));
+    };
     return (
         !dialogUserID ? <></> :
             <div>
@@ -76,7 +82,7 @@ const MessageItem = (props) => {
                                         <div className={s.message__text}>{data.messageText}</div>
                                         {!data.delete ? <div className={s.message__detete__btn}>
                                             <IconButton className={s.message__detete__btn} size="small"
-                                                        onClick={() => onClickDeleteMessage(authUserID, dialogUserID, data.messageID)}
+                                                        onClick={() => handleDelete(authUserID, dialogUserID, data.messageID)}
                                                         aria-label="delete post"
                                             >
                                                 <DeleteIcon fontSize="small"/>

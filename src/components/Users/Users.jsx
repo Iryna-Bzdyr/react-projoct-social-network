@@ -36,7 +36,6 @@ const Users = (props) => {
     const dispatch = useDispatch();
     const authUserID = useSelector(state => state.usersPage.currentUserId)
     const usersData = useSelector(state => state.usersPage.users)
-    // const followUsers = useSelector(state => state.usersPage.followUsers)
     const totalUserCount = useSelector(state => state.usersPage.totalUsersCount)
     let [currentPage, setCurrentPage] = useState(1)
     let [pageSize] = useState(4)

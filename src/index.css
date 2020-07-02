@@ -22,3 +22,17 @@ button, button:focus, button:active{
   outline-style: none;
   border-color: transparent;
 }
+
+/*.MuiOutlinedInput-root{*/
+/*  background-color: #59d600;*/
+/*}*/
+*:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: red;
+}
+
+input:focus{
+  outline:none;
+}
+

@@ -30,13 +30,9 @@ const FollowBtn = (props) => {
 
     let follow = (id, followUserId) => {
         dispatch(followThunk(id, followUserId))
-        // dispatch(changeUserPage(props.currentPage, props.pageSize))
-        // dispatch(setTotalUserCount())
     }
     let unFollow = (id, followUserId) => {
         dispatch(unFollowThunk(id, followUserId))
-        // dispatch(changeUserPage(props.currentPage, props.pageSize))
-        // dispatch(setTotalUserCount())
     }
     return (
         <div>

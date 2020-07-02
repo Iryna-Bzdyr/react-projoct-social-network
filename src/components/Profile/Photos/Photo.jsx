@@ -7,21 +7,21 @@ import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addNewPhotoThunk,
-    deleteCurrentUserPhoto, setPhotoDataAC,
+    deleteCurrentUserPhoto,
     setUserPhotoThunk
 } from "../../../Redux/Reducer/profile-reducer";
 import UploadPhoto from "../../../common/UploadPhoto/UploadPhoto";
 import PreLoader from "../../../common/PreLoader/PreLoader";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import {makeStyles} from '@material-ui/core';
-import DeleteBtn from "../../../common/DeleteBtn/DeleteBtn";
 import PhotoLikeBtn from "./PhotoLikeBtn";
 import LikePhotoUsers from "./LikePhotoUsers";
 import *as AOS from "aos";
 import "aos/dist/aos.css";
-import PhotoDeleteBtn from "./PhotoDeleteBtn";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
+import { useConfirm } from "material-ui-confirm";
+
 
 const useStyles = makeStyles((theme) => (
     {
@@ -62,6 +62,7 @@ let Photo = (props) => {
     const uploadFile = useSelector(state => state.uploadPhotoReducer.upLoadFile)
     const [spinner, setSpinner] = useState(true);
     const [photoWidth, setPhotoWidth] = useState(window.innerHeight)
+    const confirm = useConfirm();
 
 
     useEffect(() => {
@@ -104,6 +105,12 @@ let Photo = (props) => {
         dispatch(deleteCurrentUserPhoto(userId, photoId, url))
         dispatch(setUserPhotoThunk(userId))
     }
+
+    const handleDelete = (userId, photoId, url) => {
+        confirm({ description: `This will permanently delete this photo.` })
+            .then(() =>  deletePhoto(userId, photoId, url))
+            .catch(() => console.log("Deletion cancelled."));
+    };
 
     return (
 
@@ -151,7 +158,7 @@ let Photo = (props) => {
                                                      authUserID === id ?
                                                          <IconButton color='#de2694'
                                                                      aria-label="delete"
-                                                                     onClick={() => deletePhoto(authUserID, photo.id, photo.url)}
+                                                                     onClick={() => handleDelete(authUserID, photo.id, photo.url)}
                                                          >
                                                              <DeleteIcon/>
                                                          </IconButton>

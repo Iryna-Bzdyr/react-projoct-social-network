@@ -32,13 +32,13 @@ export default function SearchBarNavigation(props) {
             showLabels
             className={classes.root}
         >
-            <BottomNavigationAction  label="Activity" value='Activity'  icon={<RestoreIcon fontSize='large'/>}>
+            <BottomNavigationAction  label="Activity" value='Activity'  icon={<RestoreIcon />}>
             </BottomNavigationAction>
-            <BottomNavigationAction label="Posts" value='MyPost'   icon={<CommentIcon fontSize='large'/>}>
+            <BottomNavigationAction label="Posts" value='MyPost'   icon={<CommentIcon />}>
             </BottomNavigationAction>
-            <BottomNavigationAction label="Friends" value='Friends'  icon={<GroupIcon fontSize='large'/>}>
+            <BottomNavigationAction label="Friends" value='Friends'  icon={<GroupIcon />}>
             </BottomNavigationAction>
-            <BottomNavigationAction label="Photo" value='Photo'  icon={<PhotoLibraryIcon fontSize='large'/>}>
+            <BottomNavigationAction label="Photo" value='Photo'  icon={<PhotoLibraryIcon />}>
             </BottomNavigationAction>
         </BottomNavigation>
     );

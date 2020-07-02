@@ -18,12 +18,16 @@ const setCurrentUserId = 'SET-CURRENT-USER-ID'
 const setCurrentUserData = 'SET-CURRENT-USER-DATA'
 const setFollowUsers = 'SET-FOLLOW-USERS'
 const setFollowerUsersData = 'SET-FOLLOWER-USERS'
+const setCurrentFollowUsers = 'SET-CURRENT-FOLLOW-USERS'
+const setCurrentFollowerUsersData = 'SET-CURRENT-FOLLOWER-USERS'
 
 let initialState = {
     users: [],
     followerUserData: [],
     currentUserData: [],
     followUsers: [],
+    currentFollowUsers: [],
+    currentFollowerUserData: [],
     currentUserId: 0,
     pageSize: 3,
     totalUsersCount: 0,
@@ -53,6 +57,16 @@ let userReducer = (state = initialState, action) => {
                 ...state,
                 followUsers: [...action.followUsers]
             }
+        case setCurrentFollowUsers:
+            return {
+                ...state,
+                currentFollowUsers: [...action.currentFollowUsers]
+            }
+        case setCurrentFollowerUsersData:
+            return {
+                ...state,
+                currentFollowerUserData: [...action.currentFollowerUserData]
+            }
         case setCurrentPage:
             return {...state, currentPage: action.page}
         case setTotalUsersCount:
@@ -76,6 +90,8 @@ export const toggleIsFetchingAC = (status) => ({type: toggleIsFetching, isFetchi
 export const setCurrentUserIdAC = (userID) => ({type: setCurrentUserId, currentUserId: userID})
 export const setCurrentUserDataAC = (currentUserData) => ({type: setCurrentUserData, currentUserData: currentUserData})
 export const setFollowersAC = (followUsers) => ({type: setFollowUsers, followUsers:followUsers})
+export const setCurrentFollowUsersAC = (currentFollowUsers) => ({type: setCurrentFollowUsers, currentFollowUsers:currentFollowUsers})
+export const setCurrentFollowerUsersDataAC = (currentFollowerUserData) => ({type: setCurrentFollowerUsersData, currentFollowerUserData:currentFollowerUserData})
 
 export const setCurrentUserMainData = (id) => (dispath) => {
     userAPI(`${id}`).on('value', (snap) => {
@@ -214,9 +230,26 @@ export const getFollowerUsersData = (data)=>(dispatch)=>{
     dispatch(setFollowerUsersDataAC(userData))
 }
 
+////
+export const getCurrentFollowers = (currentID) => (dispatch) => {
+    let data = []
+    checkFollowerAPI(currentID).on('value', (snap) => {
+        snap.forEach(u => {
+            data.push(u.val())
+        })
+        dispatch(setCurrentFollowUsersAC(data))
+    })
+}
 
-
-
+export const getCurrentFollowerUsersData = (data)=>(dispatch)=>{
+    let userData = []
+    data.forEach(u=>{
+        currentUserAPI(u.userID).on('value', (snap) => {
+            userData.push(snap.exportVal())
+        })
+    })
+    dispatch(setCurrentFollowerUsersDataAC(userData))
+}
 
 
 ///

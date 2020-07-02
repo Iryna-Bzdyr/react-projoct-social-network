@@ -30,6 +30,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import CommentsBlock from "./CommentsBlock";
+import { useConfirm } from "material-ui-confirm";
 
 
 
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MyPosts = (props) => {
     let paramsData = useParams();
+    const confirm = useConfirm();
     let [id, setUserID] = useState('')
     const authUserID = useSelector(state => state.usersPage.currentUserId)
     const dispatch = useDispatch();
@@ -81,6 +83,14 @@ const MyPosts = (props) => {
         dispatch(deleteCurrentUserPost(authUserID, postID, url))
         dispatch(setUserPostThunk(id))
     }
+
+    const handleDelete = (authUserID, postID, url) => {
+        confirm({ description: `This will permanently delete this post.` })
+            .then(() =>  deletePost(authUserID, postID, url))
+            .catch(() => console.log("Deletion cancelled."));
+    };
+
+
 
     return (
         spinner ? <PreLoader></PreLoader> :
@@ -143,7 +153,7 @@ const MyPosts = (props) => {
                             <span>{post.commentsCount}</span>
                             {authUserID === post.userID ?
                                 <IconButton
-                                    onClick={() => deletePost(authUserID, post.id, post.url)}
+                                    onClick={() => handleDelete(authUserID, post.id, post.url)}
                                     aria-label="delete post"
                                 >
                                     <DeleteIcon className={s.delete__btn}/>
