@@ -1,15 +1,46 @@
 import React from "react";
 import s from './SearchBar.module.css'
-import {NavLink} from "react-router-dom";
+import {useHistory} from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import RestoreIcon from '@material-ui/icons/Restore';
+import CommentIcon from '@material-ui/icons/Comment';
+import GroupIcon from '@material-ui/icons/Group';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+const useStyles = makeStyles({
+    root: {
+        width: '100%',
+        "&$selected": {
+            color: "red"
+        }
+    },
+});
 
-let SearchBarNavigation = (props)=>{
+export default function SearchBarNavigation(props) {
+    const classes = useStyles();
+    let history = useHistory();
+    const [value, setValue] = React.useState('Photo');
 
     return (
-        <div className={s.wrapper}>
-           <div>
-               <NavLink to={`/profile/${props.currentUserId}/${props.pathName}`} activeClassName={s.active} className={s.link}>{props.pathName}</NavLink>
-           </div>
-        </div>
-    )
+        <BottomNavigation
+            value={value}
+            onChange={(event, newValue) => {
+                setValue(newValue);
+                history.push(`/profile/${props.currentUserId}/${newValue}`);
+            }}
+            showLabels
+            className={classes.root}
+        >
+            <BottomNavigationAction  label="Activity" value='Activity'  icon={<RestoreIcon fontSize='large'/>}>
+            </BottomNavigationAction>
+            <BottomNavigationAction label="Posts" value='MyPost'   icon={<CommentIcon fontSize='large'/>}>
+            </BottomNavigationAction>
+            <BottomNavigationAction label="Friends" value='Friends'  icon={<GroupIcon fontSize='large'/>}>
+            </BottomNavigationAction>
+            <BottomNavigationAction label="Photo" value='Photo'  icon={<PhotoLibraryIcon fontSize='large'/>}>
+            </BottomNavigationAction>
+        </BottomNavigation>
+    );
 }
-export default  SearchBarNavigation
+

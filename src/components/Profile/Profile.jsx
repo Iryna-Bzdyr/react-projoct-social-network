@@ -40,10 +40,15 @@ const Profile = (props) => {
     }, [id, postData.length,paramsData.userID])
 
 
-    let navigationElement = searchBar.map((pathName, index) => <SearchBarNavigation key={index}
-                                                                                    pathName={pathName.name}
-                                                                                    currentUserId={id}
-    />)
+    // let navigationElement = searchBar.map((pathName, index) => <SearchBarNavigation key={index}
+    //                                                                                 pathName={pathName.name}
+    //                                                                                 currentUserId={id}
+    // />)
+
+
+
+
+
     return (
         spinner ? <PreLoader></PreLoader> :
             <div className={s.wrapper}>
@@ -51,7 +56,7 @@ const Profile = (props) => {
                     <ProfileInfo currentUserId={id}/>
                     <div className={s.nav__menu}>
                         <div className={s.link__wrapper}>
-                            {navigationElement}
+                            <SearchBarNavigation currentUserId={id}></SearchBarNavigation>
                         </div>
                     </div>
                     <div>

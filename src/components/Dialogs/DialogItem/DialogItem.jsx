@@ -14,7 +14,7 @@ const DialogItem = (props) => {
     const DialogsUserData = useSelector(state => state.messagesPage.DialogsUserData)
 
 
-console.log(props)
+
     useEffect(() => {
           if(!dialogUserID){
               setTimeout(()=>{ dispatch(setDialogUserIDAC(DialogsUserData[0].userID))},1000)
@@ -29,7 +29,7 @@ console.log(props)
     return (
         <div onClick={() => onClick(props.dialogUserID)} className={s.dialogs__block} >
 
-            <Paper elevation={3} variant="outlined" className={s.dialogs__data}>
+            <div  className={props.dialogUserID===dialogUserID?s.dialogs__data__active:s.dialogs__data}>
                 <div className={s.dialogs__data__box}>
                     <Avatar aria-label="recipe" className={s.avatar}
                             src={getUserAvatar(props.dialogUserID)}
@@ -41,7 +41,7 @@ console.log(props)
                 <div className={s.message__data}>
                     <span>{getDialogsData(authUserID, props.dialogUserID).time}</span><span>{getDialogsData(authUserID, props.dialogUserID).date}</span>
                 </div>
-            </Paper>
+            </div>
 
         </div>
     )
