@@ -43,9 +43,6 @@ const Dialogs = (props) => {
     useEffect(() => {
         dispatch(getFollowerUsersData(followUsers))
         dispatch(getDialogsUserData(authUserID))
-      // if(DialogsUserData.length>0){
-      //     DialogsUserData.forEach(d=>dispatch(getDialogsData(authUserID,d.dialogUserID,DialogsData)))
-      // }
         setTimeout(() => setSpinner(false), 1000)
     }, [followUsers.length, dialogUserID, DialogsUserData.length, messagesData.length])
 

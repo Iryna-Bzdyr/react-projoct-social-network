@@ -24,6 +24,7 @@ import {setDeleteModalAC} from "./process-reducer";
 const upDateNewPostText = 'UPDATE-NEW-POST-TEXT';
 const setProfileData = 'SET-PROFILE-DATA'
 const setPostData = 'SET-POST-DATA'
+const setFollowerPostData = 'SET-FOLLOWER-POST-DATA'
 const setPhotoData = 'SET-PHOTO-DATA'
 const setActivityData = 'SET-ACTIVITY-DATA'
 const sliderIsOpen = 'SLIDER-IS-OPEN'
@@ -37,6 +38,7 @@ let initialState = {
     photoData: [],
     photoLikeUsers: [],
     activityData: [],
+    followerPostData: [],
     searchBar: [
         {id: 1, name: 'Activity'},
         {id: 2, name: 'MyPost'},
@@ -63,6 +65,12 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postData: [...action.postData]
+            }
+        }
+        case setFollowerPostData: {
+            return {
+                ...state,
+                followerPostData: [...action.followerPostData]
             }
         }
         case setPhotoData: {
@@ -109,9 +117,11 @@ const profileReducer = (state = initialState, action) => {
 }
 
 export const setProfileDataAC = (profileData) => ({type: setProfileData, profileData: profileData})
-
-
 export const setPostDataAC = (postData) => ({type: setPostData, postData: postData})
+export const setFollowerPostDataAC = (followerPostData) => ({
+    type: setFollowerPostData,
+    followerPostData: followerPostData
+})
 export const setPhotoDataAC = (photoData) => ({type: setPhotoData, photoData: photoData})
 export const setActivityDataAC = (activityData) => ({type: setActivityData, activityData: activityData})
 export const upDateNewPostTextActionCreator = (text) => (
@@ -120,6 +130,7 @@ export const sliderIsOpenAC = (status) => ({type: sliderIsOpen, sliderIsOpen: st
 export const setUsersStatusAC = (userStatus) => ({type: setUserStatus, userStatus})
 export const setNewPostCommentAC = (newPostComment) => ({type: setNewPostComment, newPostComment})
 export const setPostCommentDataAC = (postCommentData) => ({type: setPostCommentData, postCommentData})
+
 
 export const setCurrentUserProfileData = (id) => (dispatch) => {
     userProfileAPI(id).on('value', (snap) => {
@@ -285,7 +296,7 @@ export const addNewPostThunk = (id, url, postText) => (dispatch) => {
     const fullDate = Date.now()
     let postData = {
         id: postID,
-        userID:id,
+        userID: id,
         url: url,
         likes: 0,
         commentsCount: 0,
@@ -386,7 +397,7 @@ export const addPostComment = (id, postId, commentsCount, commentText, authUserI
     const postID = 'PSCM' + Date.now()
     const date = (new Date()).toString().split(' ').splice(1, 3).join(' ');
     profileCurrentPostComment(id, postId, postID).set({
-        postUserID:id,
+        postUserID: id,
         id: postID,
         likes: 0,
         date: date,
@@ -462,18 +473,36 @@ export const getAllPosts = () => (dispatch) => {
             data.push(u.val())
         })
     })
-    let postsData=[]
+    let postsData = []
     let newData = []
-    data.forEach((d)=>{
-        if(d.post){
+    data.forEach((d) => {
+        if (d.post) {
             postsData.push(d.post)
         }
     })
-    postsData.forEach((d)=>{newData.push(Object.values(d))})
+    postsData.forEach((d) => {
+        newData.push(Object.values(d))
+    })
     let resultData = []
-    newData.forEach((d)=>{resultData.push(...d)})
+    newData.forEach((d) => {
+        resultData.push(...d)
+    })
     const sortPhotoData = resultData.sort((a, b) => b.fullDate - a.fullDate)
     dispatch(setActivityDataAC(sortPhotoData))
 }
+
+export const getFollowerPosts = (data) => (dispatch) => {
+    let postsData = []
+    data.forEach(d => {
+        currentUserPostAPI(d.userID).on('value', (snap) => {
+            snap.forEach(u => {
+                postsData.push(u.val())
+            })
+            const sortPhotoData = postsData.sort((a, b) => b.fullDate - a.fullDate)
+            dispatch(setFollowerPostDataAC(sortPhotoData))
+        })
+    })
+}
+
 
 export default profileReducer

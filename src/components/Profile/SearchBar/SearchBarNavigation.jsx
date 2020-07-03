@@ -8,6 +8,7 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import CommentIcon from '@material-ui/icons/Comment';
 import GroupIcon from '@material-ui/icons/Group';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import {useSelector} from "react-redux";
 const useStyles = makeStyles({
     root: {
         width: '100%',
@@ -21,6 +22,7 @@ export default function SearchBarNavigation(props) {
     const classes = useStyles();
     let history = useHistory();
     const [value, setValue] = React.useState('Photo');
+    const authUserID = useSelector(state => state.usersPage.currentUserId)
 
     return (
         <BottomNavigation
@@ -32,8 +34,8 @@ export default function SearchBarNavigation(props) {
             showLabels
             className={classes.root}
         >
-            <BottomNavigationAction  label="Activity" value='Activity'  icon={<RestoreIcon />}>
-            </BottomNavigationAction>
+            {authUserID===props.currentUserId?<BottomNavigationAction  label="Activity" value='Activity'  icon={<RestoreIcon />}>
+            </BottomNavigationAction>:<></>}
             <BottomNavigationAction label="Posts" value='MyPost'   icon={<CommentIcon />}>
             </BottomNavigationAction>
             <BottomNavigationAction label="Friends" value='Friends'  icon={<GroupIcon />}>

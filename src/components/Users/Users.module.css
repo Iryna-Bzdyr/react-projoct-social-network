@@ -54,9 +54,6 @@
 }
 
 .avatar{
-/*height: 100%;*/
-/*    width: 100%;*/
-/*    zoom: 200%;*/
     height: 80px;
     width: 80px;
 }
@@ -65,10 +62,12 @@ height: 100%;
     width: 100%;
     zoom: 150%;
 }
+
 .message__btn{
     position: absolute;
     right: 20px;
 }
-.friends__wrapper{
-    padding-bottom: 30px;
+.card__wrapper{
+    padding-top: 40px;
 }
+

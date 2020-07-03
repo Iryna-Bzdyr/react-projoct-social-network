@@ -16,9 +16,9 @@ const DialogWindow = (props) => {
                 >
                 </Avatar>
 
-                <p><span className={s.name}>{getUserFirstName(dialogUserID)}</span>
+                <div className={s.user__name}><span className={s.name}>{getUserFirstName(dialogUserID)}</span>
                     <span className={s.name}>{getUserLastName(dialogUserID)}</span>
-                </p>
+                </div>
             </div>
             <MessageItem></MessageItem>
 
