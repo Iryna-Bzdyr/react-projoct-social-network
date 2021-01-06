@@ -12,7 +12,7 @@
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.4.0",
     "aos": "^2.3.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "emoji.json": "^12.1.1",
     "firebase": "^7.14.1",
